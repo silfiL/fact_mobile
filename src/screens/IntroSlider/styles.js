@@ -22,5 +22,14 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: 16,
+  },
+  btnContainer: {
+    justifyContent: 'center',
+    height: 45
+  },
+  btnText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16
   }
 });

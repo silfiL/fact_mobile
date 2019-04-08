@@ -11,7 +11,7 @@ const rootStack = createStackNavigator({
   Login: Login,
   SignUp: SignUp
 },{
-  initialRouteName: 'IntroSlider',
+  initialRouteName: 'Base',
   headerMode: 'none'
 });
 

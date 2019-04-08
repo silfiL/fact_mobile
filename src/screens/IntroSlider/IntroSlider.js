@@ -1,10 +1,11 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import { View, Text } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-import styles from './styles';
+import {styles} from './styles';
 
 const slides = [
   {
@@ -41,32 +42,27 @@ const slides = [
 export default class IntroSlider extends React.Component {
   _renderNextButton = () => {
     return (
-      <View style={styles.buttonCircle}>
-        <Ionicons
-          name="md-arrow-round-forward"
-          color="rgba(255, 255, 255, .9)"
+      <View style={styles.btnContainer}>
+        <Icon
+          name="right"
+          color="white"
           size={24}
-          style={{ backgroundColor: 'transparent' }}
+          style={{ backgroundColor: 'transparent', fontWeight:'bold' }}
         />
       </View>
     );
   }
   _renderDoneButton = () => {
     return (
-      <View style={styles.buttonCircle}>
-        <Ionicons
-          name="md-checkmark"
-          color="rgba(255, 255, 255, .9)"
-          size={24}
-          style={{ backgroundColor: 'transparent' }}
-        />
+      <View style={styles.btnContainer}>
+        <Text style={styles.btnText}>DONE</Text>
       </View>
     );
   }
    _renderSkipButton = () => {
     return (
-      <View>
-        <Text>SKIP</Text>
+      <View style={styles.btnContainer}>
+        <Text style={styles.btnText}>SKIP</Text>
       </View>
     );
   }
@@ -98,6 +94,7 @@ export default class IntroSlider extends React.Component {
         renderItem={this._renderItem}
         renderDoneButton={this._renderDoneButton}
         renderNextButton={this._renderNextButton}
+        renderSkipButton={this._renderSkipButton}
         showSkipButton={true}
         onDone={this._goToNext}
       />

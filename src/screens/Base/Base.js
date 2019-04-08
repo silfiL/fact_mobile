@@ -1,5 +1,8 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import { Button } from '../../components/Button'
+import { styles } from './styles'
 
 export default class Base extends React.Component{
   toSignUp = () => {
@@ -12,16 +15,13 @@ export default class Base extends React.Component{
   
   render(){
     return(
-      <View>
-        <Text>App Name</Text>
-        <TouchableOpacity onPress={this.toSignUp}>
-          <Text>SIGN UP</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.toLogin}>
-          <Text>LOGIN</Text>
-        </TouchableOpacity>
-        <Text>Copyright by Zro2iro</Text>
-      </View>
+      <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={['#91e1f2','#4d9fdd']} style={styles.container}>
+          <Text>App Name</Text>
+          <Button text="SIGN UP" onPress={this.toSignUp} bgColor="blue" txtColor="white" />
+          <Button text="LOGIN" onPress={this.toLogin} bgColor="blue" txtColor="white" /> 
+          <Text>Copyright by Zro2iro</Text>
+        
+      </LinearGradient>
     )
   }
 }
