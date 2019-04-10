@@ -1,0 +1,21 @@
+import React from 'react';
+import { TouchableOpacity, View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+//styles
+import { styles } from './styles';
+
+const HeaderBackButton = ({title,onPressBack}) => (
+    <View style={styles.header}>
+        <View style={styles.left}>
+            <TouchableOpacity onPress={onPressBack}>
+                <Icon name="left" color="black" size={25} />
+            </TouchableOpacity>
+        </View>
+        <View style={styles.right}>
+            <Text style={styles.screenTitle}>{title}</Text>
+        </View>
+        <View style={styles.left}></View>
+    </View>
+)
+
+export default HeaderBackButton;

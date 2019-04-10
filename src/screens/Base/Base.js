@@ -19,7 +19,7 @@ export default class Base extends React.Component{
           <Text>App Name</Text>
           <Button text="SIGN UP" onPress={this.toSignUp} bgColor="blue" txtColor="white" />
           <Button text="LOGIN" onPress={this.toLogin} bgColor="blue" txtColor="white" /> 
-          <Text>Copyright by Zro2iro</Text>
+          <Text style={styles.footer}>Copyright by Zro2iro</Text>
         
       </LinearGradient>
     )

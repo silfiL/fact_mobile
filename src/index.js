@@ -4,14 +4,20 @@ import IntroSlider from './screens/IntroSlider';
 import Base from './screens/Base';
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
+import FillProfileFirst from './screens/FillProfileFirst';
+import FillProfileSecond from './screens/FillProfileSecond';
+import FillProfileAnalysis from './screens/FillProfileAnalysis';
 
 const rootStack = createStackNavigator({
   IntroSlider: IntroSlider,
   Base: Base,
   Login: Login,
-  SignUp: SignUp
+  SignUp: SignUp,
+  FillProfileFirst: FillProfileFirst,
+  FillProfileSecond: FillProfileSecond,
+  FillProfileAnalysis: FillProfileAnalysis
 },{
-  initialRouteName: 'Base',
+  initialRouteName: 'FillProfileFirst',
   headerMode: 'none'
 });
 

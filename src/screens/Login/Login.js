@@ -1,28 +1,39 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
-import Icon from 'react-native-vector-icons/AntDesign';
-
+import { View, Text, TouchableOpacity } from 'react-native'
+import FloatingLabel from 'react-native-floating-labels';
+import { Button } from '../../components/Button'
+import { HeaderBackButton } from '../../components/HeaderBackButton'
+import { styles } from './styles'
 
 export default class Login extends React.Component{
   back = () => {
     this.props.navigation.goBack()
   }
+
+  doNothing = () => {
+    console.log("nothing")
+  }
   
   render(){
     return(
-      <View>
-        <View>
-          <TouchableOpacity onPress={this.back}>
-            <Icon name="arrowleft" />
-          </TouchableOpacity>
+      <View style={{flex:1}}>
+        <HeaderBackButton onPressBack={this.back} />
+        <View style={styles.container}>
+            <FloatingLabel 
+                labelStyle={styles.labelInput}
+                inputStyle={styles.input}
+                style={styles.formInput}>Email Address</FloatingLabel>
+            <FloatingLabel
+                labelStyle={styles.labelInput}
+                inputStyle={styles.input}
+                password={true}
+                style={styles.formInput}>Password</FloatingLabel>
+            <TouchableOpacity>
+              <Text>Forget Password?</Text>
+            </TouchableOpacity>
+            <Button text="LOGIN" onPress={this.doNothing} bgColor="blue" txtColor="white" /> 
         </View>
-        <TextInput placeholder="Email Address" />
-        <TextInput placeholder="Password" />
-        <Text>Forget Password?</Text>
-         <TouchableOpacity onPress={this.toLogin}>
-          <Text>LOGIN</Text>
-        </TouchableOpacity>
-        <Text>Copyright by Zro2iro</Text>
+        <Text style={styles.footer}>Copyright by Zro2iro</Text>
       </View>
     )
   }

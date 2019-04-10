@@ -5,12 +5,10 @@ const { width, height } = Dimensions.get('window')
 export const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1
+        flex: 1,
+        padding: 20,
     },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        padding: 10
+    title: {
+        fontSize: 18,
     }
 })
