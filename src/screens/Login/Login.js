@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels';
 import { Button } from '../../components/Button'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
+import { Footer } from '../../components/Footer'
 import { styles } from './styles'
 
 export default class Login extends React.Component{
@@ -12,6 +13,10 @@ export default class Login extends React.Component{
 
   doNothing = () => {
     console.log("nothing")
+  }
+
+  forget = () => {
+    this.props.navigation.navigate('ForgetPassword')
   }
   
   render(){
@@ -28,12 +33,12 @@ export default class Login extends React.Component{
                 inputStyle={styles.input}
                 password={true}
                 style={styles.formInput}>Password</FloatingLabel>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.forget}>
               <Text>Forget Password?</Text>
             </TouchableOpacity>
-            <Button text="LOGIN" onPress={this.doNothing} bgColor="blue" txtColor="white" /> 
+            <Button text="LOGIN" size="long" onPress={this.doNothing} bgColor="blue" txtColor="white" /> 
         </View>
-        <Text style={styles.footer}>Copyright by Zro2iro</Text>
+        <Footer />
       </View>
     )
   }

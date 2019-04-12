@@ -4,10 +4,11 @@ const { width, height } = Dimensions.get('window')
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 20,
+        padding: 20
     },
-    title: {
-        fontSize: 18,
+    footer: {
+        position: 'absolute',
+        bottom: 0,
+        padding: 10
     }
 })

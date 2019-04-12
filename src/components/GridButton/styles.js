@@ -7,19 +7,16 @@ import { smallWidth, smallHeight } from '../../config/sizes';
 export const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
-        borderRadius: 30,
-        paddingHorizontal: smallWidth*0.05,
-        paddingVertical: smallWidth*0.3,
-        marginVertical: smallHeight*0.2
-    },
-    long: {
-        width: width*0.8,
-    },
-    short: {
-        width: width*0.25,
+        justifyContent: 'center',
+        width: width*0.35,
+        height: width*0.35,
+        padding: 10,
+        margin: 5,
+        borderRadius: 20
     },
     buttonText: {
         fontSize: height*0.08*0.28,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'white'
     }
 })

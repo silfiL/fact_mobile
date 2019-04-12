@@ -1,14 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, View, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 //styles
 import { styles } from './styles';
 
-const HeaderBackButton = ({title,onPressBack}) => (
-    <View style={styles.header}>
+const HeaderBackButton = ({title,onPressBack,bgColor}) => (
+    <View style={[styles.header,{backgroundColor:bgColor}]}>
         <View style={styles.left}>
             <TouchableOpacity onPress={onPressBack}>
-                <Icon name="left" color="black" size={25} />
+                <Icon name="md-arrow-round-back" color="black" size={25} />
             </TouchableOpacity>
         </View>
         <View style={styles.right}>
