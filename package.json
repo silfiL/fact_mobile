@@ -15,7 +15,9 @@
     "react-native-floating-labels": "^1.1.9",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-linear-gradient": "^2.5.4",
+    "react-native-modal": "^9.0.0",
     "react-native-stopwatch-timer": "0.0.20",
+    "react-native-timer-countdown": "^4.1.0",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.6.1"
   },

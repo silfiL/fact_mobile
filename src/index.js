@@ -11,6 +11,9 @@ import FillProfileSecond from './screens/FillProfileSecond';
 import FillProfileAnalysis from './screens/FillProfileAnalysis';
 import FirstTimeSTrain from './screens/FirstTimeSTrain';
 import AddFood from './screens/AddFood';
+import RecentFood from './screens/RecentFood';
+import CategoryList from './screens/CategoryList';
+import ViewCategory from './screens/ViewCategory';
 
 const rootStack = createStackNavigator({
   IntroSlider: IntroSlider,
@@ -23,9 +26,12 @@ const rootStack = createStackNavigator({
   FillProfileSecond: FillProfileSecond,
   FillProfileAnalysis: FillProfileAnalysis,
   FirstTimeSTrain: FirstTimeSTrain,
-  AddFood: AddFood
+  AddFood: AddFood,
+  RecentFood: RecentFood,
+  CategoryList: CategoryList,
+  ViewCategory: ViewCategory
 },{
-  initialRouteName: 'FirstTimeSTrain',
+  initialRouteName: 'RecentFood',
   headerMode: 'none'
 });
 

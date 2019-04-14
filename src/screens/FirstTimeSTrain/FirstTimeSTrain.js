@@ -1,38 +1,29 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Button } from '../../components/Button'
 import { Timer } from 'react-native-stopwatch-timer'
-
-const options = {
-  container: {
-    backgroundColor: 'transparent',
-    padding: 5,
-    borderRadius: 5,
-    width: 220,
-  },
-  text: {
-    fontSize: 30,
-    color: 'black',
-    marginLeft: 7,
-  }
-};
-
+import TimerCountdown from 'react-native-timer-countdown'
 
 export default class FirstTimeSTrain extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      timerStart: false,
-      totalDuration: 25000
+      showButton: true,
     }
   }
 
   startTimer = () => {
-    this.setState({timerStart:true})
+    this.setState({totalDuration:25000})
+    this.setState({showButton:false})
   }
 
   handleTimerComplete = () => {
+    this.setState({totalDuration:null})
     alert('timer is completed')
+  }
+
+  toDiary = () => {
+    console.log("lalala")
   }
 
   render(){
@@ -41,10 +32,25 @@ export default class FirstTimeSTrain extends React.Component{
         <Text>You're almost there!!</Text>
         <Text>To increase accuracy, we need your help to do the instructions below :</Text>
         <Text style={{fontWeight:'bold'}}>"Walk Around"</Text>
-        <Button text="START" bgColor="blue" txtColor="white" onPress={this.startTimer} size="short" />
-        <Timer totalDuration={this.state.totalDuration} start={this.state.timerStart}
-          options={options}
-          handleFinish={this.handleTimerComplete} />
+        {this.state.showButton &&
+          <Button text="START" bgColor="blue" txtColor="white" onPress={this.startTimer} size="short" />
+        }
+        <TimerCountdown
+            initialMilliseconds={this.state.totalDuration}
+            onTick={(milliseconds) => console.log("tick", milliseconds)}
+            onExpire={this.handleTimerComplete}
+            formatMilliseconds={(milliseconds) => {
+              const remainingSec = Math.round(milliseconds / 1000);
+              const seconds = parseInt((remainingSec % 60).toString(), 10);
+              const s = seconds ? seconds : '';
+              return s;
+            }}
+            allowFontScaling={true}
+            style={{ fontSize: 20 }}
+        />
+        <TouchableOpacity onPress={this.toDiary}>
+          <Text>NEXT</Text>
+        </TouchableOpacity>
       </View>
     )
   }
