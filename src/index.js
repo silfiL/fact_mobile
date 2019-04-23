@@ -14,8 +14,11 @@ import AddFood from './screens/AddFood';
 import RecentFood from './screens/RecentFood';
 import CategoryList from './screens/CategoryList';
 import ViewCategory from './screens/ViewCategory';
+import Meal from './screens/Meal';
 import EditProfile from './screens/EditProfile';
 import ChangePassword from './screens/ChangePassword';
+import MyActivity from './screens/MyActivity';
+import AddNewActivity from "./screens/AddNewActivity";
 
 const rootStack = createStackNavigator({
   IntroSlider: IntroSlider,
@@ -32,10 +35,13 @@ const rootStack = createStackNavigator({
   RecentFood: RecentFood,
   CategoryList: CategoryList,
   ViewCategory: ViewCategory,
+  Meal: Meal,
   EditProfile: EditProfile,
-  ChangePassword: ChangePassword
+  ChangePassword: ChangePassword,
+  MyActivity: MyActivity,
+  AddNewActivity: AddNewActivity
 },{
-  initialRouteName: 'RecentFood',
+  initialRouteName: 'AddNewActivity',
   headerMode: 'none'
 });
 

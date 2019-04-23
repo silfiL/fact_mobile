@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     },
     screenTitle: {
         fontSize: (height*0.08)*0.35,
-        color: 'white'
+        color: 'white',
+        fontWeight: 'bold'
     }
 })
