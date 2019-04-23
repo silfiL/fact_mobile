@@ -42,11 +42,7 @@ export default class RecentFood extends React.Component{
     return(
       <View style={{flex:1}}>
         <HeaderBackButton onPressBack={this.back} title="RECENT LUNCH" bgColor="blue"/>
-        {/*<FlatList
-          data={this.state.data}
-          keyExtractor={item=>item.id}
-          renderItem={this._renderItem}
-        />*/}
+  
         <SectionList
           sections={this.state.data}
           renderSectionHeader={ ({section}) => <Text style={styles.SectionHeader}> { section.date } </Text> }
