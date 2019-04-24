@@ -15,10 +15,14 @@ import RecentFood from './screens/RecentFood';
 import CategoryList from './screens/CategoryList';
 import ViewCategory from './screens/ViewCategory';
 import Meal from './screens/Meal';
+import ViewMeal from './screens/ViewMeal';
+import AddInMeal from './screens/AddInMeal';
 import EditProfile from './screens/EditProfile';
 import ChangePassword from './screens/ChangePassword';
 import MyActivity from './screens/MyActivity';
 import AddNewActivity from "./screens/AddNewActivity";
+import SelfTrainSessions from './screens/SelfTrainSessions';
+import EvaluationForm from './screens/EvaluationForm';
 
 const rootStack = createStackNavigator({
   IntroSlider: IntroSlider,
@@ -36,12 +40,16 @@ const rootStack = createStackNavigator({
   CategoryList: CategoryList,
   ViewCategory: ViewCategory,
   Meal: Meal,
+  ViewMeal: ViewMeal,
+  AddInMeal: AddInMeal,
   EditProfile: EditProfile,
   ChangePassword: ChangePassword,
   MyActivity: MyActivity,
-  AddNewActivity: AddNewActivity
+  AddNewActivity: AddNewActivity,
+  SelfTrainSessions: SelfTrainSessions,
+  EvaluationForm: EvaluationForm
 },{
-  initialRouteName: 'AddNewActivity',
+  initialRouteName: 'ViewMeal',
   headerMode: 'none'
 });
 

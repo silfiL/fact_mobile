@@ -1,26 +1,25 @@
 import React from 'react'
 import { View, FlatList, Text} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { ListItemWithButton } from '../../components/ListItemWithButton'
 import { FloatingButton } from '../../components/FloatingButton'
 import { styles } from './styles'
 
-const mealArr = [{
+const sessions = [{
   id: '1',
-  name: 'Meal 1',
-  calorie: '520 kcal'
+  date: '22nd March 2019',
+  time: '12.30 PM'
 },{
   id: '2',
-  name: 'Meal 2',
-  calorie: '600 kcal'
+  date: '5th March 2019',
+  time: '05.00 PM'
 }]
 
-export default class Meal extends React.Component{
+export default class SelfTrainSessions extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: mealArr
+      data: sessions
     }
   }
 
@@ -35,10 +34,10 @@ export default class Meal extends React.Component{
   _renderItem = ({item}) => (
     <ListItemWithButton
       id={item.id}
-      firstLine={item.name}
-      secondLine={item.calorie}
+      firstLine={item.date}
+      secondLine={item.time}
       buttonPress={this._onLongPress}
-      iconName="info"
+      iconName="trash"
     />
   );
 
@@ -48,8 +47,7 @@ export default class Meal extends React.Component{
         <HeaderBackButton onPressBack={this.back} title="MEAL" bgColor="blue"/>
         {this.state.data.length==0 ?
         <View style={{justifyContent:'center',flex:1,alignItems:'center'}}>
-            <Icon name="food" size={80} />
-            <Text style={{alignSelf:'center'}}>Currently you have no meal data. Try to create a new one.</Text>
+            <Text style={{alignSelf:'center'}}>Currently you have no sessions. Try to add a new one.</Text>
         </View>:
         <FlatList
           data={this.state.data}

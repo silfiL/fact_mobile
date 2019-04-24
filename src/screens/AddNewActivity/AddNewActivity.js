@@ -50,7 +50,7 @@ export default class AddNewActivity extends React.Component{
           keyExtractor={item=>item.id}
           renderItem={this._renderItem}
         />
-        <FloatingButton />
+        <FloatingButton iconName="plus" />
       </View>
     )
   }
