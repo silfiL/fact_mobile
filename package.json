@@ -16,6 +16,7 @@
     "react-native-gesture-handler": "^1.1.0",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-modalbox": "^1.7.1",
+    "react-native-numeric-input": "^1.6.5",
     "react-native-stopwatch-timer": "0.0.20",
     "react-native-swiper": "^1.5.14",
     "react-native-timer-countdown": "^4.1.0",
