@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator, createBottomTabNavigator ,createAppContainer } from "react-navigation";
-import Icon from 'react-native-vector-icons/SimpleLineIcons'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import IntroSlider from './screens/IntroSlider';
 import Base from './screens/Base';
 import Login from './screens/Login';
@@ -33,26 +33,35 @@ import EvaluationForm from './screens/EvaluationForm';
 const HomepageTab = createBottomTabNavigator(
   {
     Diary: { screen: Diary,
-
       navigationOptions: {
         tabBarLabel:"Diary",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="book-open" size={30} color="#900" />
+          <Icon name="book" size={30} color={tintColor} />
         ) }
     },
-    History: History,
-    Newsfeed: Newsfeed,
-    Profile: Profile
+    History: { screen: History,
+      navigationOptions: {
+        tabBarLabel:"History",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="line-chart" size={30} color={tintColor} />
+        ) }
+    },
+    Newsfeed: { screen: Newsfeed,
+      navigationOptions: {
+        tabBarLabel:"Newsfeed",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="comments" size={30} color={tintColor} />
+        ) }
+    },
+    Profile: { screen: Profile,
+      navigationOptions: {
+        tabBarLabel:"Profile",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="user" size={30} color={tintColor} />
+        ) }
+    }
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
-        let IconComponent = Icon;
-        let iconName;
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
-      },
-    }),
     tabBarOptions: {
       activeTintColor: '#42f44b',
       inactiveTintColor: 'gray',
