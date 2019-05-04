@@ -16,6 +16,7 @@ import History from './screens/History';
 import Newsfeed from './screens/Newsfeed';
 import Profile from './screens/Profile';
 import AddFood from './screens/AddFood';
+import SearchFood from './screens/SearchFood';
 import RecentFood from './screens/RecentFood';
 import CategoryList from './screens/CategoryList';
 import ViewCategory from './screens/ViewCategory';
@@ -43,14 +44,14 @@ const HomepageTab = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel:"History",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="line-chart" size={30} color={tintColor} />
+          <Icon name="history" size={30} color={tintColor} />
         ) }
     },
     Newsfeed: { screen: Newsfeed,
       navigationOptions: {
         tabBarLabel:"Newsfeed",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="comments" size={30} color={tintColor} />
+          <Icon name="commenting" size={30} color={tintColor} />
         ) }
     },
     Profile: { screen: Profile,
@@ -81,6 +82,7 @@ const rootStack = createStackNavigator({
   FillProfileAnalysis: FillProfileAnalysis,
   FirstTimeSTrain: FirstTimeSTrain,
   AddFood: AddFood,
+  SearchFood: SearchFood,
   RecentFood: RecentFood,
   CategoryList: CategoryList,
   ViewCategory: ViewCategory,

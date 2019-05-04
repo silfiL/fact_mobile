@@ -33,7 +33,6 @@ export default class EditProfile extends React.Component{
                   labelStyle={styles.labelInput}
                   inputStyle={styles.input}
                   style={styles.formInput}>Email Address</FloatingLabel>
-                <Text style={styles.title}>Let us know you more..</Text>
                 <Text>Birth Year</Text>
                 <TextInput keyboardType="numeric" placeholder="Enter Birth Year"/>
                 <Text>Gender</Text>
