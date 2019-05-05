@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         height: height*0.2
     },
     bottomModal: {
-      padding: width*0.05,
+      padding: width*0.01,
       width: width,
       height: height*0.5
     },

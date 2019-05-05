@@ -4,6 +4,7 @@ import FloatingLabel from 'react-native-floating-labels';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '../../components/Button';
+import { HeaderBackButton } from '../../components/HeaderBackButton';
 import { styles } from './styles';
 
 export default class EditProfile extends React.Component{
@@ -22,8 +23,14 @@ export default class EditProfile extends React.Component{
       console.log("do nothing")
     }
 
+    back = () => {
+      this.props.navigation.goBack()
+    }
+
     render(){
         return(
+          <View style={{flex:1}}>
+            <HeaderBackButton onPressBack={this.back} />
             <View style={styles.container}>
                 <FloatingLabel
                   labelStyle={styles.labelInput}
@@ -51,6 +58,7 @@ export default class EditProfile extends React.Component{
                 </RadioGroup>
                  <Button text="SAVE" size="long" onPress={this.next} bgColor="blue" txtColor="white" />
             </View>
+          </View>
         )
     }
 }

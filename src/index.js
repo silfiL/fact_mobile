@@ -30,6 +30,7 @@ import MyActivity from './screens/MyActivity';
 import AddNewActivity from "./screens/AddNewActivity";
 import SelfTrainSessions from './screens/SelfTrainSessions';
 import EvaluationForm from './screens/EvaluationForm';
+import EvaluationAnalysis from './screens/EvaluationAnalysis';
 
 const HomepageTab = createBottomTabNavigator(
   {
@@ -96,9 +97,10 @@ const rootStack = createStackNavigator({
   AddNewActivity: AddNewActivity,
   SelfTrainSessions: SelfTrainSessions,
   EvaluationForm: EvaluationForm,
+  EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'Homepage',
+  initialRouteName: 'EvaluationAnalysis',
   headerMode: 'none'
 });
 

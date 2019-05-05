@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '../../components/Button';
+import { CircleWithText } from '../../components/CircleWithText'
 import AIcon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modalbox'
 import { styles } from './styles'
@@ -13,7 +14,9 @@ export default class Profile extends React.Component{
     super(props);
     this.state = {
       isOpen: false,
-      activityInfo: false
+      activityInfo: false,
+      bodyInfo: false,
+      isEdit: false
     }
   }
 
@@ -33,9 +36,17 @@ export default class Profile extends React.Component{
     this.props.navigation.navigate('MyActivity')
   }
 
-  toggleActivity = () => [
+  toggleActivity = () => {
     this.setState({activityInfo:!this.state.activityInfo})
-  ]
+  }
+
+  toggleBody = () => {
+    this.setState({bodyInfo:!this.state.bodyInfo})
+  }
+
+  toggleEdit = () => {
+    this.setState({isEdit:!this.state.isEdit})
+  }
 
   render(){
     return(
@@ -49,7 +60,7 @@ export default class Profile extends React.Component{
             <Text style={{alignSelf:'center'}}>Underweight</Text>
         </View>
         <View style={{flexDirection:'row'}}>
-            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',borderColor:'black',borderWidth:1,flex:1}}>
+            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',borderColor:'black',borderWidth:1,flex:1}} onPress={this.toggleBody}>
               <IonIcon name="md-body" size={30} />
               <Text>Body</Text>
             </TouchableOpacity>
@@ -67,6 +78,61 @@ export default class Profile extends React.Component{
           <AIcon name="right" size={30} />
         </TouchableOpacity>
         <Button text="LOG OUT" txtColor="white" bgColor="blue" size="long" onPress={this.logout} />
+        <Modal style={styles.smallModal} coverScreen={true} position="center" isOpen={this.state.isEdit} backdropPressToClose={false}>
+            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+              <Text style={styles.modalTitle}>EDIT</Text>
+              <TouchableOpacity onPress={this.toggleEdit}>
+                <AIcon name="close" size={20} />
+              </TouchableOpacity>
+            </View>
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+              <Text>Weight</Text>
+              <TextInput placeholder="40" />
+              <Text>kg</Text>
+            </View>
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+              <Text>Height</Text>
+              <TextInput placeholder="162" />
+              <Text>cm</Text>
+            </View>
+            <TouchableOpacity style={{alignSelf:'flex-end'}}>
+              <Text>OK</Text>
+            </TouchableOpacity>
+        </Modal>
+        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo} 
+          coverScreen={true}>
+            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+              <Text style={styles.modalTitle}>BODY INFORMATION</Text>
+              <TouchableOpacity onPress={this.toggleBody}>
+                <AIcon name="close" size={24} />
+              </TouchableOpacity>
+            </View>
+            <View style={{borderRadius:10,borderWidth:1,padding:10,flexDirection:'row',justifyContent:'space-between'}}>
+              <View>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                  <Text style={{fontWeight:'bold',width:90}}>Weight :</Text>
+                  <Text>42 kg</Text>
+                </View>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                  <Text style={{fontWeight:'bold',width:90}}>Height :</Text>
+                  <Text>162 cm</Text>
+                </View>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                  <Text style={{fontWeight:'bold',width:90}}>BMI :</Text>
+                  <Text>19.4</Text>
+                </View>
+              </View>
+              <TouchableOpacity onPress={this.toggleEdit}>
+                <MIcon name="edit" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+            <Text style={{fontWeight:'bold'}}>Nutritions</Text>
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+              <CircleWithText number="70" type="carb" />
+              <CircleWithText number="20" type="pro" />
+              <CircleWithText number="50" type="fat" />
+            </View>
+        </Modal>
         <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.activityInfo} 
           coverScreen={true}>
             <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>

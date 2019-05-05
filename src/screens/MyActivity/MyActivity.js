@@ -28,8 +28,8 @@ export default class MyActivity extends React.Component{
     this.props.navigation.goBack()
   }
 
-  _onPressItem = (id) => {
-    console.log("test",id)
+  _onPressItem = () => {
+    this.props.navigation.navigate('SelfTrainSessions')
   };
 
   _renderItem = ({item}) => (

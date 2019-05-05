@@ -44,7 +44,7 @@ export default class SelfTrainSessions extends React.Component{
   render(){
     return(
       <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} title="MEAL" bgColor="blue"/>
+        <HeaderBackButton onPressBack={this.back} title="SELF-TRAIN SESSIONS" bgColor="blue"/>
         {this.state.data.length==0 ?
         <View style={{justifyContent:'center',flex:1,alignItems:'center'}}>
             <Text style={{alignSelf:'center'}}>Currently you have no sessions. Try to add a new one.</Text>
