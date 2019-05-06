@@ -40,6 +40,10 @@ export default class MyActivity extends React.Component{
     />
   );
 
+  addActivity = () => {
+    this.props.navigation.navigate('AddNewActivity')
+  }
+
   render(){
     return(
       <View style={{flex:1}}>
@@ -49,7 +53,7 @@ export default class MyActivity extends React.Component{
           keyExtractor={item=>item.id}
           renderItem={this._renderItem}
         />
-        <FloatingButton iconName="plus" />
+        <FloatingButton iconName="plus" onPress={this.addActivity}/>
       </View>
     )
   }

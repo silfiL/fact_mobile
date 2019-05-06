@@ -28,6 +28,7 @@ import EditProfile from './screens/EditProfile';
 import ChangePassword from './screens/ChangePassword';
 import MyActivity from './screens/MyActivity';
 import AddNewActivity from "./screens/AddNewActivity";
+import SelfTrain from "./screens/SelfTrain";
 import SelfTrainSessions from './screens/SelfTrainSessions';
 import EvaluationForm from './screens/EvaluationForm';
 import EvaluationAnalysis from './screens/EvaluationAnalysis';
@@ -95,12 +96,13 @@ const rootStack = createStackNavigator({
   ChangePassword: ChangePassword,
   MyActivity: MyActivity,
   AddNewActivity: AddNewActivity,
+  SelfTrain: SelfTrain,
   SelfTrainSessions: SelfTrainSessions,
   EvaluationForm: EvaluationForm,
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'EvaluationAnalysis',
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 
