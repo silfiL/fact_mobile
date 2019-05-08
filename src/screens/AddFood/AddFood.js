@@ -3,8 +3,6 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import Modal from 'react-native-modalbox'
 import Icon from 'react-native-vector-icons/AntDesign'
 import FloatingLabel from 'react-native-floating-labels'
-import NumericInput from 'react-native-numeric-input'
-import { CircleWithText } from '../../components/CircleWithText'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { GridButton } from '../../components/GridButton'
 import { Footer } from '../../components/Footer'
@@ -27,12 +25,16 @@ export default class AddFood extends React.Component{
     this.setState({isOpen:!this.state.isOpen})
   }
 
+  goToSearch = () => {
+    this.props.navigation.navigate('SearchFood')
+  }
+
   render(){
     return(
       <View style={{flex:1}}>
         <View style={{backgroundColor:'yellow',marginBottom:20}}>
           <HeaderBackButton title="LUNCH" onPressBack={this.back} />
-          <TextInput placeholder="Search Food" style={{borderRadius:30,borderWidth:1,backgroundColor:'white'}}/>
+          <TextInput placeholder="Search Food" style={{borderRadius:30,borderWidth:1,backgroundColor:'white'}} onFocus={this.goToSearch}/>
         </View>
         <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
           <GridButton text="Recent" iconName="history" bgColor="grey"/>
@@ -78,43 +80,6 @@ export default class AddFood extends React.Component{
               </TouchableOpacity>
             </View>
         </Modal>
-        {/*<Modal style={styles.modal} position="center" isOpen={this.state.isOpen}>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-              <Text style={styles.modalTitle}>ADD FOOD</Text>
-              <TouchableOpacity onPress={this.toggleModal}>
-                <Icon name="close" size={24} />
-              </TouchableOpacity>
-            </View>
-            <Text>Fried Noodles</Text>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-              <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <NumericInput 
-                    value={this.state.value} 
-                    onChange={value => this.setState({value})} 
-                    iconSize={25}
-                    type="up-down" />
-                  <Text>Serving</Text>
-              </View>
-              <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <Text>200</Text>
-                  <Text>KCAL</Text>
-              </View>
-            </View>
-            <Text style={{textDecorationLine:'underline'}}>Nutrition Informations</Text>
-            <View style={{flexDirection:'row',alignItems:'center'}}>
-              <CircleWithText number="70" type="carb" />
-              <CircleWithText number="20" type="pro" />
-              <CircleWithText number="50" type="fat" />
-            </View>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-evenly',paddingHorizontal:20}}>
-              <TouchableOpacity>
-                <Text>SAVE</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text>CANCEL</Text>
-              </TouchableOpacity>
-            </View>
-        </Modal>*/}
         <Footer />
       </View>
     )

@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
         marginVertical: smallHeight*0.2
     },
     long: {
-        width: width*0.8,
+        width: width*0.9,
     },
     short: {
         width: width*0.25,

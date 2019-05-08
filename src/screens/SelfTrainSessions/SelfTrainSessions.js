@@ -41,6 +41,10 @@ export default class SelfTrainSessions extends React.Component{
     />
   );
 
+  addSession = () => {
+    this.props.navigation.navigate('SelfTrain')
+  }
+
   render(){
     return(
       <View style={{flex:1}}>
@@ -55,7 +59,7 @@ export default class SelfTrainSessions extends React.Component{
           renderItem={this._renderItem}
         />
         }
-        <FloatingButton iconName="plus" />
+        <FloatingButton iconName="plus" onPress={this.addSession} />
       </View>
     )
   }

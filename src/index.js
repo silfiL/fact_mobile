@@ -21,6 +21,7 @@ import RecentFood from './screens/RecentFood';
 import CategoryList from './screens/CategoryList';
 import ViewCategory from './screens/ViewCategory';
 import Meal from './screens/Meal';
+import CreateMeal from './screens/CreateMeal';
 import ViewMeal from './screens/ViewMeal';
 import AddInMeal from './screens/AddInMeal';
 import TrackActivity from './screens/TrackActivity';
@@ -89,6 +90,7 @@ const rootStack = createStackNavigator({
   CategoryList: CategoryList,
   ViewCategory: ViewCategory,
   Meal: Meal,
+  CreateMeal: CreateMeal,
   ViewMeal: ViewMeal,
   AddInMeal: AddInMeal,
   TrackActivity: TrackActivity,
@@ -102,7 +104,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'Homepage',
+  initialRouteName: 'CreateMeal',
   headerMode: 'none'
 });
 

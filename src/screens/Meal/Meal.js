@@ -42,6 +42,10 @@ export default class Meal extends React.Component{
     />
   );
 
+  createMeal = () => {
+    this.props.navigation.navigate('CreateMeal')
+  }
+
   render(){
     return(
       <View style={{flex:1}}>
@@ -57,7 +61,7 @@ export default class Meal extends React.Component{
           renderItem={this._renderItem}
         />
         }
-        <FloatingButton iconName="plus" />
+        <FloatingButton iconName="plus" onPress={this.createMeal}/>
       </View>
     )
   }
