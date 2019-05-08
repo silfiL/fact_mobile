@@ -24,6 +24,7 @@ import Meal from './screens/Meal';
 import CreateMeal from './screens/CreateMeal';
 import ViewMeal from './screens/ViewMeal';
 import AddInMeal from './screens/AddInMeal';
+import ViewArticle from './screens/ViewArticle';
 import TrackActivity from './screens/TrackActivity';
 import EditProfile from './screens/EditProfile';
 import ChangePassword from './screens/ChangePassword';
@@ -93,6 +94,7 @@ const rootStack = createStackNavigator({
   CreateMeal: CreateMeal,
   ViewMeal: ViewMeal,
   AddInMeal: AddInMeal,
+  ViewArticle: ViewArticle,
   TrackActivity: TrackActivity,
   EditProfile: EditProfile,
   ChangePassword: ChangePassword,
@@ -104,7 +106,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'CreateMeal',
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 
