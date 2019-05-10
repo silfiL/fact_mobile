@@ -11,6 +11,7 @@
     "react-native": "0.59.3",
     "react-native-app-intro-slider": "^2.0.1",
     "react-native-chart-kit": "^2.6.1",
+    "react-native-circular-progress": "^1.1.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-flexi-radio-button": "^0.2.2",
     "react-native-floating-labels": "^1.1.9",

@@ -10,50 +10,62 @@ const data = [
   {
     image: 'https://cdn.th3rdwave.coffee/articles/rkvHXu_Il/rkvHXu_Il-1100-700.jpg',
     title: 'Le Brûloir',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/rkTnGunIx/rkTnGunIx-1100-700.jpg',
     title: 'Le Petit Brûloir',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/HknxZ9awg/HknxZ9awg-1100-700.jpg',
     title: 'Oui Mais Non',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/merchants/rJWPQ2mKx/rJWPQ2mKx-1100-700.jpg',
     title: 'PERKO',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/merchants/rJWPQ2mKx/rJWPQ2mKx-1100-700.jpg',
     title: 'Perko',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/B1XmNBmLe/B1XmNBmLe-1100-700.jpg',
     title: 'Café Saint-Henri | Marché Jean-Talon',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/rkvHXu_Il/rkvHXu_Il-1100-700.jpg',
     title: 'Le Brûloir',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/rkTnGunIx/rkTnGunIx-1100-700.jpg',
     title: 'Le Petit Brûloir',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/HknxZ9awg/HknxZ9awg-1100-700.jpg',
     title: 'Oui Mais Non',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/merchants/rJWPQ2mKx/rJWPQ2mKx-1100-700.jpg',
     title: 'PERKO',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/merchants/rJWPQ2mKx/rJWPQ2mKx-1100-700.jpg',
     title: 'Perko',
+    desc: 'This is just a placeholder short description'
   },
   {
     image: 'https://cdn.th3rdwave.coffee/articles/B1XmNBmLe/B1XmNBmLe-1100-700.jpg',
     title: 'Café Saint-Henri | Marché Jean-Talon',
+    desc: 'This is just a placeholder short description'
   },
 ];
 
@@ -131,9 +143,12 @@ export default class Newsfeed extends React.Component{
 
   _renderRow = (rowData, sectionId, rowId) => {
     return (
-      <ImageBackground key={rowId} style={styles.row} source={{ uri: rowData.image }} resizeMode="cover">
-        <Text style={styles.rowText}>{rowData.title}</Text>
-      </ImageBackground>
+      <View key={rowId} style={styles.card}>
+        <ImageBackground style={styles.row} source={{ uri: rowData.image }} resizeMode="cover">
+          <Text style={styles.rowText}>{rowData.title}</Text>
+        </ImageBackground>
+        <Text>{rowData.desc}</Text>
+      </View>
     );
   };
 
@@ -210,4 +225,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
+  card: {
+    marginBottom: 30,
+    paddingBottom: 30,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1
+  }
 });
