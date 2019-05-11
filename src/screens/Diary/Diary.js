@@ -7,14 +7,14 @@ import {
   Text,
   View,
   TouchableOpacity,
-  RefreshControl,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { TimeCard } from '../../components/TimeCard';
 
-const HEADER_MAX_HEIGHT = 600;
+const HEADER_MAX_HEIGHT = 450;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
@@ -27,7 +27,6 @@ export default class Diary extends Component {
         // iOS has negative initial scroll value because content inset...
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
-      refreshing: false,
       date: new Date(),
       fill1: 50,
       fill2: 82
@@ -71,35 +70,30 @@ export default class Diary extends Component {
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true },
           )}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={() => {
-                this.setState({ refreshing: true });
-                setTimeout(() => this.setState({ refreshing: false }), 1000);
-              }}
-              // Android offset for RefreshControl
-              progressViewOffset={HEADER_MAX_HEIGHT}
-            />
-          }
         >
           <View style={styles.scrollViewContent}>
-          <Text>TITLE</Text>
-          <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-            <Text>By : Author Name</Text>
-            <Text>Monday, 6 May 2019</Text>
+              <TimeCard time="BREAKFAST" showTouchableOpacity={true} total={120}>
+                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingHorizontal:10,paddingVertical:5}}>
+                  <View>
+                      <Text>Fried Rice</Text>
+                      <Text>1 serving</Text>
+                  </View>
+                  <Text>120</Text>
+                </View>
+              </TimeCard>
+              <TimeCard time="LUNCH">
+                <Text>Testing</Text>
+              </TimeCard>
+              <TimeCard time="DINNER">
+                <Text>Testing</Text>
+              </TimeCard>
+              <TimeCard time="SNACK">
+                <Text>Testing</Text>
+              </TimeCard> 
+              <TimeCard time="EXERCISE">
+                <Text>Testing</Text>
+              </TimeCard>     
           </View>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue vehicula justo id gravida. Fusce dignissim venenatis fermentum. Sed porttitor viverra felis sit amet viverra. Sed sollicitudin ultrices fringilla. Nullam et nibh egestas, pellentesque diam ac, vestibulum nulla. Maecenas maximus felis turpis, quis vehicula massa mollis facilisis. Ut cursus, nulla vel lacinia tristique, augue purus luctus enim, eget hendrerit neque sapien eu est. Ut dictum mattis urna quis varius. Maecenas facilisis congue leo, ut euismod erat finibus a. Ut facilisis tempus odio, eget tristique sem interdum sed. Vestibulum ornare id augue quis vestibulum. Integer pulvinar ex vel purus aliquet, ac vehicula elit tempus.
-
-Quisque elementum, augue quis interdum fringilla, quam augue hendrerit mi, eu egestas risus libero in nisi. Aliquam erat volutpat. Fusce semper euismod posuere. Cras lacinia luctus placerat. Aenean lacinia massa est, non vehicula nisi porta non. Vivamus non nisl placerat, euismod lacus ut, dictum ex. Nunc quam massa, cursus sed venenatis eget, sagittis in sem. Phasellus nibh eros, molestie quis ante sit amet, congue facilisis purus.
-
-Nulla sagittis metus risus, et pellentesque dui varius quis. Nullam gravida diam lacinia nunc mollis, id varius elit posuere. Suspendisse potenti. Suspendisse tincidunt, ex vitae tincidunt tempor, nisl felis dapibus odio, sit amet facilisis odio risus facilisis arcu. Sed faucibus, ligula eu gravida iaculis, erat metus eleifend dui, at lacinia ligula sapien in est. Mauris ultricies tortor condimentum tellus auctor maximus. Ut quis pretium quam. Suspendisse urna ipsum, ultricies vitae risus at, finibus tempor lectus. Mauris sollicitudin est posuere pretium pharetra. Ut id ligula quis sapien tincidunt porta. Aenean pretium nunc id magna gravida consequat. Morbi efficitur hendrerit posuere. Aliquam erat volutpat. Vivamus sit amet accumsan ex.
-
-Sed consectetur, leo eu sagittis vulputate, velit ipsum dictum sapien, nec dictum tellus ligula vel leo. Duis vitae tellus eu sapien bibendum hendrerit. Curabitur hendrerit auctor cursus. Donec augue mi, hendrerit eu malesuada quis, efficitur vitae metus. Nunc tempus eget ex nec fermentum. In hac habitasse platea dictumst. Suspendisse purus quam, ultricies vel ex ut, pulvinar rutrum dolor. Aliquam rhoncus efficitur viverra. Aliquam id turpis nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ullamcorper sit amet nibh sit amet dignissim. Aenean vestibulum enim libero, in sagittis tortor pellentesque at.
-
-Cras congue maximus quam in elementum. Nam lectus felis, viverra ac ipsum a, semper vulputate mi. Vestibulum sit amet ornare enim, nec scelerisque augue. Vivamus a facilisis neque. Duis et blandit justo. Fusce facilisis dolor nunc, a aliquam nisi semper sed. Nullam vel turpis eu urna luctus dictum in nec lorem. Sed eget varius ipsum. Quisque in tincidunt nibh. Integer lobortis tristique nisl eu cursus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean ut efficitur eros, sit amet pulvinar massa. Ut venenatis finibus urna sit amet sagittis.</Text>
-          
-        </View>
         </Animated.ScrollView>
         <Animated.View
           pointerEvents="none"
@@ -131,6 +125,7 @@ Cras congue maximus quam in elementum. Nam lectus felis, viverra ac ipsum a, sem
                 </AnimatedCircularProgress>
                 <Text>GOAL: 1000 KCAL</Text>
               </View>
+              <View style={{backgroundColor:'black',width:1,height:100}}/>
               <View style={{alignItems:'center'}}>
                 <Text>CALORIE BURNT</Text>
                 <AnimatedCircularProgress
@@ -149,6 +144,12 @@ Cras congue maximus quam in elementum. Nam lectus felis, viverra ac ipsum a, sem
                 </AnimatedCircularProgress>
                 <Text>GOAL: 1000 KCAL</Text>
               </View>
+            </View>
+            <Text>Nutritients</Text>
+            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
+              <View style={{borderRadius:50,width:80,height:80,backgroundColor:'white'}}></View>
+              <View style={{borderRadius:50,width:80,height:80,backgroundColor:'white'}}></View>
+              <View style={{borderRadius:50,width:80,height:80,backgroundColor:'white'}}></View>
             </View>
           </View>
         </Animated.View>
@@ -183,6 +184,7 @@ Cras congue maximus quam in elementum. Nam lectus felis, viverra ac ipsum a, sem
                 <Icon name="chevron-circle-right" size={20} />
               </TouchableOpacity>
             </View>
+            
         </Animated.View>
       </View>
     );
