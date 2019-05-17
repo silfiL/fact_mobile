@@ -13,29 +13,28 @@ const slides = [
     title: 'Quick setup, good defaults',
     text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
     icon: 'md-checkmark',
-    colors: ['#006762', '#062d42'],
+    colors: ['#048998', '#3bb4c1'],
   },
   {
     key: 'somethun1',
     title: 'Super customizable',
     text: 'The component is also super customizable, so you can adapt it to cover your needs and wants.',
     icon: 'md-checkmark',
-    colors: ['#135998', '#0e2f44'],
+    colors: ['#07689f','#4d9fdd'],
   },
   {
     key: 'somethun2',
     title: 'No need to buy me beer',
     text: 'Usage is all free',
     icon: 'md-checkmark',
-    //colors: ['#43cd80','#6eddaf']
-    colors: ['#91e1f2','#4d9fdd'],
+    colors: ['#ffb677','#facf5a'],
   },
   {
     key: 'somethun3',
     title: 'No need to buy me beer',
     text: 'Usage is all free',
     icon: 'md-checkmark',
-    colors: ['#ffd700','#ffa500'],
+    colors: ['#ff7e67','#f38181'],
   }
 ];
 
