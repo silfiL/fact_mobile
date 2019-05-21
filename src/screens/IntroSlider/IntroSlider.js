@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { View, Text } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-import {styles} from './styles';
+import { styles } from './styles';
 
 const slides = [
   {
@@ -13,7 +13,7 @@ const slides = [
     title: 'Quick setup, good defaults',
     text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
     icon: 'md-checkmark',
-    colors: ['#048998', '#3bb4c1'],
+    colors: ['#17a2b8','#3bb4c1'],
   },
   {
     key: 'somethun1',

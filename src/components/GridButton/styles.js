@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window')
 
-import { smallWidth, smallHeight } from '../../config/sizes';
+import Size from '../../config/Size';
 
 export const styles = StyleSheet.create({
     button: {

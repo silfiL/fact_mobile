@@ -1,25 +1,23 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
-
-import { smallWidth, smallHeight } from '../../config/sizes';
+import Size from '../../config/Size';
 
 export const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         borderRadius: 30,
-        paddingHorizontal: smallWidth*0.05,
-        paddingVertical: smallWidth*0.3,
-        marginVertical: smallHeight*0.2
+        paddingHorizontal: Size.WIDTH1*0.05,
+        paddingVertical: Size.WIDTH1*0.3,
+        marginVertical: Size.WIDTH1*0.2
     },
     long: {
-        width: width*0.9,
+        width: Size.WIDTH9,
     },
     short: {
-        width: width*0.25,
+        width: Size.WIDTH*0.25,
     },
     buttonText: {
-        fontSize: height*0.08*0.28,
+        fontSize: Size.HEIGHT*0.08*0.28,
         fontWeight: 'bold'
     }
 })

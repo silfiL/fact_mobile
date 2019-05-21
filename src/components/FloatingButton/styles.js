@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window')
 
-import { smallWidth, smallHeight } from '../../config/sizes';
+import Size from '../../config/Size';
 
 export const styles = StyleSheet.create({
     floatingButton: {
@@ -15,6 +15,6 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         right: 0,
-        margin: smallWidth*0.2
+        margin: Size.WIDTH1*0.2
     }
 })
