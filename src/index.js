@@ -106,7 +106,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'IntroSlider',
+  initialRouteName: 'Base',
   headerMode: 'none'
 });
 

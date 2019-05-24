@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
         width: Size.WIDTH*0.25,
     },
     buttonText: {
-        fontSize: Size.HEIGHT*0.08*0.28,
+        fontSize: Size.HEIGHT*0.08*0.3,
         fontWeight: 'bold'
     }
 })

@@ -4,6 +4,10 @@ import { Button } from '../../components/Button';
 import { styles } from './styles';
 
 export default class FillProfileAnalysis extends React.Component{
+    next = () => {
+      this.props.navigation.navigate('Homepage')
+    }
+    
     render(){
         return(
             <View>

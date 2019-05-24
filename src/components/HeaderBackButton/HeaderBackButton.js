@@ -4,11 +4,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 //styles
 import { styles } from './styles';
 
-const HeaderBackButton = ({title,onPressBack,bgColor}) => (
+const HeaderBackButton = ({title,onPressBack,bgColor,iconColor}) => (
     <View style={[styles.header,{backgroundColor:bgColor}]}>
         <View style={styles.left}>
             <TouchableOpacity onPress={onPressBack}>
-                <Icon name="md-arrow-round-back" color="black" size={25} />
+                <Icon name="md-arrow-round-back" color={iconColor} size={25} />
             </TouchableOpacity>
         </View>
         <View style={styles.right}>
