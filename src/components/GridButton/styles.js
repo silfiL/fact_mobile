@@ -1,22 +1,22 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
-
+import Color from '../../config/Color';
 import Size from '../../config/Size';
 
 export const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: width*0.35,
-        height: width*0.35,
-        padding: 10,
-        margin: 5,
+        width: Size.WIDTH*0.35,
+        height: Size.WIDTH*0.35,
+        padding: Size.WIDTH1*0.2,
+        marginHorizontal: Size.WIDTH1*0.1,
+        marginVertical: Size.HEIGHT1*0.2,
         borderRadius: 20
     },
     buttonText: {
-        fontSize: height*0.08*0.28,
-        fontWeight: 'bold',
-        color: 'white'
+        fontSize: Size.HEIGHT*0.08*0.3,
+        fontFamily: 'SourceSansPro-Bold',
+        color: Color.APP_WHITE
     }
 })

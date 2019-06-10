@@ -1,14 +1,33 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 20
+        flex: 1,
+        backgroundColor: Color.APP_WHITE
     },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        padding: 10
+    form: {
+      padding: Size.WIDTH1*0.5
+    },
+    roundedContainer: {
+      borderRadius: 20,
+      borderColor: Color.LIGHT_GREY,
+      borderWidth: 2,
+      padding: Size.WIDTH1*0.5,
+      marginBottom: Size.HEIGHT1*0.4,
+    },
+    label: {
+      fontSize: 20,
+      color: Color.FONT_GREY,
+      fontFamily: 'SourceSansPro-Bold'
+    },
+    input: {
+      borderBottomWidth: 1,
+      fontSize: 18,
+      borderBottomColor: Color.LIGHT_GREEN,
+      color: Color.FONT_GREY,
+      fontFamily: 'SourceSansPro-Regular'
     }
 })

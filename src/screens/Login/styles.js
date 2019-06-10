@@ -1,25 +1,37 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 20
+        flex: 1,
+    },
+    form: {
+      padding: Size.WIDTH1*0.5
     },
     labelInput: {
-        color: '#673AB7',
+        color: Color.APP_WHITE,
+        fontFamily: 'SourceSansPro-Bold'
     },
     formInput: {    
         borderBottomWidth: 1.5, 
-        marginLeft: 20,
-        borderColor: '#333',       
+        borderColor: Color.APP_WHITE,
     },
     input: {
-        borderWidth: 0
+        borderWidth: 0,
+        color: Color.APP_WHITE,
+        fontSize: 16,
+        fontFamily: 'SourceSansPro-Regular',
     },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        padding: 10
+    below: {
+      marginBottom: Size.HEIGHT1
+    },
+    forget: {
+      color: Color.APP_WHITE,
+      textDecorationLine: 'underline',
+      fontFamily: 'SourceSansPro-Regular',
+      alignSelf: 'flex-end',
+      marginVertical: Size.HEIGHT1*0.1
     }
 })

@@ -1,10 +1,14 @@
 import React from 'react'
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, StatusBar } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels';
 import { Button } from '../../components/Button'
+import { Title } from '../../components/Title'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export default class ResetPassword extends React.Component{
   back = () => {
@@ -24,9 +28,13 @@ export default class ResetPassword extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} />
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.BG_GREY} />
+        <HeaderBackButton onPressBack={this.back} iconColor={Color.GREEN}/>
+        <View style={{marginTop:Size.HEIGHT1}}>
+          <Title size="small" titleColor={Color.GREEN}/>
+        </View>
+        <View style={styles.form}>
             <FloatingLabel 
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
@@ -40,10 +48,10 @@ export default class ResetPassword extends React.Component{
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
                 password={true}
-                style={styles.formInput}>Re-enter New Password</FloatingLabel>
-            <Button text="SAVE" size="long" onPress={this.save} bgColor="blue" txtColor="white" /> 
+                style={[styles.formInput,styles.below]}>Re-enter New Password</FloatingLabel>
+            <Button text="SAVE" size="long" onPress={this.save} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} /> 
         </View>
-        <Footer />
+        <Footer color={Color.GREEN}/>
       </View>
     )
   }

@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, StatusBar } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '../../components/Button';
 import { styles } from './styles';
 
+import Color from '../../config/Color'
+
 export default class FillProfileFirst extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            date: new Date()
+            gender: 'male'
         }
     }
 
@@ -23,35 +25,45 @@ export default class FillProfileFirst extends React.Component{
 
     render(){
         return(
-            <View style={styles.container}>
-                <Text style={styles.title}>Let us know you more..</Text>
-                <Text>Birth Year</Text>
-                <TextInput keyboardType="numeric" placeholder="Enter Birth Year"/>
-                <Text>Gender</Text>
+          <View style={styles.container}>
+            <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
+            <Text style={styles.title}>Let us know you more..</Text>
+            <View style={styles.form}>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Birth Year</Text>
+                  <TextInput style={styles.input} keyboardType="numeric" placeholder="Enter Birth Year" placeholderTextColor={Color.LIGHT_GREY}/>
+                </View>
+                <Text style={styles.label}>Gender</Text>
                 <RadioGroup
-                    style = {{flexDirection:'row'}}
-                    onSelect = {(index, value) => this.onSelect(index, value)}>
-                    <RadioButton value={'male'} >
-                      <Icon name="male" color="black" size={30} />
-                      <Text>Male</Text>
-                    </RadioButton>
-
-                    <RadioButton value={'female'}>
-                      <Icon name="female" color="black" size={30} />
-                      <Text>Female</Text>
-                    </RadioButton>
+                  style = {styles.inline}
+                  selectedIndex={0}
+                  color={Color.LIGHT_GREEN}
+                  onSelect = {(index, value) => this.onSelect(index, value)}>
+                  <RadioButton value={'male'} >
+                    <Icon name="male" color={Color.FONT_GREY} size={50} />
+                    <Text style={styles.radioLabel}>Male</Text>
+                  </RadioButton>
+                  <RadioButton value={'female'}>
+                    <Icon name="female" color={Color.FONT_GREY} size={50} />
+                    <Text>Female</Text>
+                  </RadioButton>
                 </RadioGroup>
-                <Text>Weight</Text>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                <TextInput keyboardType="numeric" placeholder="Enter Your Weight"/>
-                <Text>kg</Text>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Weight</Text>
+                  <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <TextInput keyboardType="numeric" placeholder="Enter Your Weight" style={styles.input} placeholderTextColor={Color.LIGHT_GREY}/>
+                    <Text style={styles.metric}>kg</Text>
+                  </View>
                 </View>
-                <Text>Height</Text>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                <TextInput keyboardType="numeric" placeholder="Enter Your Height"/>
-                <Text>cm</Text>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Height</Text>
+                  <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <TextInput keyboardType="numeric" placeholder="Enter Your Height" style={styles.input} placeholderTextColor={Color.LIGHT_GREY}/>
+                    <Text style={styles.metric}>cm</Text>
+                  </View>
                 </View>
-                 <Button text="NEXT" size="short" onPress={this.next} bgColor="blue" txtColor="white" />
+              </View>
+              <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} />
             </View>
         )
     }

@@ -10,7 +10,9 @@ const Button = ({text,onPress,bgColor,txtColor,size,border}) => {
     else if (size=='short')
       sizeStyle = styles.short
     return(
-        <TouchableOpacity onPress={onPress} style={[styles.button,sizeStyle,{backgroundColor:bgColor,borderColor:border?border:bgColor,borderWidth:1}]}>
+        <TouchableOpacity onPress={onPress} 
+        style={[styles.button,sizeStyle,{backgroundColor:bgColor,borderColor:border?border:bgColor,borderWidth:1}]}
+        >
             <Text style={[styles.buttonText,{color:txtColor}]}>{text}</Text>
         </TouchableOpacity>
     )

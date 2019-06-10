@@ -1,18 +1,23 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import FloatingLabel from 'react-native-floating-labels';
+import { View, Text, TouchableOpacity, StatusBar } from 'react-native'
+import FloatingLabel from 'react-native-floating-labels'
+import LinearGradient from 'react-native-linear-gradient'
 import { Button } from '../../components/Button'
+import { Title } from '../../components/Title'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export default class Login extends React.Component{
   back = () => {
     this.props.navigation.goBack()
   }
 
-  doNothing = () => {
-    console.log("nothing")
+  goToDiary = () => {
+    this.props.navigation.navigate('Homepage')
   }
 
   forget = () => {
@@ -21,9 +26,13 @@ export default class Login extends React.Component{
   
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} />
-        <View style={styles.container}>
+     <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
+        <StatusBar backgroundColor={Color.GREEN} />
+        <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE}/>
+        <View style={{marginTop:Size.HEIGHT1}}>
+          <Title size="small"/>
+        </View>
+        <View style={styles.form}>
             <FloatingLabel 
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
@@ -34,12 +43,12 @@ export default class Login extends React.Component{
                 password={true}
                 style={styles.formInput}>Password</FloatingLabel>
             <TouchableOpacity onPress={this.forget}>
-              <Text>Forget Password?</Text>
+              <Text style={styles.forget}>Forget Password?</Text>
             </TouchableOpacity>
-            <Button text="LOGIN" size="long" onPress={this.doNothing} bgColor="blue" txtColor="white" /> 
+            <Button text="LOGIN" size="long" onPress={this.goToDiary} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />  
         </View>
         <Footer />
-      </View>
+      </LinearGradient>
     )
   }
 }

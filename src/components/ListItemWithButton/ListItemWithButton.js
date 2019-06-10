@@ -1,23 +1,23 @@
 import React from 'react';
-import { TouchableOpacity, View, Text} from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //styles
 import { styles } from './styles';
 
+import Color from '../../config/Color'
+
 export default class ListItemWithButton extends React.Component {
   render() {
     return (
-      <TouchableOpacity onLongPress={this.props.onLongPress}>
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+        <View style={styles.row}>
           <View>
-            <Text style={{fontWeight:'bold',fontSize:17}}>{this.props.firstLine}</Text>
-            <Text>{this.props.secondLine}</Text>
+            <Text style={styles.firstLine}>{this.props.firstLine}</Text>
+            <Text style={styles.secondLine}>{this.props.secondLine}</Text>
           </View>
-          <TouchableOpacity onPress={this.props.buttonPress} style={{padding:10}}>
-            <Icon name={this.props.iconName} size={24} color="black" />
+          <TouchableOpacity onPress={this.props.buttonPress} style={styles.button}>
+            <Icon name={this.props.iconName} size={24} color={Color.LIGHT_BLUE} />
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
     );
   }
 }

@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import { Button } from '../../components/Button';
 import { styles } from './styles';
+
+import Color from '../../config/Color'
 
 export default class FillProfileSecond extends React.Component{
     next = () => {
@@ -11,38 +13,43 @@ export default class FillProfileSecond extends React.Component{
 
     render(){
         return(
-            <View style={{flex:1}}>
-                <Text>Which activity level are you in ?</Text>
-                <RadioGroup
-                    onSelect = {(index, value) => this.onSelect(index, value)}>
-                    <RadioButton value={'low'} >
-                      <Text>Low Activity Level/Sedentary</Text>
-                      <Text>ssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+            <View style={styles.container}>
+              <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
+              <Text style={styles.title}>Which activity level are you in ?</Text>
+              <RadioGroup
+                  size={18}
+                  style={styles.radioGroup}
+                  color={Color.LIGHT_GREEN}
+                  onSelect = {(index, value) => this.onSelect(index, value)}>
+                  <RadioButton value={'low'}>
+                    <Text style={styles.radioLabel}>Low Activity Level (Sedentary)</Text>
+                    <View style={styles.wrapText}>
+                      <View style={styles.image}/>
+                      <Text style={styles.text}>ssssssssssssssssssssssssssssssss
                       </Text>
-                    </RadioButton>
+                    </View>
+                  </RadioButton>
 
-                    <RadioButton value={'mod'}>
-                      <Text>Moderate Activity Level</Text>
-                      <Text>ssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                  <RadioButton value={'mod'}>
+                    <Text style={styles.radioLabel}>Moderate Activity Level</Text>
+                    <View style={styles.wrapText}>
+                      <View style={styles.image}/>
+                      <Text style={styles.text}>ssssssssssssssssssssssssssssssss
                       </Text>
-                    </RadioButton>
+                    </View>
+                  </RadioButton>
 
-                    <RadioButton value={'high'}>
-                      <Text>High Activity Level</Text>
-                      <Text>ssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                  <RadioButton value={'high'}>
+                    <Text style={styles.radioLabel}>High Activity Level</Text>
+                    <View style={styles.wrapText}>
+                      <View style={styles.image}/>
+                      <Text style={styles.text}>Loren ipsum dslfkjsl dkfjlskjfsljpji wefdkjefjporj ei
+                        fsdlkfjsalfjsal dfslsdjflejrepirejeprjwp dflaskfjls skfjiejrpjw kjfdslfjaoisd
                       </Text>
-                    </RadioButton>
-                </RadioGroup>
-                 <Button text="DONE" size="short" onPress={this.next} bgColor="blue" txtColor="white" />
+                    </View>
+                  </RadioButton>
+              </RadioGroup>
+              <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} />
             </View>
         )
     }

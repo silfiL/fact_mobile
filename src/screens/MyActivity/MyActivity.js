@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, FlatList} from 'react-native'
+import { View, FlatList, StatusBar} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { SimpleListItem } from '../../components/SimpleListItem'
 import { FloatingButton } from '../../components/FloatingButton'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
 
 const categoryArr = [{
   id: '1',
@@ -46,14 +48,15 @@ export default class MyActivity extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} title="MY ACTIVITIES" bgColor="blue"/>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.LIGHT_BLUE} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.LIGHT_BLUE} iconColor={Color.APP_WHITE} title="MY ACTIVITIES"/>
         <FlatList
-          data={this.state.data}
-          keyExtractor={item=>item.id}
-          renderItem={this._renderItem}
-        />
-        <FloatingButton iconName="plus" onPress={this.addActivity}/>
+            data={this.state.data}
+            keyExtractor={item=>item.id}
+            renderItem={this._renderItem}
+          />
+        <FloatingButton iconName="plus" onPress={this.addActivity} bgColor={Color.LIGHT_BLUE}/>
       </View>
     )
   }

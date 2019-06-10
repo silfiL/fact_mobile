@@ -21,9 +21,9 @@ const CircleWithText = ({type,number}) => {
     <View>
       <View style={[styles.circle,color]}>
         <Text style={styles.number}>{number}</Text>
-        <Text>g</Text>
+        <Text style={styles.text}>g</Text>
       </View>
-      <Text style={{alignSelf:'center'}}>{display}</Text>
+      <Text style={styles.display}>{display}</Text>
     </View>
   )
 }

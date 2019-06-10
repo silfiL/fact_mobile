@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, FlatList, Text} from 'react-native'
+import { View, FlatList, Text, StatusBar} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { ListItemWithButton } from '../../components/ListItemWithButton'
 import { FloatingButton } from '../../components/FloatingButton'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
 
 const sessions = [{
   id: '1',
@@ -28,7 +30,7 @@ export default class SelfTrainSessions extends React.Component{
   }
 
   _onLongPress = (id) => {
-    alert("test",id)
+    alert("test"+id)
   };
 
   _renderItem = ({item}) => (
@@ -36,7 +38,7 @@ export default class SelfTrainSessions extends React.Component{
       id={item.id}
       firstLine={item.date}
       secondLine={item.time}
-      buttonPress={this._onLongPress}
+      buttonPress={()=>this._onLongPress(item.id)}
       iconName="trash"
     />
   );
@@ -47,11 +49,13 @@ export default class SelfTrainSessions extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} title="SELF-TRAIN SESSIONS" bgColor="blue"/>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.LIGHT_BLUE} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.LIGHT_BLUE} iconColor={Color.APP_WHITE} title="SELF-TRAIN SESSIONS"/>
         {this.state.data.length==0 ?
-        <View style={{justifyContent:'center',flex:1,alignItems:'center'}}>
-            <Text style={{alignSelf:'center'}}>Currently you have no sessions. Try to add a new one.</Text>
+        <View style={styles.centerContainer}>
+            <Text style={styles.text}>Currently you have no sessions.</Text>
+            <Text style={styles.text}>Try to add a new one.</Text>
         </View>:
         <FlatList
           data={this.state.data}

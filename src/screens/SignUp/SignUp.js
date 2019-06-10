@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StatusBar } from 'react-native'
-import FloatingLabel from 'react-native-floating-labels';
+import FloatingLabel from 'react-native-floating-labels'
 import LinearGradient from 'react-native-linear-gradient'
 import { Button } from '../../components/Button'
 import { Title } from '../../components/Title'
@@ -45,7 +45,7 @@ export default class SignUp extends React.Component{
               inputStyle={styles.input}
               password={true}
               style={[styles.formInput,styles.below]}>Re-Password</FloatingLabel>
-          <Button text="SIGN UP" size="long" onPress={this.goToFillProfile} bgColor={Color.BG_GREY} txtColor={Color.LIGHT_GREEN} /> 
+          <Button text="SIGN UP" size="long" onPress={this.goToFillProfile} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} /> 
         </View>
         <Footer />
       </LinearGradient>

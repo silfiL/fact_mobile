@@ -6,6 +6,8 @@ import { View, Text } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 import { styles } from './styles';
+import Color from '../../config/Color';
+
 
 const slides = [
   {
@@ -13,28 +15,28 @@ const slides = [
     title: 'Quick setup, good defaults',
     text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
     icon: 'md-checkmark',
-    colors: ['#17a2b8','#3bb4c1'],
+    colors: [Color.GREEN,Color.LIGHT_GREEN],
   },
   {
     key: 'somethun1',
     title: 'Super customizable',
     text: 'The component is also super customizable, so you can adapt it to cover your needs and wants.',
     icon: 'md-checkmark',
-    colors: ['#07689f','#4d9fdd'],
+    colors: [Color.BLUE,Color.LIGHT_BLUE],
   },
   {
     key: 'somethun2',
     title: 'No need to buy me beer',
     text: 'Usage is all free',
     icon: 'md-checkmark',
-    colors: ['#ffb677','#facf5a'],
+    colors: [Color.YELLOW,Color.LIGHT_YELLOW],
   },
   {
     key: 'somethun3',
     title: 'No need to buy me beer',
     text: 'Usage is all free',
     icon: 'md-checkmark',
-    colors: ['#ff7e67','#f38181'],
+    colors: [Color.RED,Color.LIGHT_RED],
   }
 ];
 

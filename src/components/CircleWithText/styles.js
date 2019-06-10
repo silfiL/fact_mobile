@@ -1,26 +1,37 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
   circle: {
-    width: width*0.2,
-    height: width*0.2,
-    borderRadius: width*0.2/2,
+    width: Size.WIDTH2,
+    height: Size.WIDTH2,
+    borderRadius: Size.WIDTH1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'  
+    justifyContent: 'center',
   },
   number: {
     fontSize: 20,
+    color: Color.APP_WHITE  
   },
   red: {
-    backgroundColor: 'red',
+    backgroundColor: Color.LIGHT_RED,
   },
   yellow: {
-    backgroundColor: 'yellow',
+    backgroundColor: Color.LIGHT_YELLOW,
   },
   green: {
-    backgroundColor: 'green'
+    backgroundColor: Color.LIGHT_GREEN
+  },
+  display: {
+    alignSelf: 'center',
+    fontFamily: 'SourceSansPro-Regular'
+  },
+  text: {
+    fontFamily: 'SourceSansPro-Regular',
+    marginLeft: 5,
+    color: Color.APP_WHITE  
   }
 })

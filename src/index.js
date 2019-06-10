@@ -1,5 +1,6 @@
 import React from "react";
-import { createStackNavigator, createBottomTabNavigator ,createAppContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IntroSlider from './screens/IntroSlider';
 import Base from './screens/Base';
@@ -35,44 +36,56 @@ import SelfTrainSessions from './screens/SelfTrainSessions';
 import EvaluationForm from './screens/EvaluationForm';
 import EvaluationAnalysis from './screens/EvaluationAnalysis';
 
-const HomepageTab = createBottomTabNavigator(
-  {
-    Diary: { screen: Diary,
+import Color from './config/Color';
+
+const HomepageTab = createMaterialBottomTabNavigator({
+  Diary: { screen: Diary,
       navigationOptions: {
         tabBarLabel:"Diary",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="book" size={30} color={tintColor} />
-        ) }
+          <Icon name="book" size={25} color={tintColor} />
+        ),
+        activeColor: Color.APP_WHITE,  
+        inactiveColor: Color.GREEN,  
+        barStyle: { backgroundColor: Color.LIGHT_GREEN } 
+      }
     },
-    History: { screen: History,
+  History: { screen: History,
       navigationOptions: {
         tabBarLabel:"History",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="history" size={30} color={tintColor} />
-        ) }
+          <Icon name="history" size={25} color={tintColor} />
+        ),
+        activeColor: Color.APP_WHITE,  
+        inactiveColor: Color.BLUE,  
+        barStyle: { backgroundColor: Color.LIGHT_BLUE }
+      }
     },
-    Newsfeed: { screen: Newsfeed,
+  Newsfeed: { screen: Newsfeed,
       navigationOptions: {
         tabBarLabel:"Newsfeed",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="commenting" size={30} color={tintColor} />
-        ) }
-    },
-    Profile: { screen: Profile,
+          <Icon name="commenting" size={25} color={tintColor} />
+        ),
+        activeColor: Color.APP_WHITE,  
+        inactiveColor: Color.YELLOW,  
+        barStyle: { backgroundColor: Color.LIGHT_YELLOW }, 
+      }
+  },
+  Profile: { screen: Profile,
       navigationOptions: {
         tabBarLabel:"Profile",
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="user" size={30} color={tintColor} />
-        ) }
-    }
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: '#42f44b',
-      inactiveTintColor: 'gray',
+          <Icon name="user" size={25} color={tintColor} />
+        )  
+      }
     },
-  }
-);
+}, {
+  initialRouteName: 'Profile',
+  activeColor: Color.APP_WHITE,
+  inactiveColor: Color.RED,
+  barStyle: { backgroundColor: Color.LIGHT_RED },
+});
 
 const rootStack = createStackNavigator({
   IntroSlider: IntroSlider,
@@ -106,7 +119,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'Base',
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 

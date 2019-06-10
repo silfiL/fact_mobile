@@ -1,10 +1,13 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StatusBar } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels';
 import { Button } from '../../components/Button'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export default class ChangePassword extends React.Component{
   back = () => {
@@ -17,9 +20,10 @@ export default class ChangePassword extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} />
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE} title="CHANGE PASSWORD" bgColor={Color.RED}/>
+        <View style={styles.form}>
             <FloatingLabel 
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
@@ -34,10 +38,10 @@ export default class ChangePassword extends React.Component{
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
                 password={true}
-                style={styles.formInput}>Confirm New Password</FloatingLabel>
-            <Button text="SAVE" size="long" onPress={this.doNothing} bgColor="blue" txtColor="white" /> 
+                style={[styles.formInput,styles.below]}>Confirm New Password</FloatingLabel>
+            <Button text="SAVE" size="long" onPress={this.doNothing} bgColor={Color.LIGHT_RED} txtColor={Color.APP_WHITE} /> 
         </View>
-        <Footer />
+        <Footer color={Color.GREEN}/>
       </View>
     )
   }

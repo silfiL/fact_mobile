@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, StatusBar, TextInput } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +9,9 @@ import { CircleWithText } from '../../components/CircleWithText'
 import AIcon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modalbox'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export default class Profile extends React.Component{
   constructor(props){
@@ -50,84 +54,92 @@ export default class Profile extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <View style={{backgroundColor:'grey',padding:10}}>
-            <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
-                <MIcon name="edit" size={24} color="white" />
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.coloredCont}>
+         <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
+                <MIcon name="edit" size={24} color={Color.APP_WHITE} />
             </TouchableOpacity>
-            <View style={{backgroundColor:'white',borderRadius:50,width:100,height:100,alignSelf:'center'}}></View>
-            <Text style={{alignSelf:'center'}}>Name</Text>
-            <Text style={{alignSelf:'center'}}>Underweight</Text>
+            <View style={styles.image}></View>
+            <Text style={styles.name}>Name</Text>
+            <Text style={styles.status}>Underweight</Text>
+        </LinearGradient>
+        <View style={styles.row}>
+            <TouchableOpacity style={styles.buttonInRow} onPress={this.toggleBody}>
+              <IonIcon name="md-body" size={30} color={Color.RED} />
+              <Text style={styles.buttonText}>Body</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonInRow} onPress={this.toggleActivity}>
+              <FaIcon name="line-chart" size={30} color={Color.RED} />
+              <Text style={styles.buttonText}>Activity Level</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonInRow} onPress={this.myActivity}>
+              <FaIcon name="list-alt" size={30} color={Color.RED}/>
+              <Text style={styles.buttonText}>My Activities</Text>
+            </TouchableOpacity>
         </View>
-        <View style={{flexDirection:'row'}}>
-            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',borderColor:'black',borderWidth:1,flex:1}} onPress={this.toggleBody}>
-              <IonIcon name="md-body" size={30} />
-              <Text>Body</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',borderColor:'black',borderWidth:1,flex:1}} onPress={this.toggleActivity}>
-              <FaIcon name="line-chart" size={30} />
-              <Text>Activity Level</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',borderColor:'black',borderWidth:1,flex:1}} onPress={this.myActivity}>
-              <FaIcon name="list-alt" size={30} />
-              <Text>My Activities</Text>
-            </TouchableOpacity>
+        <TouchableHighlight onPress={this.changePass} underlayColor={Color.LIGHTER_GREY}>
+          <View style={styles.longRowButton} >
+            <Text style={styles.longRowText}>Change Password</Text>
+            <AIcon name="right" size={20} color={Color.FONT_GREY} />
+          </View>
+        </TouchableHighlight>
+        <View style={styles.buttonCont}>
+          <Button text="LOG OUT" txtColor={Color.APP_WHITE} bgColor={Color.LIGHT_RED} size="long" onPress={this.logout} />
         </View>
-        <TouchableOpacity style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:12,borderBottomColor:'black',borderBottomWidth:1,alignItems:'center'}} onPress={this.changePass}>
-          <Text>Change Password</Text>
-          <AIcon name="right" size={30} />
-        </TouchableOpacity>
-        <Button text="LOG OUT" txtColor="white" bgColor="blue" size="long" onPress={this.logout} />
         <Modal style={styles.smallModal} coverScreen={true} position="center" isOpen={this.state.isEdit} backdropPressToClose={false}>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+            <View style={[styles.headerModal,{margin: 0}]}>
               <Text style={styles.modalTitle}>EDIT</Text>
               <TouchableOpacity onPress={this.toggleEdit}>
-                <AIcon name="close" size={20} />
+                <AIcon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
-            <View style={{flexDirection:'row',alignItems:'center'}}>
-              <Text>Weight</Text>
-              <TextInput placeholder="40" />
-              <Text>kg</Text>
+            <View style={styles.row}>
+              <Text style={styles.label}>Weight</Text>
+              <TextInput placeholder="40" keyboardType="numeric" style={styles.numInput}/>
+              <Text style={styles.text}>kg</Text>
             </View>
-            <View style={{flexDirection:'row',alignItems:'center'}}>
-              <Text>Height</Text>
-              <TextInput placeholder="162" />
-              <Text>cm</Text>
+            <View style={styles.row}>
+              <Text style={styles.label}>Height</Text>
+              <TextInput placeholder="162" keyboardType="numeric" style={styles.numInput}/>
+              <Text style={styles.text}>cm</Text>
             </View>
-            <TouchableOpacity style={{alignSelf:'flex-end'}}>
-              <Text>OK</Text>
+            <TouchableOpacity>
+              <Text style={styles.modalButton}>OK</Text>
             </TouchableOpacity>
         </Modal>
         <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo} 
           coverScreen={true}>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+            <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>BODY INFORMATION</Text>
               <TouchableOpacity onPress={this.toggleBody}>
-                <AIcon name="close" size={24} />
+                <AIcon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
-            <View style={{borderRadius:10,borderWidth:1,padding:10,flexDirection:'row',justifyContent:'space-between'}}>
-              <View>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <Text style={{fontWeight:'bold',width:90}}>Weight :</Text>
-                  <Text>42 kg</Text>
+            <View style={styles.roundedBox}>
+              <View style={styles.half}>
+                <View style={[styles.row,styles.evenly]}>
+                  <Text style={styles.label}>Weight</Text>
+                  <Text style={styles.text}>:</Text>
+                  <Text style={[styles.text,styles.info]}>42 kg</Text>
                 </View>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <Text style={{fontWeight:'bold',width:90}}>Height :</Text>
-                  <Text>162 cm</Text>
+                <View style={[styles.row,styles.evenly]}>
+                  <Text style={styles.label}>Height</Text>
+                  <Text style={styles.text}>:</Text>
+                  <Text style={[styles.text,styles.info]}>162 cm</Text>
                 </View>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <Text style={{fontWeight:'bold',width:90}}>BMI :</Text>
-                  <Text>19.4</Text>
+                <View style={[styles.row,styles.evenly]}>
+                  <Text style={styles.label}>BMI</Text>
+                  <Text style={styles.text}>:</Text>
+                  <Text style={[styles.text,styles.info]}>19.4</Text>
                 </View>
               </View>
               <TouchableOpacity onPress={this.toggleEdit}>
-                <MIcon name="edit" size={20} color="black" />
+                <MIcon name="edit" size={18} color={Color.RED} />
               </TouchableOpacity>
             </View>
-            <Text style={{fontWeight:'bold'}}>Nutritions</Text>
-            <View style={{flexDirection:'row',alignItems:'center'}}>
+            <Text style={[styles.label,styles.belowMargin]}>Nutritions</Text>
+            <View style={[styles.row,styles.evenly]}>
               <CircleWithText number="70" type="carb" />
               <CircleWithText number="20" type="pro" />
               <CircleWithText number="50" type="fat" />
@@ -135,16 +147,20 @@ export default class Profile extends React.Component{
         </Modal>
         <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.activityInfo} 
           coverScreen={true}>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+            <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>ACTIVITY LEVEL</Text>
               <TouchableOpacity onPress={this.toggleActivity}>
-                <AIcon name="close" size={24} />
+                <AIcon name="close" size={20} />
               </TouchableOpacity>
             </View>
-            <Text>LOW ACTIVITY (SEDENTARY)</Text>
-            <Text>Are you sure you want to log out your account? loren ipsum adkslsadja dsfksldjf dsfkjdlf eiewr. sdfksalfdaslsdkfj sdfksdfjslfjsofsi </Text>
-            <View style={{borderRadius:10,borderWidth:1,padding:20}}>
-              <Text>sddddddddddddddddddddddddddddddddddddddddddddd</Text>
+            <Text style={[styles.bold,styles.belowMargin]}>LOW ACTIVITY (SEDENTARY)</Text>
+            <View style={[styles.row,styles.belowMargin]}>
+              <View style={styles.square} />
+              <Text style={[styles.text,styles.paragraph]}>Are you sure you want to log out your account? loren ipsum adkslsadja dsfksldjf dsfkjdlf eiewr. sdfksalfdaslsdkfj sdfksdfjslfjsofsi </Text>
+            </View>
+            <View style={[styles.roundedBox,styles.vertical]}>
+              <Text style={styles.bold}>Advices :</Text>
+              <Text style={styles.text}>sddddddddddddddddddddddddddddddddddddddddddddd</Text>
             </View>
         </Modal>
         <Modal style={styles.smallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false}>

@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     },
     labelInput: {
         color: Color.APP_WHITE,
-        fontFamily: 'CrimsonText-Regular'
+        fontFamily: 'SourceSansPro-Bold'
     },
     formInput: {    
         borderBottomWidth: 1.5, 
@@ -21,7 +21,8 @@ export const styles = StyleSheet.create({
     input: {
         borderWidth: 0,
         color: Color.APP_WHITE,
-        fontFamily: 'CrimsonText-Regular',
+        fontSize: 16,
+        fontFamily: 'SourceSansPro-Regular'
     },
     below: {
       marginBottom: Size.HEIGHT1

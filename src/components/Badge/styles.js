@@ -1,20 +1,21 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
     badge: {
-        padding: width*0.012,
-        backgroundColor: 'black',
-        opacity: 0.5,
+        padding: Size.WIDTH*0.012,
+        backgroundColor: Color.LIGHT_GREEN,
         borderRadius: 20,
-        width: width*0.15,
+        width: Size.WIDTH*0.15,
         alignItems:'center',
         justifyContent: 'center',
-        marginRight: width*0.02
+        marginRight: Size.WIDTH*0.02
     },
     badgeText: {
-        fontSize: height*0.018,
-        color: 'white'
+        fontSize: 12,
+        color: Color.APP_WHITE,
+        fontFamily: 'SourceSansPro-Regular'
     }
 })

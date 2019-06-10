@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StatusBar } from 'react-native'
 import Modal from 'react-native-modalbox'
 import Icon from 'react-native-vector-icons/AntDesign'
 import FloatingLabel from 'react-native-floating-labels'
@@ -7,6 +7,8 @@ import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { GridButton } from '../../components/GridButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
 
 export default class AddFood extends React.Component{
   constructor(props){
@@ -31,24 +33,28 @@ export default class AddFood extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <View style={{backgroundColor:'yellow',marginBottom:20}}>
-          <HeaderBackButton title="LUNCH" onPressBack={this.back} />
-          <TextInput placeholder="Search Food" style={{borderRadius:30,borderWidth:1,backgroundColor:'white'}} onFocus={this.goToSearch}/>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.GREEN} barStyle="dark-content" />
+        <View style={styles.header}>
+          <HeaderBackButton title="LUNCH" onPressBack={this.back} iconColor={Color.APP_WHITE} />
+          <TextInput placeholder="Search Food" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onFocus={this.goToSearch}/>
         </View>
-        <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-          <GridButton text="Recent" iconName="history" bgColor="grey"/>
-          <GridButton text="Categories" iconName="format-list-bulleted" bgColor="grey"/>
-        </View>
-        <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-          <GridButton text="Meal" iconName="food" bgColor="grey"/>
-          <GridButton text="Custom" iconName="plus" bgColor="grey" onPress={this.toggleModal}/>
+        <View style={styles.center}>
+          <View style={styles.row}>
+            <GridButton text="Recent" iconName="history" bgColor="#22747c" iconColor={Color.LIGHT_GREEN}/>
+            <GridButton text="Categories" iconName="format-list-bulleted" bgColor="#e8aa00" iconColor={Color.LIGHT_YELLOW}/>
+          </View>
+          <View style={styles.row}>
+            <GridButton text="Meal" iconName="food" bgColor={Color.BLUE} iconColor={Color.LIGHT_BLUE}/>
+            <GridButton text="Custom" iconName="plus" bgColor="#d65640" iconColor="#f9917f" onPress={this.toggleModal}/>
+          </View>
+          <Footer color={Color.FONT_GREY}/>
         </View>
         <Modal style={styles.modal} position="center" isOpen={this.state.isOpen}>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+            <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>ADD CUSTOM FOOD</Text>
               <TouchableOpacity onPress={this.toggleModal}>
-                <Icon name="close" size={24} />
+                <Icon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
             <FloatingLabel 
@@ -71,16 +77,18 @@ export default class AddFood extends React.Component{
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
                 style={styles.formInput}>Fat</FloatingLabel>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-evenly',paddingHorizontal:20}}>
-              <TouchableOpacity>
-                <Text>SAVE</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text>CANCEL</Text>
-              </TouchableOpacity>
+            <View style={styles.blankRow} >
+              <View style={styles.blank}/>
+              <View style={styles.modalButtonRow}>
+                <TouchableOpacity>
+                  <Text style={styles.modalButton}>SAVE</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text style={styles.modalButton}>CANCEL</Text>
+                </TouchableOpacity>
+              </View>
             </View>
         </Modal>
-        <Footer />
       </View>
     )
   }

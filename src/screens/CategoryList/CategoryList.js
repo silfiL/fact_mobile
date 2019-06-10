@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, FlatList} from 'react-native'
+import { View, Text, FlatList, StatusBar} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { SimpleListItem } from '../../components/SimpleListItem'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
 
 const categoryArr = [{
   id: '1',
@@ -47,13 +49,14 @@ export default class CategoryList extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} title="CATEGORIES" bgColor="blue"/>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.LIGHT_BLUE} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.LIGHT_BLUE} iconColor={Color.APP_WHITE} title="CATEGORIES"/>
         <FlatList
-          data={this.state.data}
-          keyExtractor={item=>item.id}
-          renderItem={this._renderItem}
-        />
+            data={this.state.data}
+            keyExtractor={item=>item.id}
+            renderItem={this._renderItem}
+          />
       </View>
     )
   }

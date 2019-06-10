@@ -22,8 +22,8 @@ export default class Base extends React.Component{
           <StatusBar backgroundColor={Color.GREEN} />
           <Title size="large" />
           <View style={styles.buttonContainer}>
-            <Button text="SIGN UP" size="long" onPress={this.toSignUp} bgColor={Color.TRANSPARENT} txtColor={Color.BG_GREY} border={Color.BG_GREY} />
-            <Button text="LOGIN" size="long" onPress={this.toLogin} bgColor={Color.BG_GREY} txtColor={Color.LIGHT_GREEN} /> 
+            <Button text="SIGN UP" size="long" onPress={this.toSignUp} bgColor={Color.TRANSPARENT} txtColor={Color.APP_WHITE} border={Color.APP_WHITE} />
+            <Button text="LOGIN" size="long" onPress={this.toLogin} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} /> 
           </View>
           <Footer />
       </LinearGradient>

@@ -1,25 +1,53 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 20
+        flex: 1,
+        backgroundColor: Color.APP_WHITE,
+    },
+    form: {
+      padding: Size.WIDTH1*0.5,
     },
     labelInput: {
-        color: '#673AB7',
+        color: Color.FONT_GREY,
+        fontFamily: 'SourceSansPro-Bold'
     },
     formInput: {    
         borderBottomWidth: 1.5, 
-        marginLeft: 20,
-        borderColor: '#333',       
+        borderColor: Color.LIGHT_GREEN,
     },
     input: {
-        borderWidth: 0
+        borderWidth: 0,
+        color: Color.FONT_GREY,
+        fontSize: 16,
+        fontFamily: 'SourceSansPro-Regular'
     },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        padding: 10
+    row: {
+      marginBottom: Size.HEIGHT1*0.2
+    },
+    label: {
+      fontFamily: 'SourceSansPro-Bold',
+      color: Color.FONT_GREY,
+      fontSize: 18,
+    },
+    textInput: {
+      borderBottomColor: Color.LIGHT_GREEN,
+      borderBottomWidth: 1,
+      fontFamily: 'SourceSansPro-Regular',
+      fontSize: 16,
+      color: Color.FONT_GREY
+    },
+    inline: {
+      flexDirection: 'row',
+      width: Size.WIDTH5,
+      justifyContent: 'space-between'
+    },
+    radioLabel: {
+      fontFamily: 'SourceSansPro-Regular',
+      color: Color.FONT_GREY,
+      fontSize: 14,
     }
 })

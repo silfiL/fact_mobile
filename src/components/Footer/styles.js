@@ -12,6 +12,6 @@ export const styles = StyleSheet.create({
         paddingVertical: Size.HEIGHT1*0.1,
         alignSelf: 'center',
         color: Color.APP_WHITE,
-        fontFamily: 'CrimsonText-Regular'
+        fontFamily: 'SourceSansPro-Regular'
     }
 })

@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'LuckiestGuy-Regular',
     fontSize: Size.HEIGHT*0.15,
     color: Color.APP_WHITE,
-    marginTop: Size.HEIGHT2
+    marginTop: Size.HEIGHT2,
   },
   smallTitle: {
     alignSelf: 'center',

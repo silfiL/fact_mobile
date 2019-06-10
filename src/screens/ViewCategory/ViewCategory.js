@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, FlatList} from 'react-native'
+import { View, Text, FlatList, StatusBar} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { FoodItem } from '../../components/FoodItem'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
 
 const foodArr = [{
   id: '1',
@@ -50,7 +52,7 @@ export default class ViewCategory extends React.Component{
   _renderItem = ({item}) => (
     <FoodItem
       id={item.id}
-      onPressItem={this._onPressItem}
+      onPressItem={()=>this._onPressItem(item.id)}
       name={item.name}
       calorie={item.calorie}
       portion={item.portion}
@@ -59,8 +61,9 @@ export default class ViewCategory extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} title="CATEGORY A" bgColor="blue"/>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.LIGHT_BLUE} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.LIGHT_BLUE} iconColor={Color.APP_WHITE} title="CATEGORY A"/>
         <FlatList
           data={this.state.data}
           keyExtractor={item=>item.id}
