@@ -163,21 +163,24 @@ export default class Profile extends React.Component{
               <Text style={styles.text}>sddddddddddddddddddddddddddddddddddddddddddddd</Text>
             </View>
         </Modal>
-        <Modal style={styles.smallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false}>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+        <Modal style={styles.extraSmallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false}>
+            <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>LOG OUT</Text>
               <TouchableOpacity onPress={this.logout}>
-                <AIcon name="close" size={24} />
+                <AIcon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
-            <Text>Are you sure you want to log out your account?</Text>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-evenly',paddingHorizontal:20}}>
-              <TouchableOpacity>
-                <Text>NO</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text>YES</Text>
-              </TouchableOpacity>
+            <Text style={styles.text}>Are you sure you want to log out your account?</Text>
+            <View style={styles.blankRow} >
+              <View style={styles.blank}/>
+              <View style={styles.modalButtonRow}>
+                <TouchableOpacity>
+                  <Text style={styles.modalButton}>NO</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text style={styles.modalButton}>YES</Text>
+                </TouchableOpacity>
+              </View>
             </View>
         </Modal>
       </View>

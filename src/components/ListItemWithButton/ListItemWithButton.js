@@ -15,7 +15,7 @@ export default class ListItemWithButton extends React.Component {
             <Text style={styles.secondLine}>{this.props.secondLine}</Text>
           </View>
           <TouchableOpacity onPress={this.props.buttonPress} style={styles.button}>
-            <Icon name={this.props.iconName} size={24} color={Color.LIGHT_BLUE} />
+            <Icon name={this.props.iconName} size={24} color={this.props.iconColor} />
           </TouchableOpacity>
         </View>
     );

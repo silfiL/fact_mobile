@@ -150,5 +150,26 @@ export const styles = StyleSheet.create({
     vertical: {
       flexDirection: 'column',
       justifyContent: 'center'
-    }
+    },
+    blankRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    },
+    modalButtonRow: {
+      width: Size.WIDTH3,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: Size.WIDTH1*0.2,
+      marginVertical: Size.HEIGHT1*0.2
+    },
+    blank: {
+      width: Size.WIDTH5
+    },
+    extraSmallModal : {
+      padding: Size.WIDTH*0.05,
+      width: Size.WIDTH9,
+      height: Size.HEIGHT2
+    },
 })

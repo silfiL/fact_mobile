@@ -1,10 +1,12 @@
 import React from 'react'
-import { View, FlatList, Text} from 'react-native'
+import { View, FlatList, Text, StatusBar} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { ListItemWithButton } from '../../components/ListItemWithButton'
 import { FloatingButton } from '../../components/FloatingButton'
 import { styles } from './styles'
+
+import Color from '../../config/Color'
 
 const mealArr = [{
   id: '1',
@@ -29,7 +31,7 @@ export default class Meal extends React.Component{
   }
 
   _onLongPress = (id) => {
-    alert("test",id)
+    this.props.navigation.navigate('ViewMeal',{mealId:id})
   };
 
   _renderItem = ({item}) => (
@@ -39,6 +41,7 @@ export default class Meal extends React.Component{
       secondLine={item.calorie}
       buttonPress={this._onLongPress}
       iconName="info"
+      iconColor={Color.LIGHT_BLUE}
     />
   );
 
@@ -48,12 +51,14 @@ export default class Meal extends React.Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <HeaderBackButton onPressBack={this.back} title="MEAL" bgColor="blue"/>
+      <View style={styles.container}>
+        <StatusBar backgroundColor={Color.BLUE} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} title="MEAL" bgColor={Color.BLUE} iconColor={Color.APP_WHITE}/>
         {this.state.data.length==0 ?
-        <View style={{justifyContent:'center',flex:1,alignItems:'center'}}>
-            <Icon name="food" size={80} />
-            <Text style={{alignSelf:'center'}}>Currently you have no meal data. Try to create a new one.</Text>
+        <View style={styles.centerCont}>
+            <Icon name="food" size={80} color={Color.FONT_GREY} />
+            <Text style={styles.text}>Currently you have no meal data.</Text>
+            <Text style={styles.text}>Try to create a new one.</Text>
         </View>:
         <FlatList
           data={this.state.data}
@@ -61,7 +66,7 @@ export default class Meal extends React.Component{
           renderItem={this._renderItem}
         />
         }
-        <FloatingButton iconName="plus" onPress={this.createMeal}/>
+        <FloatingButton iconName="plus" onPress={this.createMeal} bgColor={Color.BLUE}/>
       </View>
     )
   }

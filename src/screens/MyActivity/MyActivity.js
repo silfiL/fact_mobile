@@ -49,14 +49,14 @@ export default class MyActivity extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.LIGHT_BLUE} barStyle="dark-content" />
-        <HeaderBackButton onPressBack={this.back} bgColor={Color.LIGHT_BLUE} iconColor={Color.APP_WHITE} title="MY ACTIVITIES"/>
+        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.RED} iconColor={Color.APP_WHITE} title="MY ACTIVITIES"/>
         <FlatList
             data={this.state.data}
             keyExtractor={item=>item.id}
             renderItem={this._renderItem}
           />
-        <FloatingButton iconName="plus" onPress={this.addActivity} bgColor={Color.LIGHT_BLUE}/>
+        <FloatingButton iconName="plus" onPress={this.addActivity} bgColor={Color.RED}/>
       </View>
     )
   }

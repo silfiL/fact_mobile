@@ -30,13 +30,13 @@ export default class AddNewActivity extends React.Component{
   }
 
   _onPressItem = (id) => {
-    console.log("test",id)
+    this.props.navigation.navigate('SelfTrain',{actId:id})
   };
 
   _renderItem = ({item}) => (
     <SimpleListItem
       id={item.id}
-      onPressItem={this._onPressItem}
+      onPressItem={()=>this._onPressItem(item.id)}
       title={item.name}
     />
   );
@@ -44,8 +44,8 @@ export default class AddNewActivity extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.LIGHT_BLUE} barStyle="dark-content" />
-        <HeaderBackButton onPressBack={this.back} bgColor={Color.LIGHT_BLUE} iconColor={Color.APP_WHITE} title="ADD NEW ACTIVITY"/>
+        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.RED} iconColor={Color.APP_WHITE} title="ADD NEW ACTIVITY"/>
         <Text style={styles.text}>Choose activity you want to add</Text>
         <FlatList
           data={this.state.data}

@@ -11,6 +11,6 @@ export const styles = StyleSheet.create({
     text: {
         fontFamily: 'SourceSansPro-Regular',
         fontSize: 18,
-        padding: Size.WIDTH1*0.2
+        padding: Size.WIDTH1*0.25
     }
 })

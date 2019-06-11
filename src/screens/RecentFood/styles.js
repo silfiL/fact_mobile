@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
       fontFamily: 'SourceSansPro-Bold',
       fontSize : 18,
       padding: Size.WIDTH1*0.1,
-      backgroundColor: Color.BLUE,
+      backgroundColor: Color.LIGHT_GREEN,
       color: Color.APP_WHITE,
    },
   container: {

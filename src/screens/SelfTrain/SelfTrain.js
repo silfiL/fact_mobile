@@ -35,6 +35,10 @@ export default class SelfTrain extends React.Component{
     this.props.navigation.goBack()
   }
 
+  done = () => {
+    this.props.navigation.navigate('SelfTrainSessions')
+  }
+
   render(){
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.container}>
@@ -66,7 +70,7 @@ export default class SelfTrain extends React.Component{
               <Icon name="check-circle" size={100} color={Color.APP_WHITE} />}
           {this.state.timerDone &&
             <View>
-              <Button text="DONE" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} size="short" />
+              <Button text="DONE" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} size="short" onPress={this.done}/>
               <Button text="RESET" bgColor={Color.TRANSPARENT} border={Color.APP_WHITE} txtColor={Color.APP_WHITE} onPress={this.reset} size="short" />
             </View>
           }

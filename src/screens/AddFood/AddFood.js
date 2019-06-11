@@ -31,6 +31,18 @@ export default class AddFood extends React.Component{
     this.props.navigation.navigate('SearchFood')
   }
 
+  recent = () => {
+    this.props.navigation.navigate('RecentFood')
+  }
+
+  meal = () => {
+    this.props.navigation.navigate('Meal')
+  }
+
+  categories = () => {
+    this.props.navigation.navigate('CategoryList')
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -41,11 +53,11 @@ export default class AddFood extends React.Component{
         </View>
         <View style={styles.center}>
           <View style={styles.row}>
-            <GridButton text="Recent" iconName="history" bgColor="#22747c" iconColor={Color.LIGHT_GREEN}/>
-            <GridButton text="Categories" iconName="format-list-bulleted" bgColor="#e8aa00" iconColor={Color.LIGHT_YELLOW}/>
+            <GridButton text="Recent" iconName="history" bgColor="#22747c" iconColor={Color.LIGHT_GREEN} onPress={this.recent}/>
+            <GridButton text="Categories" iconName="format-list-bulleted" bgColor="#e8aa00" iconColor={Color.LIGHT_YELLOW} onPress={this.categories}/>
           </View>
           <View style={styles.row}>
-            <GridButton text="Meal" iconName="food" bgColor={Color.BLUE} iconColor={Color.LIGHT_BLUE}/>
+            <GridButton text="Meal" iconName="food" bgColor={Color.BLUE} iconColor={Color.LIGHT_BLUE} onPress={this.meal}/>
             <GridButton text="Custom" iconName="plus" bgColor="#d65640" iconColor="#f9917f" onPress={this.toggleModal}/>
           </View>
           <Footer color={Color.FONT_GREY}/>
