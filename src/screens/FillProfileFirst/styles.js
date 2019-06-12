@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
       fontSize: 18
     },
     input: {
-      borderBottomColor: Color.GREEN,
+      borderBottomColor: Color.LIGHT_GREEN,
       borderBottomWidth: 1,
       fontFamily: 'SourceSansPro-Regular',
       fontSize: 16

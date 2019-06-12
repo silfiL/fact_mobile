@@ -31,7 +31,7 @@ export default class ResetPassword extends React.Component{
       <View style={styles.container}>
         <StatusBar backgroundColor={Color.BG_GREY} />
         <HeaderBackButton onPressBack={this.back} iconColor={Color.GREEN}/>
-        <View style={{marginTop:Size.HEIGHT1}}>
+        <View style={{marginTop:Size.HEIGHT1*0.5}}>
           <Title size="small" titleColor={Color.GREEN}/>
         </View>
         <View style={styles.form}>
@@ -49,7 +49,7 @@ export default class ResetPassword extends React.Component{
                 inputStyle={styles.input}
                 password={true}
                 style={[styles.formInput,styles.below]}>Re-enter New Password</FloatingLabel>
-            <Button text="SAVE" size="long" onPress={this.save} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} /> 
+            <Button text="SAVE" size="long" onPress={this.save} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} /> 
         </View>
         <Footer color={Color.GREEN}/>
       </View>

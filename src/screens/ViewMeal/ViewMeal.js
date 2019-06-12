@@ -35,20 +35,20 @@ export default class ViewMeal extends React.Component{
             <Text style={styles.label}>Nutritions Info</Text>
             <View style={styles.infoContainer}>
               <View style={[styles.row,styles.rowGroup]}>
-                <Text style={[styles.label,styles.white]}>Calories</Text>
-                <Text style={[styles.text,styles.white]}>520 kcal</Text>
+                <Text style={styles.label}>Calories</Text>
+                <Text style={styles.text}>520 kcal</Text>
               </View>
               <View style={[styles.row,styles.rowGroup]}>
-                <Text style={[styles.label,styles.white]}>Carbs</Text>
-                <Text style={[styles.text,styles.white]}>62 g</Text>
+                <Text style={styles.label}>Carbs</Text>
+                <Text style={styles.text}>62 g</Text>
               </View>
               <View style={[styles.row,styles.rowGroup]}>
-                <Text style={[styles.label,styles.white]}>Protein</Text>
-                <Text style={[styles.text,styles.white]}>30 g</Text>
+                <Text style={styles.label}>Protein</Text>
+                <Text style={styles.text}>30 g</Text>
               </View>
               <View style={[styles.row,styles.rowGroup]}>
-                <Text style={[styles.label,styles.white]}>Fat</Text>
-                <Text style={[styles.text,styles.white]}>40 g</Text>
+                <Text style={styles.label}>Fat</Text>
+                <Text style={styles.text}>40 g</Text>
               </View>
             </View>
           </View>

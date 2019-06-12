@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
       fontFamily: 'SourceSansPro-Bold'
     },
     input: {
-      borderBottomWidth: 1,
+      borderBottomWidth: 1.5,
       fontSize: 18,
       borderBottomColor: Color.LIGHT_GREEN,
       color: Color.FONT_GREY,

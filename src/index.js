@@ -37,6 +37,7 @@ import EvaluationForm from './screens/EvaluationForm';
 import EvaluationAnalysis from './screens/EvaluationAnalysis';
 
 import Color from './config/Color';
+import SearchFoodMeal from "./screens/SearchFoodMeal";
 
 const HomepageTab = createMaterialBottomTabNavigator({
   Diary: { screen: Diary,
@@ -106,6 +107,7 @@ const rootStack = createStackNavigator({
   Meal: Meal,
   CreateMeal: CreateMeal,
   ViewMeal: ViewMeal,
+  SearchFoodMeal: SearchFoodMeal,
   AddInMeal: AddInMeal,
   ViewArticle: ViewArticle,
   TrackActivity: TrackActivity,
@@ -119,7 +121,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'Homepage',
+  initialRouteName: 'EvaluationForm',
   headerMode: 'none'
 });
 

@@ -23,7 +23,7 @@ export default class FillProfileAnalysis extends React.Component{
                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaderfer
                 </Text>
-                 <Button text="START" size="short" onPress={this.next} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} />
+                 <Button text="START" size="short" onPress={this.next} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />
             </View>
         )
     }

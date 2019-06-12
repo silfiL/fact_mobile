@@ -1,21 +1,30 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 20
+        flex: 1,
+        backgroundColor: Color.APP_WHITE
+    },  
+    form: {
+        padding: Size.WIDTH1*0.5
     },
     labelInput: {
-        color: '#673AB7',
+        color: Color.FONT_GREY,
+        fontFamily: 'SourceSansPro-Bold'
     },
     formInput: {    
         borderBottomWidth: 1.5, 
-        marginLeft: 20,
-        borderColor: '#333',       
+        borderColor: Color.LIGHT_BLUE,
+        marginBottom: Size.HEIGHT*0.02
     },
     input: {
-        borderWidth: 0
+        borderWidth: 0,
+        color: Color.FONT_GREY,
+        fontSize: 16,
+        fontFamily: 'SourceSansPro-Regular'
     },
     row: {
         flexDirection: 'row',
@@ -23,18 +32,27 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     label: {
-        fontWeight: 'bold',
-        marginRight: width*0.1
+        fontSize: 17,
+        fontFamily: 'SourceSansPro-Bold',
+        marginRight: Size.WIDTH1,
+        color: Color.FONT_GREY,
+    },
+    text: {
+        fontSize: 17,
+        fontFamily: 'SourceSansPro-Regular',
+        color: Color.FONT_GREY
     },
     rowGroup: {
-        marginBottom: height*0.02
+        marginBottom: Size.HEIGHT*0.02
     },
     infoContainer: {
-        padding: width*0.1,
-        borderRadius: 40,
-        borderWidth: 2,
-        borderColor: 'grey',
-        backgroundColor: 'yellow',
-        opacity: 0.8
-    }
+        justifyContent: 'center',
+        marginVertical: Size.HEIGHT1*0.2,
+        padding: Size.WIDTH1*0.4,
+        paddingBottom: 0,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: Color.BLUE,
+        backgroundColor: Color.TRANSPARENT,
+    },
 })

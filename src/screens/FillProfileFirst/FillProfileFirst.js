@@ -63,7 +63,7 @@ export default class FillProfileFirst extends React.Component{
                   </View>
                 </View>
               </View>
-              <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} />
+              <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />
             </View>
         )
     }

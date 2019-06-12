@@ -38,9 +38,6 @@ export const styles = StyleSheet.create({
       borderRadius: 20,
       borderWidth: 1,
       borderColor: Color.BLUE,
-      backgroundColor: Color.LIGHT_BLUE,
+      backgroundColor: Color.TRANSPARENT,
     },
-    white: {
-      color: Color.APP_WHITE
-    }
 })

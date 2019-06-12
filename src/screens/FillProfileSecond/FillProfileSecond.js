@@ -49,7 +49,7 @@ export default class FillProfileSecond extends React.Component{
                     </View>
                   </RadioButton>
               </RadioGroup>
-              <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} />
+              <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />
             </View>
         )
     }

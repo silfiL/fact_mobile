@@ -43,7 +43,7 @@ export default class SelfTrainSessions extends React.Component{
       secondLine={item.time}
       buttonPress={()=>this._onLongPress(item.date)}
       iconName="trash"
-      iconColor={Color.RED}
+      iconColor={Color.LIGHT_RED}
     />
   );
 

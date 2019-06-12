@@ -21,7 +21,7 @@ export default class ForgetPassword extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.BG_GREY} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
         <HeaderBackButton onPressBack={this.back} iconColor={Color.GREEN}/>
         <View style={{marginTop:Size.HEIGHT1}}>
           <Title size="small" titleColor={Color.GREEN}/>
@@ -31,7 +31,7 @@ export default class ForgetPassword extends React.Component{
               <Text style={styles.label}>Please write down your email below</Text>
               <TextInput placeholder="Email Address" style={styles.input} placeholderTextColor={Color.FONT_GREY} />
             </View>
-            <Button text="SEND RESET LINK" size="long" onPress={this.sendReset} bgColor={Color.GREEN} txtColor={Color.APP_WHITE} /> 
+            <Button text="SEND RESET LINK" size="long" onPress={this.sendReset} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} /> 
         </View>
         <Footer color={Color.GREEN}/>
       </View>
