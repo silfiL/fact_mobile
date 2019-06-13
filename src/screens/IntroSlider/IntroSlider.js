@@ -8,7 +8,6 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import { styles } from './styles';
 import Color from '../../config/Color';
 
-
 const slides = [
   {
     key: 'somethun',
@@ -67,16 +66,15 @@ export default class IntroSlider extends React.Component {
       </View>
     );
   }
-  _renderItem = props => (
+  _renderItem = (props) => (
     <LinearGradient
       style={[styles.mainContent, {
         width: props.width,
         height: props.height,
       }]}
       colors={props.colors}
-      start={{x: 0, y: .1}} end={{x: .1, y: 1}}
-    >
-      <Ionicons style={{ backgroundColor: 'transparent' }} name={props.icon} size={200} color="white" />
+      start={{x: 0, y: .1}} end={{x: .1, y: 1}}>
+      <Ionicons style={{ backgroundColor: 'transparent' }} name={props.icon} size={200} color={Color.APP_WHITE} />
       <View>
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.text}>{props.text}</Text>

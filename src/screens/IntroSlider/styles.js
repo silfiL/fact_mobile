@@ -1,4 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet  } from 'react-native';
+
+import Color from '../../config/Color'
+import Size from '../../config/Size'
+
 
 export const styles = StyleSheet.create({
   mainContent: {
@@ -11,14 +15,16 @@ export const styles = StyleSheet.create({
     height: 320,
   },
   text: {
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: Color.APP_WHITE,
     backgroundColor: 'transparent',
     textAlign: 'center',
+    fontFamily: 'SourceSansPro-Regular',
     paddingHorizontal: 16,
   },
   title: {
+    fontFamily: 'SourceSansPro-Regular',
     fontSize: 22,
-    color: 'white',
+    color: Color.APP_WHITE,
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: 16,
@@ -28,8 +34,8 @@ export const styles = StyleSheet.create({
     height: 45
   },
   btnText: {
-    color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'SourceSansPro-Bold',
+    color: Color.APP_WHITE,
     fontSize: 16
   }
 });

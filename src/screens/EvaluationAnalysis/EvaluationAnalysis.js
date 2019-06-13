@@ -1,43 +1,17 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { PieChart } from 'react-native-chart-kit'
 import Swiper from 'react-native-swiper';
 import { MyProgressBar } from '../../components/MyProgressBar';
 
-const styles = StyleSheet.create({
-  wrapper: {
-  },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-    alignSelf: 'center'
-  }
-})
+import {styles} from './styles'
+import Color from '../../config/Color'
 
 const data = [
   { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
@@ -57,15 +31,17 @@ const chartConfig = {
 export default class EvaluationAnalysis extends Component {
   render(){    
     return (
-      <Swiper style={styles.wrapper} showsButtons={false} loop={false}>
-        <View style={styles.slide1}>
+      <Swiper style={styles.wrapper} showsButtons={false} loop={false} activeDotColor={Color.LIGHT_GREEN} dotColor={Color.LIGHT_GREY}>
+        <View style={styles.slide}>
+          <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
           <Text style={styles.text}>Congratulations!!</Text>
-          <Text style={{color:'white'}}>You have reached your target</Text>
-          <Text style={{fontWeight:'bold',color:'white'}}>"Ideal Body Weight"</Text>
+          <Text>You have reached your target</Text>
+          <Text style={{fontWeight:'bold'}}>"Ideal Body Weight"</Text>
           <Icon name="trophy" size={100} />
           <Text style={{fontSize:12}}>Hard work pays off</Text>
         </View>
-        <View style={styles.slide2}>
+        <View style={styles.slide}>
+          <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
           <Text style={styles.text}>Here is review of your</Text>
           <Text style={styles.text}>1-month Calorie Intake</Text>
           <PieChart
@@ -80,7 +56,8 @@ export default class EvaluationAnalysis extends Component {
           <Text>Advice</Text>
           <Text>loren ipsmum blada bks sdfsdl df ddddddddddddddddddddddf dfd</Text>
         </View>
-        <View style={styles.slide3}>
+        <View style={styles.slide}>
+          <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
           <Text style={styles.text}>Here is review of your</Text>
           <Text style={styles.text}>1-month Burnt Calorie</Text>
           <PieChart
@@ -95,7 +72,8 @@ export default class EvaluationAnalysis extends Component {
           <Text>Advice</Text>
           <Text>loren ipsmum blada bks sdfsdl df ddddddddddddddddddddddf dfd</Text>
         </View>
-        <View style={styles.slide1}>
+        <View style={styles.slide}>
+          <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
           <Text style={styles.text}>Here is review of your</Text>
           <Text style={styles.text}>1-month Activity Level</Text>
           <Text>Activity Level</Text>
