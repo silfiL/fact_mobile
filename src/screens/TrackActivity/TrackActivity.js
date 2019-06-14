@@ -1,8 +1,13 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, StatusBar } from 'react-native'
 import { Button } from '../../components/Button'
 import { Stopwatch } from 'react-native-stopwatch-timer'
 import { RowThreeListItem } from '../../components/RowThreeListItem'
+import { HeaderBackButton } from '../../components/HeaderBackButton'
+import LinearGradient from 'react-native-linear-gradient'
+import { styles } from './styles'
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 const resultArr = [{
   id: '1',
@@ -46,50 +51,58 @@ export default class TrackActivity extends React.Component{
     />
   );
 
+  back = () => {
+    this.props.navigation.goBack()
+  }
+
   render(){
     return(
-      <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
-        {this.state.showButton &&
-        <View>
-          <Text>Press the button below to start tracking your activity</Text>
-          <Button text="START" bgColor="blue" txtColor="white" onPress={this.startStopwatch} size="short" />
-        </View>
-        }
-        {this.state.stopwatchStart &&
-        <View>
-          <Text>We're tracking your activity...</Text>
-          <Stopwatch laps start={this.state.stopwatchStart}
-            reset={this.state.stopwatchReset}
-            options={options}
-            getTime={this.getFormattedTime} />
-          <Button text="STOP" bgColor="blue" txtColor="white" onPress={this.stopStopwatch} size="short" />
-        </View>
-        }
-        {this.state.stopwatchStop &&
-        <View style={{alignItems:'center'}}>
-          <Text>Tracking Finished</Text>
-          <Text>RESULT</Text>
-          <FlatList
-            data={this.state.data}
-            keyExtractor={item=>item.id}
-            renderItem={this._renderItem}
-          />
-        </View>}
-      </View>
+      <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
+        <StatusBar backgroundColor={Color.GREEN} barStyle="dark-content" />
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.TRANSPARENT} iconColor={Color.APP_WHITE}/> 
+         {this.state.showButton &&
+          <View style={styles.centerCont}>
+            <Text style={styles.text}>Press the button below to start</Text>
+            <Text style={[styles.text,styles.below]}>tracking your activity</Text>
+            <Button text="START" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} onPress={this.startStopwatch} size="short" />
+          </View>
+          }
+          {this.state.stopwatchStart &&
+          <View style={styles.centerCont}>
+            <Text style={[styles.text,styles.below]}>We're tracking your activity...</Text>
+            <Stopwatch laps start={this.state.stopwatchStart}
+              reset={this.state.stopwatchReset}
+              options={options}
+              getTime={this.getFormattedTime} />
+            <Button text="STOP" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} onPress={this.stopStopwatch} size="short" />
+          </View>
+          }
+          {this.state.stopwatchStop &&
+          <View style={styles.centerCont}>
+            <Text style={[styles.text,styles.below]}>Tracking Finished</Text>
+            <Text style={[styles.text,styles.smallerBelow]}>RESULT</Text>
+            <FlatList
+                style={styles.list}
+                data={this.state.data}
+                keyExtractor={item=>item.id}
+                renderItem={this._renderItem}
+              />
+              
+          </View>}
+      </LinearGradient>
     )
   }
 }
 
 const options = {
   container: {
-    backgroundColor: '#000',
-    padding: 5,
-    borderRadius: 5,
-    width: 220,
+    backgroundColor: Color.TRANSPARENT,
+    alignItems: 'center',
+    width: Size.WIDTH8,
+    marginBottom: Size.HEIGHT2
   },
   text: {
-    fontSize: 30,
-    color: '#FFF',
-    marginLeft: 7,
+    fontSize: 70,
+    color: Color.APP_WHITE,
   }
 };

@@ -121,7 +121,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'EvaluationForm',
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, ImageBackground, Platform, StyleSheet, View, Text, ListView } from 'react-native';
+import { Animated, ImageBackground, Platform, StyleSheet, View, Text, ListView, TouchableOpacity } from 'react-native';
 
 const NAVBAR_HEIGHT = 64;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -141,14 +141,20 @@ export default class Newsfeed extends React.Component{
     }).start();
   };
 
+  _goToView = () => {
+    this.props.navigation.navigate('ViewArticle')
+  }
+
   _renderRow = (rowData, sectionId, rowId) => {
     return (
-      <View key={rowId} style={styles.card}>
-        <ImageBackground style={styles.row} source={{ uri: rowData.image }} resizeMode="cover">
-          <Text style={styles.rowText}>{rowData.title}</Text>
-        </ImageBackground>
-        <Text>{rowData.desc}</Text>
-      </View>
+      <TouchableOpacity onPress={this._goToView}>
+        <View key={rowId} style={styles.card}>
+          <ImageBackground style={styles.row} source={{ uri: rowData.image }} resizeMode="cover">
+            <Text style={styles.rowText}>{rowData.title}</Text>
+          </ImageBackground>
+          <Text>{rowData.desc}</Text>
+        </View>
+      </TouchableOpacity>
     );
   };
 

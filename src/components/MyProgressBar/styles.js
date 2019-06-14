@@ -1,25 +1,29 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
 
 export const styles = StyleSheet.create({
     wrapper: {
-        width: width,
+        width: '100%',
         alignItems: 'center'
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: width*0.95
+        width: '100%'
     },
     progressBar: {
-        width: width*0.95,
-        height: height*0.02,
-        backgroundColor: 'white'
+        width: '100%',
+        height: '22%',
+        backgroundColor: Color.BLUE
     },
     progress: {
-        width: width*0.1,
-        height: height*0.02,
-        backgroundColor: 'blue'
+        width: '0%',
+        height: '100%',
+        backgroundColor: Color.LIGHT_BLUE
+    },
+    text: {
+      fontFamily: 'SourceSansPro-Regular',
+      color: Color.FONT_GREY
     }
 })

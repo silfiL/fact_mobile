@@ -3,15 +3,15 @@ import { View, Text } from 'react-native'
 
 import { styles } from './styles'
 
-const MyProgressBar = () => (
+const MyProgressBar = ({progress}) => (
     <View style={styles.wrapper}>
         <View style={styles.progressBar}>
-            <View style={styles.progress}></View>
+            <View style={[styles.progress,{width:progress+'%'}]}></View>
         </View>
         <View style={styles.row}>
-            <Text>Low</Text>
-            <Text>Medium</Text>
-            <Text>High</Text>
+            <Text style={styles.text}>Low</Text>
+            <Text style={styles.text}>Medium</Text>
+            <Text style={styles.text}>High</Text>
         </View>
     </View>
 )

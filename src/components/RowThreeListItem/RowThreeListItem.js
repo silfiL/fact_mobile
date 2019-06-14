@@ -6,18 +6,18 @@ import { styles } from './styles';
 export default class RowThreeListItem extends React.Component {
   render() {
     return (
-      <View style={{flexDirection:'row',alignItems:'center'}}>
-        <View style={{paddingHorizontal:10,borderRightColor:'black',borderRightWidth:1}}>
-          <Text style={{fontWeight:'bold'}}>Activity</Text>
-          <Text>{this.props.activity}</Text>
+      <View style={styles.row}>
+        <View style={styles.rightBorder}>
+          <Text style={styles.label}>Activity</Text>
+          <Text style={styles.text}>{this.props.activity}</Text>
         </View>
-        <View style={{paddingHorizontal:10,borderRightColor:'black',borderRightWidth:1}}>
-          <Text style={{fontWeight:'bold'}}>Time</Text>
-          <Text>{this.props.time}</Text>
+        <View style={styles.rightBorder}>
+          <Text style={styles.label}>Time</Text>
+          <Text style={styles.text}>{this.props.time}</Text>
         </View>
-        <View style={{paddingHorizontal:10}}>
-          <Text style={{fontWeight:'bold'}}>Burnt</Text>
-          <Text>{this.props.burnt}</Text>
+        <View style={[styles.rightBorder,styles.noBorder]}>
+          <Text style={styles.label}>Burnt</Text>
+          <Text style={styles.text}>{this.props.burnt}</Text>
         </View>
       </View>
     );

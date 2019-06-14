@@ -7,7 +7,7 @@ import Color from '../../config/Color'
 
 export default class FillProfileAnalysis extends React.Component{
     next = () => {
-      this.props.navigation.navigate('Homepage')
+      this.props.navigation.navigate('FirstTimeSTrain')
     }
     
     render(){
