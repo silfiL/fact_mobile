@@ -33,6 +33,14 @@ export default class Diary extends Component {
     };
   }
 
+  goToAddFood = () => {
+    this.props.navigation.navigate('AddFood')
+  }
+
+  goToTrack = () => {
+    this.props.navigation.navigate('TrackActivity')
+  }
+
   render() {
     // Because of content inset the scroll value will be negative on iOS so bring
     // it back to 0.
@@ -72,7 +80,7 @@ export default class Diary extends Component {
           )}
         >
           <View style={styles.scrollViewContent}>
-              <TimeCard time="BREAKFAST" showTouchableOpacity={true} total={120}>
+              <TimeCard time="BREAKFAST" showTouchableOpacity={true} total={120} onPress={this.goToAddFood}>
                 <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingHorizontal:10,paddingVertical:5}}>
                   <View>
                       <Text>Fried Rice</Text>
@@ -81,16 +89,16 @@ export default class Diary extends Component {
                   <Text>120</Text>
                 </View>
               </TimeCard>
-              <TimeCard time="LUNCH">
+              <TimeCard time="LUNCH" onPress={this.goToAddFood} showButton>
                 <Text>Testing</Text>
               </TimeCard>
-              <TimeCard time="DINNER">
+              <TimeCard time="DINNER" onPress={this.goToAddFood} showButton>
                 <Text>Testing</Text>
               </TimeCard>
-              <TimeCard time="SNACK">
+              <TimeCard time="SNACK" onPress={this.goToAddFood} showButton>
                 <Text>Testing</Text>
               </TimeCard> 
-              <TimeCard time="EXERCISE">
+              <TimeCard time="EXERCISE" onPress={this.goToTrack} showButton>
                 <Text>Testing</Text>
               </TimeCard>     
           </View>

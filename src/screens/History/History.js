@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, ScrollView, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker'
 import { styles } from './styles';
-
+import Color from '../../config/Color';
 import {
   BarChart,
   PieChart,
@@ -26,11 +26,9 @@ const data = {
 }
 
 const pieData = [
-  { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-  { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-  { name: 'Beijing', population: 527612, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-  { name: 'New York', population: 8538000, color: '#ffffff', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-  { name: 'Moscow', population: 11920000, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
+  { name: 'Below', calorie: 2150000, color: Color.LIGHT_BLUE, legendFontColor: Color.BLUE, legendFontSize: 15 },
+  { name: 'Ideal', calorie: 280000, color: Color.LIGHT_GREEN, legendFontColor: Color.GREEN, legendFontSize: 15 },
+  { name: 'Over', calorie: 527610, color: Color.LIGHT_RED, legendFontColor: Color.RED, legendFontSize: 15 },
 ]
 
 export default class History extends React.Component{
@@ -45,6 +43,7 @@ export default class History extends React.Component{
   render(){
     return(
       <View style={{flex:1}}>
+        <StatusBar barStyle="dark-content" backgroundColor={Color.BLUE} />
         <View style={styles.header}>
           <Text>HISTORY</Text>
         </View>
@@ -99,7 +98,7 @@ export default class History extends React.Component{
               width={Dimensions.get('window').width}
               height={220}
               chartConfig={chartConfig}
-              accessor="population"
+              accessor="calorie"
               backgroundColor="transparent"
               paddingLeft="15"
             />
