@@ -52,6 +52,10 @@ export default class Profile extends React.Component{
     this.setState({isEdit:!this.state.isEdit})
   }
 
+  goToBase = () => {
+    this.props.navigation.navigate('Base')
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -177,7 +181,7 @@ export default class Profile extends React.Component{
                 <TouchableOpacity>
                   <Text style={styles.modalButton}>NO</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.goToBase}>
                   <Text style={styles.modalButton}>YES</Text>
                 </TouchableOpacity>
               </View>

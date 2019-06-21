@@ -1,23 +1,25 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 
-const { width, height } = Dimensions.get('window')
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 export const styles = StyleSheet.create({
   circle: {
-    width: width*0.3,
-    height: width*0.3,
-    borderRadius: width*0.3/2,
+    width: Size.WIDTH2,
+    height: Size.WIDTH2,
+    borderRadius: Size.WIDTH1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'yellow'
+    backgroundColor: Color.TRANSPARENT,
+    borderColor: Color.BLUE,
+    borderWidth: 1,
   },
   date: {
-    fontSize: 20,
-  },
-  month: {
-    fontSize: 20,
+    fontFamily: 'SourceSansPro-Regular',
+    color: Color.LIGHT_BLUE,
   },
   hour: {
-    fontSize: 12
+    fontSize: 10,
+    fontFamily: 'SourceSansPro-Regular',
   }
 })

@@ -17,7 +17,7 @@ const CircleWithDate = ({date,month,hour}) => {
     <View>
       <View style={styles.circle}>
         <Text style={styles.date}>{date}{display}</Text>
-        <Text style={styles.month}>{month}</Text>
+        <Text style={styles.date}>{month}</Text>
         <Text style={styles.hour}>{hour} hours</Text>
       </View>
     </View>

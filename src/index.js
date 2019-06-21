@@ -82,7 +82,7 @@ const HomepageTab = createMaterialBottomTabNavigator({
       }
     },
 }, {
-  initialRouteName: 'Profile',
+  initialRouteName: 'Newsfeed',
   activeColor: Color.APP_WHITE,
   inactiveColor: Color.RED,
   barStyle: { backgroundColor: Color.LIGHT_RED },
@@ -121,7 +121,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'EvaluationAnalysis',
+  initialRouteName: 'ViewArticle',
   headerMode: 'none'
 });
 

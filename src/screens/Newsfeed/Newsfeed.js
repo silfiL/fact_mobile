@@ -1,5 +1,7 @@
 import React from 'react';
-import { Animated, ImageBackground, Platform, StyleSheet, View, Text, ListView, TouchableOpacity } from 'react-native';
+import { Animated, ImageBackground, Platform, StyleSheet, View, Text, ListView, TouchableOpacity, StatusBar } from 'react-native';
+import Color from '../../config/Color'
+import Size from '../../config/Size'
 
 const NAVBAR_HEIGHT = 64;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });

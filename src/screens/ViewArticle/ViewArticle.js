@@ -6,11 +6,15 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   RefreshControl,
+  Image
 } from 'react-native';
+import ParallaxScrollView from 'react-native-parallax-scrollview';
 import Icon from 'react-native-vector-icons/FontAwesome'
-
 import Color from '../../config/Color'
+import Size from '../../config/Size'
+//import { styles } from './styles'
 
 const HEADER_MAX_HEIGHT = 300;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -27,6 +31,10 @@ export default class ViewArticle extends Component {
       ),
       refreshing: false,
     };
+  }
+
+  goBack = () => {
+    this.props.navigation.goBack()
   }
 
   render() {
@@ -67,11 +75,24 @@ export default class ViewArticle extends Component {
     return (
       <View style={styles.fill}>
         <StatusBar
-          translucent
-          barStyle="light-content"
-          backgroundColor="rgba(0, 0, 0, 0.251)"
+          barStyle="dark-content"
+          backgroundColor={Color.YELLOW}
         />
-        <Animated.ScrollView
+        <ParallaxScrollView
+          windowHeight={Size.HEIGHT4}
+          backgroundSource={require('../../assets/img/cat.jpg')}
+          navBarTitle='ARTICLE TITLE'
+          navBarTitleColor={Color.APP_WHITE}
+          navBarColor={Color.YELLOW}
+          headerView={(
+            <View>
+              <Image source={require('../../assets/img/cat.jpg')} style={{width:Size.WIDTH,height:Size.HEIGHT4,marginTop:-Size.HEIGHT1}} />
+            </View>
+          )}
+          leftIcon={{name: 'md-arrow-round-back', color: Color.APP_WHITE, size: 30, type: 'ionicon'}}
+          leftIconOnPress={this.goBack}
+        >
+        {/*<Animated.ScrollView
           style={styles.fill}
           scrollEventThrottle={1}
           onScroll={Animated.event(
@@ -96,14 +117,16 @@ export default class ViewArticle extends Component {
           contentOffset={{
             y: -HEADER_MAX_HEIGHT,
           }}
-        >
+        >*/}
+        <ScrollView>
           <View style={styles.scrollViewContent}>
           <Text>TITLE</Text>
           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             <Text>By : Author Name</Text>
             <Text>Monday, 6 May 2019</Text>
           </View>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue vehicula justo id gravida. Fusce dignissim venenatis fermentum. Sed porttitor viverra felis sit amet viverra. Sed sollicitudin ultrices fringilla. Nullam et nibh egestas, pellentesque diam ac, vestibulum nulla. Maecenas maximus felis turpis, quis vehicula massa mollis facilisis. Ut cursus, nulla vel lacinia tristique, augue purus luctus enim, eget hendrerit neque sapien eu est. Ut dictum mattis urna quis varius. Maecenas facilisis congue leo, ut euismod erat finibus a. Ut facilisis tempus odio, eget tristique sem interdum sed. Vestibulum ornare id augue quis vestibulum. Integer pulvinar ex vel purus aliquet, ac vehicula elit tempus.
+          <View style={{flexDirection:'row',alignItems:'center'}}>
+          <Text style={styles.paragraph}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue vehicula justo id gravida. Fusce dignissim venenatis fermentum. Sed porttitor viverra felis sit amet viverra. Sed sollicitudin ultrices fringilla. Nullam et nibh egestas, pellentesque diam ac, vestibulum nulla. Maecenas maximus felis turpis, quis vehicula massa mollis facilisis. Ut cursus, nulla vel lacinia tristique, augue purus luctus enim, eget hendrerit neque sapien eu est. Ut dictum mattis urna quis varius. Maecenas facilisis congue leo, ut euismod erat finibus a. Ut facilisis tempus odio, eget tristique sem interdum sed. Vestibulum ornare id augue quis vestibulum. Integer pulvinar ex vel purus aliquet, ac vehicula elit tempus.
 
 Quisque elementum, augue quis interdum fringilla, quam augue hendrerit mi, eu egestas risus libero in nisi. Aliquam erat volutpat. Fusce semper euismod posuere. Cras lacinia luctus placerat. Aenean lacinia massa est, non vehicula nisi porta non. Vivamus non nisl placerat, euismod lacus ut, dictum ex. Nunc quam massa, cursus sed venenatis eget, sagittis in sem. Phasellus nibh eros, molestie quis ante sit amet, congue facilisis purus.
 
@@ -113,13 +136,15 @@ Sed consectetur, leo eu sagittis vulputate, velit ipsum dictum sapien, nec dictu
 
 Cras congue maximus quam in elementum. Nam lectus felis, viverra ac ipsum a, semper vulputate mi. Vestibulum sit amet ornare enim, nec scelerisque augue. Vivamus a facilisis neque. Duis et blandit justo. Fusce facilisis dolor nunc, a aliquam nisi semper sed. Nullam vel turpis eu urna luctus dictum in nec lorem. Sed eget varius ipsum. Quisque in tincidunt nibh. Integer lobortis tristique nisl eu cursus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean ut efficitur eros, sit amet pulvinar massa. Ut venenatis finibus urna sit amet sagittis.</Text>
           
-          <View style={{flexDirection:'row',alignItems:'center'}}>
+          </View>
+          <View style={styles.row}>
             <Icon name="group" size={16} />
             <Text>30 views</Text>
           </View>
         </View>
-        </Animated.ScrollView>
-        <Animated.View
+        </ScrollView>
+        </ParallaxScrollView>
+        {/*<Animated.View
           pointerEvents="none"
           style={[
             styles.header,
@@ -149,7 +174,7 @@ Cras congue maximus quam in elementum. Nam lectus felis, viverra ac ipsum a, sem
           ]}
         >
           <Text style={styles.title}>VIEW ARTICLE</Text>
-        </Animated.View>
+        </Animated.View>*/}
       </View>
     );
   }
@@ -197,7 +222,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     // iOS uses content inset, which acts like padding.
-    paddingTop: Platform.OS !== 'ios' ? HEADER_MAX_HEIGHT : 0,
+    //paddingTop: Platform.OS !== 'ios' ? HEADER_MAX_HEIGHT : 0,
   },
   row: {
     height: 40,
@@ -206,4 +231,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  paragraph: {
+    flex: 1,
+    flexWrap: 'wrap',
+    fontFamily: 'SourceSansPro-Regular',
+    color: Color.FONT_GREY
+  }
 });
