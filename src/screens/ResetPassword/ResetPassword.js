@@ -29,7 +29,7 @@ export default class ResetPassword extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.BG_GREY} />
+        <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content"/>
         <HeaderBackButton onPressBack={this.back} iconColor={Color.GREEN}/>
         <View style={{marginTop:Size.HEIGHT1*0.5}}>
           <Title size="small" titleColor={Color.GREEN}/>

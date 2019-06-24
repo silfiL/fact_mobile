@@ -67,7 +67,7 @@ export default class History extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={Color.BLUE} />
+        <StatusBar barStyle="light-content" backgroundColor={Color.BLUE} />
         <View style={styles.header}>
           <Text style={styles.headerText}>HISTORY</Text>
         </View>

@@ -44,7 +44,7 @@ export default class AddNewActivity extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} bgColor={Color.RED} iconColor={Color.APP_WHITE} title="ADD NEW ACTIVITY"/>
         <Text style={styles.text}>Choose activity you want to add</Text>
         <FlatList

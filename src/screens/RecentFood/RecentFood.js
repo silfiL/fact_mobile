@@ -43,7 +43,7 @@ export default class RecentFood extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.GREEN} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} bgColor={Color.GREEN} iconColor={Color.APP_WHITE} title="RECENT LUNCH" />
         <SectionList
           sections={this.state.data}

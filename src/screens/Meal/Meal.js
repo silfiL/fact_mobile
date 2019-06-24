@@ -52,7 +52,7 @@ export default class Meal extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.BLUE} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.BLUE} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} title="MEAL" bgColor={Color.BLUE} iconColor={Color.APP_WHITE}/>
         {this.state.data.length==0 ?
         <View style={styles.centerCont}>

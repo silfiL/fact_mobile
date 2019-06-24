@@ -22,7 +22,7 @@ export default class SignUp extends React.Component{
   render(){
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
-        <StatusBar backgroundColor={Color.GREEN} />
+        <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE}/>
         <Title size="small"/>
         <View style={styles.form}>

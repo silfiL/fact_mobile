@@ -154,7 +154,7 @@ export default class Newsfeed extends React.Component{
           <ImageBackground style={styles.row} source={{ uri: rowData.image }} resizeMode="cover">
             <Text style={styles.rowText}>{rowData.title}</Text>
           </ImageBackground>
-          <Text>{rowData.desc}</Text>
+          <Text style={styles.desc}>{rowData.desc}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -176,6 +176,7 @@ export default class Newsfeed extends React.Component{
 
     return (
       <View style={styles.fill}>
+        <StatusBar backgroundColor={Color.YELLOW} barStyle="light-content" />
         <AnimatedListView
           contentContainerStyle={styles.contentContainer}
           dataSource={this.state.dataSource}
@@ -209,18 +210,20 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderBottomColor: '#dedede',
+    backgroundColor: Color.YELLOW,
+    borderBottomColor: Color.LIGHT_GREY,
     borderBottomWidth: 1,
     height: NAVBAR_HEIGHT,
     justifyContent: 'center',
-    paddingTop: STATUS_BAR_HEIGHT,
+    //paddingTop: STATUS_BAR_HEIGHT,
   },
   contentContainer: {
     paddingTop: NAVBAR_HEIGHT,
   },
   title: {
-    color: '#333333',
+    color: Color.APP_WHITE,
+    fontFamily: 'SourceSansPro-Bold',
+    fontSize: (Size.HEIGHT*0.08)*0.35
   },
   row: {
     height: 300,
@@ -234,9 +237,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   card: {
-    marginBottom: 30,
-    paddingBottom: 30,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1
+    margin: Size.WIDTH1*0.2,
+    marginBottom: Size.HEIGHT1*0.3,
+    paddingBottom: Size.HEIGHT1*0.2,
+    borderColor: Color.LIGHT_GREY,
+    borderWidth: 1,
+  },
+  desc: {
+    fontFamily: 'SourceSansPro-Regular',
+    color: Color.FONT_GREY,
+    padding: Size.WIDTH1*0.2
   }
 });

@@ -54,7 +54,7 @@ export default class SelfTrainSessions extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} bgColor={Color.RED} iconColor={Color.APP_WHITE} title="SELF-TRAIN SESSIONS"/>
         {this.state.data.length==0 ?
         <View style={styles.centerContainer}>

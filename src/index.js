@@ -121,7 +121,7 @@ const rootStack = createStackNavigator({
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
 },{
-  initialRouteName: 'ViewArticle',
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 

@@ -20,7 +20,7 @@ export default class CreateMeal extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.BLUE} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.BLUE} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} title="CREATE MEAL" bgColor={Color.BLUE} iconColor={Color.APP_WHITE} />
         <View style={styles.form}>
             <FloatingLabel 

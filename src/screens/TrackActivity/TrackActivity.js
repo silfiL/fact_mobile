@@ -58,7 +58,7 @@ export default class TrackActivity extends React.Component{
   render(){
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
-        <StatusBar backgroundColor={Color.GREEN} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} bgColor={Color.TRANSPARENT} iconColor={Color.APP_WHITE}/> 
          {this.state.showButton &&
           <View style={styles.centerCont}>

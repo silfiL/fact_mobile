@@ -57,7 +57,7 @@ export default class AddInMeal extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.BLUE} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.BLUE} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} title="ADDED IN MEAL" bgColor={Color.BLUE} iconColor={Color.APP_WHITE}/>
         <FlatList
           data={this.state.data}

@@ -75,7 +75,7 @@ export default class SearchFood extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-          <StatusBar backgroundColor={Color.GREEN} barStyle="dark-content" />
+          <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
           <View style={styles.rowSearch}>
             <TouchableOpacity onPress={this.back}>            
               <Icon name="md-arrow-round-back" color={Color.APP_WHITE} size={24} />      

@@ -59,7 +59,7 @@ export default class Profile extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.coloredCont}>
          <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
                 <MIcon name="edit" size={24} color={Color.APP_WHITE} />

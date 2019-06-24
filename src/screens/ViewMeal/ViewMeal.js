@@ -17,7 +17,7 @@ export default class ViewMeal extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.BLUE} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.BLUE} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} title="VIEW MEAL" bgColor={Color.BLUE} iconColor={Color.APP_WHITE}/>
         <View style={styles.form}>
           <View style={[styles.row,styles.rowGroup]}>

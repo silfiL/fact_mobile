@@ -45,7 +45,7 @@ export default class FirstTimeSTrain extends React.Component{
   render(){
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.container}>
-        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <View style={styles.form}>
           <Text style={styles.h1}>You're almost there!!</Text>
           <View>

@@ -46,7 +46,7 @@ export default class AddFood extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.GREEN} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
         <View style={styles.header}>
           <HeaderBackButton title="LUNCH" onPressBack={this.back} iconColor={Color.APP_WHITE} />
           <TextInput placeholder="Search Food" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onFocus={this.goToSearch}/>

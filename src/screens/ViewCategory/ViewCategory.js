@@ -62,7 +62,7 @@ export default class ViewCategory extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.YELLOW} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.YELLOW} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} bgColor={Color.YELLOW} iconColor={Color.APP_WHITE} title="CATEGORY A"/>
         <FlatList
           data={this.state.data}

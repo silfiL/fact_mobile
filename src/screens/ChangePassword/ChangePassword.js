@@ -21,7 +21,7 @@ export default class ChangePassword extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.RED} barStyle="dark-content" />
+        <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE} title="CHANGE PASSWORD" bgColor={Color.RED}/>
         <View style={styles.form}>
             <FloatingLabel 
