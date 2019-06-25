@@ -12,13 +12,15 @@ const TimeCard = ({time,children,showButton,onPress,total}) => {
         <View style={styles.card}>
             <View style={styles.cardHeader}>
                 <Text style={styles.time}>{time}</Text>
-                {showButton && <Icon name='plus-circle' color={Color.APP_WHITE} onPress={onPress} size={24}/>}
+                {showButton && <Icon name='plus-circle' color={Color.APP_WHITE} onPress={onPress} size={28}/>}
             </View>
-            {children}
+            <View style={styles.cardChild}>
+              {children}
+            </View>
             {total && 
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',backgroundColor:'lightblue',borderTopWidth:1,borderTopColor:'grey',paddingHorizontal:10}}>
-                <Text>Total in KCAL</Text>
-                <Text>{total}</Text>
+            <View style={styles.totalRow}>
+                <Text style={styles.text}>Total in KCAL</Text>
+                <Text style={styles.total}>{total}</Text>
             </View>}
         </View>
     )

@@ -82,7 +82,7 @@ const HomepageTab = createMaterialBottomTabNavigator({
       }
     },
 }, {
-  initialRouteName: 'Newsfeed',
+  initialRouteName: 'Diary',
   activeColor: Color.APP_WHITE,
   inactiveColor: Color.RED,
   barStyle: { backgroundColor: Color.LIGHT_RED },

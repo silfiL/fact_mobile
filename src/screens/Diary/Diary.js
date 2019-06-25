@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { TimeCard } from '../../components/TimeCard';
+import { EmptyCardList } from '../../components/EmptyCardList';
 
 const HEADER_MAX_HEIGHT = 450;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -69,7 +70,7 @@ export default class Diary extends Component {
         <StatusBar
           translucent
           barStyle="light-content"
-          backgroundColor="rgba(0, 0, 0, 0.251)"
+          backgroundColor="rgba(0, 0, 0, 0.25)"
         />
         <Animated.ScrollView
           style={styles.fill}
@@ -80,26 +81,27 @@ export default class Diary extends Component {
           )}
         >
           <View style={styles.scrollViewContent}>
-              <TimeCard time="BREAKFAST" showTouchableOpacity={true} total={120} onPress={this.goToAddFood}>
+              <TimeCard time="BREAKFAST" total={120} onPress={this.goToAddFood} showButton>
                 <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingHorizontal:10,paddingVertical:5}}>
                   <View>
                       <Text>Fried Rice</Text>
                       <Text>1 serving</Text>
                   </View>
                   <Text>120</Text>
+                  
                 </View>
               </TimeCard>
-              <TimeCard time="LUNCH" onPress={this.goToAddFood} showButton>
-                <Text>Testing</Text>
+              <TimeCard time="LUNCH">
+                <EmptyCardList recMin={100} recMax={350} onPress={this.goToAddFood} text="Food"/>
               </TimeCard>
-              <TimeCard time="DINNER" onPress={this.goToAddFood} showButton>
-                <Text>Testing</Text>
+              <TimeCard time="DINNER">
+                <EmptyCardList recMin={100} recMax={350} onPress={this.goToAddFood} text="Food"/>
               </TimeCard>
-              <TimeCard time="SNACK" onPress={this.goToAddFood} showButton>
-                <Text>Testing</Text>
+              <TimeCard time="SNACK">
+                <EmptyCardList recMin={100} recMax={350} onPress={this.goToAddFood} text="Food"/>
               </TimeCard> 
-              <TimeCard time="EXERCISE" onPress={this.goToTrack} showButton>
-                <Text>Testing</Text>
+              <TimeCard time="EXERCISE">
+                <EmptyCardList recMin={100} recMax={350} onPress={this.goToTrack} text="Exercise"/>
               </TimeCard>     
           </View>
         </Animated.ScrollView>
