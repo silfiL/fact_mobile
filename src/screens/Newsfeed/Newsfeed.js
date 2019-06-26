@@ -83,6 +83,8 @@ export default class Newsfeed extends React.Component{
     const offsetAnim = new Animated.Value(0);
 
     this.state = {
+      page: 1,
+      articles: [],
       dataSource: dataSource.cloneWithRows(data),
       scrollAnim,
       offsetAnim,
@@ -99,11 +101,26 @@ export default class Newsfeed extends React.Component{
         NAVBAR_HEIGHT - STATUS_BAR_HEIGHT,
       ),
     };
+
+    this.onRefresh = this.onRefresh.bind(this)
   }
 
   _clampedScrollValue = 0;
   _offsetValue = 0;
   _scrollValue = 0;
+
+  async onRefresh() {
+    const response = await fetch(`http://103.252.100.230/fact/member/newsfeed?page=${this.state.page}`)
+    const json = await response.json()
+
+    let page = this.state.page
+    let articles = this.state.articles
+    const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+    page += 1
+    articles.push.apply(articles, json.results.articles)
+    this.setState({page, articles, dataSource:dataSource.cloneWithRows(articles) })
+  }
 
   componentDidMount() {
     this.state.scrollAnim.addListener(({ value }) => {
@@ -117,6 +134,7 @@ export default class Newsfeed extends React.Component{
     this.state.offsetAnim.addListener(({ value }) => {
       this._offsetValue = value;
     });
+    this.onRefresh()
   }
 
   componentWillUnmount() {
@@ -145,18 +163,18 @@ export default class Newsfeed extends React.Component{
     }).start();
   };
 
-  _goToView = () => {
-    this.props.navigation.navigate('ViewArticle')
+  _goToView = (id) => {
+    this.props.navigation.navigate('ViewArticle', { id })
   }
 
   _renderRow = (rowData, sectionId, rowId) => {
     return (
-      <TouchableOpacity onPress={this._goToView}>
+      <TouchableOpacity onPress={() => this._goToView(rowData.id)}>
         <View key={rowId} style={styles.card}>
-          <ImageBackground style={styles.row} source={{ uri: rowData.image }} resizeMode="cover">
+          <ImageBackground style={styles.row} source={{ uri: `http://103.252.100.230/fact/image/${rowData.image}` }} resizeMode="cover">
             <Text style={styles.rowText}>{rowData.title}</Text>
           </ImageBackground>
-          <Text style={styles.desc}>{rowData.desc}</Text>
+          <Text style={styles.desc}>{rowData.content}</Text>
         </View>
       </TouchableOpacity>
     );

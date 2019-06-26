@@ -52,6 +52,7 @@ export const styles = StyleSheet.create({
   desc: {
     fontFamily: 'SourceSansPro-Regular',
     color: Color.FONT_GREY,
-    padding: Size.WIDTH1*0.2
+    padding: Size.WIDTH1*0.2,
+    height: 100
   }
 });

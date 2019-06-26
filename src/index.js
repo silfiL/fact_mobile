@@ -39,6 +39,22 @@ import EvaluationAnalysis from './screens/EvaluationAnalysis';
 import Color from './config/Color';
 import SearchFoodMeal from "./screens/SearchFoodMeal";
 
+Date.prototype.datetimeformat = function(option = "") {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"];
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+  const year = this.getFullYear()
+  const month = months[this.getMonth()]
+  const day = days[this.getDay()]
+  const date = (this.getDate() < 10) ? '0' + this.getDate() : this.getDate()
+  const hour = (this.getHours() < 10) ? '0' + this.getHours() : this.getHours()
+  const minute = (this.getMinutes() < 10) ? '0' + this.getMinutes() : this.getMinutes()
+  // const second = (this.getSeconds() < 10) ? '0' + this.getSeconds() : this.getSeconds()
+
+  if (option === "date") return `${day}, ${date} ${month} ${year}`
+  return `${date} ${month} ${year} ${hour}:${minute}`
+}
+
 const HomepageTab = createMaterialBottomTabNavigator({
   Diary: { screen: Diary,
       navigationOptions: {
@@ -46,9 +62,9 @@ const HomepageTab = createMaterialBottomTabNavigator({
         tabBarIcon: ({ tintColor }) => (
           <Icon name="book" size={25} color={tintColor} />
         ),
-        activeColor: Color.APP_WHITE,  
-        inactiveColor: Color.GREEN,  
-        barStyle: { backgroundColor: Color.LIGHT_GREEN } 
+        activeColor: Color.APP_WHITE,
+        inactiveColor: Color.GREEN,
+        barStyle: { backgroundColor: Color.LIGHT_GREEN }
       }
     },
   History: { screen: History,
@@ -57,8 +73,8 @@ const HomepageTab = createMaterialBottomTabNavigator({
         tabBarIcon: ({ tintColor }) => (
           <Icon name="history" size={25} color={tintColor} />
         ),
-        activeColor: Color.APP_WHITE,  
-        inactiveColor: Color.BLUE,  
+        activeColor: Color.APP_WHITE,
+        inactiveColor: Color.BLUE,
         barStyle: { backgroundColor: Color.LIGHT_BLUE }
       }
     },
@@ -68,9 +84,9 @@ const HomepageTab = createMaterialBottomTabNavigator({
         tabBarIcon: ({ tintColor }) => (
           <Icon name="commenting" size={25} color={tintColor} />
         ),
-        activeColor: Color.APP_WHITE,  
-        inactiveColor: Color.YELLOW,  
-        barStyle: { backgroundColor: Color.LIGHT_YELLOW }, 
+        activeColor: Color.APP_WHITE,
+        inactiveColor: Color.YELLOW,
+        barStyle: { backgroundColor: Color.LIGHT_YELLOW },
       }
   },
   Profile: { screen: Profile,
@@ -78,7 +94,7 @@ const HomepageTab = createMaterialBottomTabNavigator({
         tabBarLabel:"Profile",
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" size={25} color={tintColor} />
-        )  
+        )
       }
     },
 }, {
