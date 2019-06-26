@@ -20,19 +20,6 @@ const chartConfig = {
   strokeWidth: 2 // optional, default 3
 }
 
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-  datasets: [{
-    data: [ 20, 45, 28, 80, 99, 43 ]
-  }]
-}
-
-const pieData = [
-  { name: 'Below', calorie: 2150000, color: Color.LIGHT_BLUE, legendFontColor: Color.BLUE, legendFontSize: 15 },
-  { name: 'Ideal', calorie: 280000, color: Color.LIGHT_GREEN, legendFontColor: Color.GREEN, legendFontSize: 15 },
-  { name: 'Over', calorie: 527610, color: Color.LIGHT_RED, legendFontColor: Color.RED, legendFontSize: 15 },
-]
-
 const historyArr = ["Calorie Intake","Burnt Calorie","Activity Level"]
 
 export default class History extends React.Component{
@@ -42,21 +29,53 @@ export default class History extends React.Component{
       start: '',
       end: '',
       index: 0,
+      data: {
+        week: [],
+        month: {
+          below: 0,
+          ideal: 0,
+          over: 0,
+        }
+      }
     }
-  }
-  
-  right = () => {
-    if (this.state.index == 2)
-      this.setState({index:0})
-    else
-      this.setState({index:this.state.index+1})
+
+    this.onRefreshIntake = this.onRefreshIntake.bind(this)
   }
 
-  left = () => {
-    if (this.state.index == 0)
-      this.setState({index:2})
+  async onRefreshIntake() {
+    let date = new Date(this.state.end)
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/history/intake?year=${date.getFullYear()}&month=${date.getMonth() + 1}&day=${date.getDate()}`, {headers})
+    const json = await response.json()
+
+    const data = {
+      week: json.results.week,
+      month: json.results.month
+    }
+    this.setState({ data })
+  }
+
+  right = async () => {
+    if (this.state.index == 2)
+      await this.setState({index:0})
     else
-      this.setState({index:this.state.index-1})
+      await this.setState({index:this.state.index+1})
+
+    if (this.state.index === 0) await this.onRefreshIntake()
+    if (this.state.index === 1) console.log('do nothing')
+    if (this.state.index === 2) console.log('do nothing')
+  }
+
+  left = async () => {
+    if (this.state.index == 0)
+      await this.setState({index:2})
+    else
+      await this.setState({index:this.state.index-1})
+
+    if (this.state.index === 0) await this.onRefreshIntake()
+    if (this.state.index === 1) console.log('do nothing')
+    if (this.state.index === 2) console.log('do nothing')
   }
 
   selectDate = (date) => {
@@ -64,7 +83,43 @@ export default class History extends React.Component{
     this.setState({end:date,start:temp})
   }
 
+  async componentDidMount() {
+    await this.setState({end: moment()})
+    await this.onRefreshIntake()
+  }
+
   render(){
+    let date = new Date()
+    let monthDate = new Date()
+    const weekLabels = []
+
+    if (this.state.end !== '') {
+      date = new Date(this.state.end)
+      weekLabels.push(date.datetimeformat('date'))
+      for (let i=0; i<6; i++) {
+        date.setDate(date.getDate() - 1)
+        weekLabels.push(date.datetimeformat('date'))
+      }
+
+      date = new Date(this.state.end)
+      monthDate = new Date(date.setDate(date.getDate() - 30))
+
+      date = new Date(this.state.end)
+    }
+
+    const data = {
+      labels: weekLabels.reverse(),
+      datasets: [{
+        data: this.state.data.week
+      }]
+    }
+
+    const pieData = [
+      { name: 'Below', calorie: this.state.data.month.below, color: Color.LIGHT_BLUE, legendFontColor: Color.BLUE, legendFontSize: 15 },
+      { name: 'Ideal', calorie: this.state.data.month.ideal, color: Color.LIGHT_GREEN, legendFontColor: Color.GREEN, legendFontSize: 15 },
+      { name: 'Over', calorie: this.state.data.month.over, color: Color.LIGHT_RED, legendFontColor: Color.RED, legendFontSize: 15 },
+    ]
+
     return(
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={Color.BLUE} />
@@ -114,7 +169,6 @@ export default class History extends React.Component{
               data={data}
               width={Size.WIDTH9}
               height={220}
-              yAxisLabel={'$'}
               chartConfig={chartConfig}
             />
             <Text style={styles.sectionTitle}>MONTH VIEW</Text>
@@ -128,7 +182,7 @@ export default class History extends React.Component{
               accessor="calorie"
               backgroundColor="transparent"
               paddingLeft={15}
-            /><Text style={styles.month}>Month Name</Text>
+            /><Text style={styles.month}>({(this.state.end !== '') ? date.dateformat('date') : ''} - {(this.state.end !== '') ? monthDate.dateformat('date') : ''})</Text>
             </View>:
             <View style={[styles.subContainer,styles.padBottom]}>
               <MyProgressBar progress={20}/>
