@@ -11,14 +11,45 @@ import { styles } from './styles'
 import Color from '../../config/Color'
 
 export default class SignUp extends React.Component{
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      data: {
+        name: '',
+        email: '',
+        password: '',
+        re_password: '',
+      }
+    }
+
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange(key, text) {
+    const data = this.state.data
+    data[key] = text
+    this.setState({ data })
+  }
+
   back = () => {
     this.props.navigation.goBack()
   }
 
-  goToFillProfile = () => {
-    this.props.navigation.navigate('FillProfileFirst')
+  goToFillProfile = async () => {
+    const body = JSON.stringify(this.state.data)
+    let response = await fetch(`http://103.252.100.230/fact/register`, {method: 'POST', body})
+    let json = await response.json()
+
+    if (json.message === 'Success') {
+      response = await fetch(`http://103.252.100.230/fact/login`, {method: 'POST', body})
+      json = await response.json()
+
+      await AsyncStorage.setItem('token', json.results.token);
+      this.props.navigation.navigate('FillProfileFirst')
+    }
   }
-  
+
   render(){
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
@@ -26,26 +57,34 @@ export default class SignUp extends React.Component{
         <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE}/>
         <Title size="small"/>
         <View style={styles.form}>
-          <FloatingLabel 
+          <FloatingLabel
               labelStyle={styles.labelInput}
               inputStyle={styles.input}
-              style={styles.formInput}>Name</FloatingLabel>
-          <FloatingLabel 
+              style={styles.formInput}
+              value={this.state.data.name}
+              onChangeText={(event) => this.onChange('name', event)}>Name</FloatingLabel>
+          <FloatingLabel
               labelStyle={styles.labelInput}
               inputStyle={styles.input}
               keyboardType="email"
-              style={styles.formInput}>Email Address</FloatingLabel>
+              style={styles.formInput}
+              value={this.state.data.email}
+              onChangeText={(event) => this.onChange('email', event)}>Email Address</FloatingLabel>
           <FloatingLabel
               labelStyle={styles.labelInput}
               inputStyle={styles.input}
               password={true}
-              style={styles.formInput}>Password</FloatingLabel>
+              style={styles.formInput}
+              value={this.state.data.password}
+              onChangeText={(event) => this.onChange('password', event)}>Password</FloatingLabel>
           <FloatingLabel
               labelStyle={styles.labelInput}
               inputStyle={styles.input}
               password={true}
-              style={[styles.formInput,styles.below]}>Re-Password</FloatingLabel>
-          <Button text="SIGN UP" size="long" onPress={this.goToFillProfile} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} /> 
+              style={[styles.formInput,styles.below]}
+              value={this.state.data.re_password}
+              onChangeText={(event) => this.onChange('re_password', event)}>Re-Password</FloatingLabel>
+          <Button text="SIGN UP" size="long" onPress={this.goToFillProfile} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />
         </View>
         <Footer />
       </LinearGradient>

@@ -7,8 +7,33 @@ import { styles } from './styles';
 import Color from '../../config/Color'
 
 export default class FillProfileSecond extends React.Component{
+    constructor(props) {
+      super(props)
+
+      this.state = {
+        data: {
+          activity_level: ''
+        }
+      }
+    }
+
+    onSelect = (index, value) => {
+      console.log(value)
+      const data = this.state.data
+      data.activity_level = value
+      this.setState({ data })
+    }
+
     next = () => {
-      this.props.navigation.navigate('FillProfileAnalysis')
+      const token = await AsyncStorage.getItem('token');
+      const body = JSON.stringify(this.state.data)
+      const headers = {"Authorization": 'Bearer ' + token}
+      let response = await fetch(`http://103.252.100.230/fact/member/user`, {method: 'PUT', body, headers})
+      let json = await response.json()
+
+      if (json.message === "Success") {
+        this.props.navigation.navigate('FillProfileAnalysis');
+      }
     }
 
     render(){
@@ -30,7 +55,7 @@ export default class FillProfileSecond extends React.Component{
                     </View>
                   </RadioButton>
 
-                  <RadioButton value={'mod'}>
+                  <RadioButton value={'medium'}>
                     <Text style={styles.radioLabel}>Moderate Activity Level</Text>
                     <View style={styles.wrapText}>
                       <View style={styles.image}/>
