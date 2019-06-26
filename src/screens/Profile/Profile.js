@@ -20,8 +20,67 @@ export default class Profile extends React.Component{
       isOpen: false,
       activityInfo: false,
       bodyInfo: false,
-      isEdit: false
+      isEdit: false,
+      data: {
+        weight: '',
+        height: '',
+      },
+      user: {
+        name: '',
+        status: '',
+        weight: '',
+        height: '',
+        bmi: '',
+        carbohydrate: '',
+        protein: '',
+        fat: '',
+        activity_level: '',
+      }
     }
+
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    this.onRefresh = this.onRefresh.bind(this)
+  }
+
+  onChange(key, text) {
+    const data = this.state.data
+    data[key] = text
+    this.setState({ data })
+  }
+
+  async onSubmit() {
+    const token = await AsyncStorage.getItem('token');
+    const body = JSON.stringify(this.state.data)
+    const headers = {"Authorization": 'Bearer ' + token}
+    let response = await fetch(`http://103.252.100.230/fact/member/user`, {method: 'PUT', body, headers})
+    let json = await response.json()
+
+    if (json.message === "Success") {
+      this.onRefresh()
+      this.setState({isEdit:!this.state.isEdit})
+    }
+  }
+
+  async onRefresh() {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/user`, {headers})
+    const json = await response.json()
+
+    const user = {
+      name: json.results.name,
+      status: json.results.status,
+      weight: json.results.weight,
+      height: json.results.height,
+      bmi: json.results.bmi,
+      carbohydrate: json.results.carbohydrate,
+      protein: json.results.protein,
+      fat: json.results.fat,
+      activity_level: json.results.activity_level
+    }
+
+    this.setState({ user })
   }
 
   editProfile = () => {
@@ -31,7 +90,7 @@ export default class Profile extends React.Component{
   changePass = () => {
     this.props.navigation.navigate('ChangePassword')
   }
-  
+
   logout = () => {
     this.setState({isOpen:!this.state.isOpen})
   }
@@ -56,6 +115,10 @@ export default class Profile extends React.Component{
     this.props.navigation.navigate('Base')
   }
 
+  componentDidMount() {
+    this.onRefresh()
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -65,8 +128,8 @@ export default class Profile extends React.Component{
                 <MIcon name="edit" size={24} color={Color.APP_WHITE} />
             </TouchableOpacity>
             <View style={styles.image}></View>
-            <Text style={styles.name}>Name</Text>
-            <Text style={styles.status}>Underweight</Text>
+            <Text style={styles.name}>{this.state.user.name}</Text>
+            <Text style={styles.status}>{this.state.user.status}</Text>
         </LinearGradient>
         <View style={styles.row}>
             <TouchableOpacity style={styles.buttonInRow} onPress={this.toggleBody}>
@@ -100,19 +163,29 @@ export default class Profile extends React.Component{
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>Weight</Text>
-              <TextInput placeholder="40" keyboardType="numeric" style={styles.numInput}/>
+              <TextInput
+                placeholder="40"
+                keyboardType="numeric"
+                style={styles.numInput}
+                value={this.state.data.weight}
+                onChangeText={(event) => this.onChange('weight', event)}/>
               <Text style={styles.text}>kg</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.label}>Height</Text>
-              <TextInput placeholder="162" keyboardType="numeric" style={styles.numInput}/>
+              <TextInput
+                placeholder="162"
+                keyboardType="numeric"
+                style={styles.numInput}
+                value={this.state.data.height}
+                onChangeText={(event) => this.onChange('height', event)}/>
               <Text style={styles.text}>cm</Text>
             </View>
             <TouchableOpacity>
               <Text style={styles.modalButton}>OK</Text>
             </TouchableOpacity>
         </Modal>
-        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo} 
+        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo}
           coverScreen={true}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>BODY INFORMATION</Text>
@@ -125,17 +198,17 @@ export default class Profile extends React.Component{
                 <View style={[styles.row,styles.evenly]}>
                   <Text style={styles.label}>Weight</Text>
                   <Text style={styles.text}>:</Text>
-                  <Text style={[styles.text,styles.info]}>42 kg</Text>
+                  <Text style={[styles.text,styles.info]}>{this.state.user.weight} kg</Text>
                 </View>
                 <View style={[styles.row,styles.evenly]}>
                   <Text style={styles.label}>Height</Text>
                   <Text style={styles.text}>:</Text>
-                  <Text style={[styles.text,styles.info]}>162 cm</Text>
+                  <Text style={[styles.text,styles.info]}>{this.state.user.height} cm</Text>
                 </View>
                 <View style={[styles.row,styles.evenly]}>
                   <Text style={styles.label}>BMI</Text>
                   <Text style={styles.text}>:</Text>
-                  <Text style={[styles.text,styles.info]}>19.4</Text>
+                  <Text style={[styles.text,styles.info]}>{parseFloat(this.state.user.bmi).toFixed(1)}</Text>
                 </View>
               </View>
               <TouchableOpacity onPress={this.toggleEdit}>
@@ -144,12 +217,12 @@ export default class Profile extends React.Component{
             </View>
             <Text style={[styles.label,styles.belowMargin]}>Nutritions</Text>
             <View style={[styles.row,styles.evenly]}>
-              <CircleWithText number="70" type="carb" />
-              <CircleWithText number="20" type="pro" />
-              <CircleWithText number="50" type="fat" />
+              <CircleWithText number={this.state.user.carbohydrate} type="carb" />
+              <CircleWithText number={this.state.user.protein} type="pro" />
+              <CircleWithText number={this.state.user.fat} type="fat" />
             </View>
         </Modal>
-        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.activityInfo} 
+        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.activityInfo}
           coverScreen={true}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>ACTIVITY LEVEL</Text>
@@ -157,7 +230,7 @@ export default class Profile extends React.Component{
                 <AIcon name="close" size={20} />
               </TouchableOpacity>
             </View>
-            <Text style={[styles.bold,styles.belowMargin]}>LOW ACTIVITY (SEDENTARY)</Text>
+            <Text style={[styles.bold,styles.belowMargin]}>{this.state.user.activity_level.toUpperCase()} ACTIVITY (SEDENTARY)</Text>
             <View style={[styles.row,styles.belowMargin]}>
               <View style={styles.square} />
               <Text style={[styles.text,styles.paragraph]}>Are you sure you want to log out your account? loren ipsum adkslsadja dsfksldjf dsfkjdlf eiewr. sdfksalfdaslsdkfj sdfksdfjslfjsofsi </Text>

@@ -37,7 +37,6 @@ export default class Login extends React.Component{
 
   goToDiary = async () => {
     const body = JSON.stringify(this.state.data)
-    console.log("Body",body)
     const response = await fetch(`http://103.252.100.230/fact/login`, {method: 'POST', body})
     const json = await response.json()
 
