@@ -23,6 +23,11 @@ export default class ViewArticle extends Component {
         }
     }
 
+    componentWillUnmount() {
+      StatusBar.setTranslucent(false);
+      StatusBar.setBackgroundColor(Color.YELLOW,true);
+    }
+
     back = () => {
       this.props.navigation.goBack();
     }
