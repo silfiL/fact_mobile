@@ -122,7 +122,7 @@ export default class History extends React.Component{
 
     return(
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={Color.BLUE} />
+        <StatusBar barStyle="light-content" backgroundColor={Color.BLUE} translucent={false}/>
         <View style={styles.header}>
           <Text style={styles.headerText}>HISTORY</Text>
         </View>
@@ -148,7 +148,7 @@ export default class History extends React.Component{
                 confirmBtnText="OK"
                 cancelBtnText="Cancel"
                 showIcon={false}
-                customStyles={{dateInput:styles.dateInput}}
+                customStyles={{dateInput:styles.dateInput,dateText:styles.dateText}}
               />
               <Text style={styles.showText}>to</Text>
               <DatePicker

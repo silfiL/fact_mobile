@@ -76,5 +76,9 @@ export const styles = StyleSheet.create({
       color: Color.LIGHT_BLUE,
       fontFamily: 'SourceSansPro-Regular',
       marginTop: -Size.HEIGHT1*0.1
+    },
+    dateText: {
+      fontFamily: 'SourceSansPro-Regular',
+      color: Color.FONT_GREY,
     }
 })

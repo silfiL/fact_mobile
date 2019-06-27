@@ -113,6 +113,7 @@ export default class Profile extends React.Component{
 
   goToBase = () => {
     this.props.navigation.navigate('Base')
+    this.setState({isOpen:false})
   }
 
   componentDidMount() {
