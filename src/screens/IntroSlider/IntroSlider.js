@@ -2,7 +2,7 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 import { styles } from './styles';
@@ -81,9 +81,28 @@ export default class IntroSlider extends React.Component {
       </View>
     </LinearGradient>
   );
-  _goToNext = () => {
+  _goToNext = async () => {
     console.log("jalan")
+    await AsyncStorage.setItem('first_time', "true");
     this.props.navigation.navigate('Base')
+  }
+
+  async componentDidMount() {
+    const firstTime = await AsyncStorage.getItem('first_time')
+    console.log(firstTime)
+    if (firstTime !== null) {
+      const token = await AsyncStorage.getItem('token');
+      if (token === null)
+        return this.props.navigation.navigate('Base')
+
+      const headers = {"Authorization": 'Bearer ' + token}
+      const response = await fetch(`http://103.252.100.230/fact/check`, {headers})
+      const json = await response.json()
+      if (json.message !== "Success")
+        return this.props.navigation.navigate('Base')
+
+      return this.props.navigation.navigate('Homepage')
+    }
   }
 
   render() {

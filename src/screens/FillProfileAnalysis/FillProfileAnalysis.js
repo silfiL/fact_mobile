@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, AsyncStorage } from 'react-native';
 import { Button } from '../../components/Button';
 import { styles } from './styles';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, StatusBar, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, StatusBar, TextInput, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -55,7 +55,7 @@ export default class Profile extends React.Component{
     const headers = {"Authorization": 'Bearer ' + token}
     let response = await fetch(`http://103.252.100.230/fact/member/user`, {method: 'PUT', body, headers})
     let json = await response.json()
-
+    console.log("JSON #1", json)
     if (json.message === "Success") {
       this.onRefresh()
       this.setState({isEdit:!this.state.isEdit})
@@ -182,7 +182,7 @@ export default class Profile extends React.Component{
                 onChangeText={(event) => this.onChange('height', event)}/>
               <Text style={styles.text}>cm</Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.onSubmit}>
               <Text style={styles.modalButton}>OK</Text>
             </TouchableOpacity>
         </Modal>

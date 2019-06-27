@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StatusBar } from 'react-native';
+import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import FloatingLabel from 'react-native-floating-labels';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -38,7 +38,7 @@ export default class EditProfile extends React.Component{
       this.setState({ data })
     }
 
-    next = () => {
+    next = async () => {
       console.log("do nothing")
       const token = await AsyncStorage.getItem('token');
       const body = JSON.stringify(this.state.data)

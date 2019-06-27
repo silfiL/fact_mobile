@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StatusBar, AsyncStorage} from 'react-native'
 import Modal from 'react-native-modalbox'
 import Icon from 'react-native-vector-icons/AntDesign'
 import FloatingLabel from 'react-native-floating-labels'
@@ -15,7 +15,45 @@ export default class AddFood extends React.Component{
     super(props);
     this.state = {
       isOpen: false,
-      value: 0
+      value: 0,
+      data: {
+        name: '',
+        fat: 0,
+        calorie: 0,
+        protein: 0,
+        carbohydrate: 0,
+        category: 1
+      },
+    }
+
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  onChange(key, text) {
+    const data = this.state.data
+    data[key] = text
+    this.setState({ data })
+  }
+
+  async onSubmit() {
+    const body = JSON.stringify(this.state.data)
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    let response = await fetch(`http://103.252.100.230/fact/member/food`, {method: 'POST', body, headers})
+    let json = await response.json()
+
+    if (json.message === 'Success') {
+      const data = {
+        name: '',
+        fat: 0,
+        calorie: 0,
+        protein: 0,
+        carbohydrate: 0,
+        category: 1
+      }
+
+      await this.setState({data, isOpen:!this.state.isOpen})
     }
   }
 
@@ -69,30 +107,40 @@ export default class AddFood extends React.Component{
                 <Icon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
-            <FloatingLabel 
+            <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
-                style={styles.formInput}>Food Name</FloatingLabel>
-            <FloatingLabel 
+                style={styles.formInput}
+                value={this.state.data.name}
+                onChangeText={(event) => this.onChange('name', event)}>Food Name</FloatingLabel>
+            <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
-                style={styles.formInput}>Calories</FloatingLabel>
-            <FloatingLabel 
+                style={styles.formInput}
+                value={this.state.data.calorie}
+                onChangeText={(event) => this.onChange('calorie', event)}>Calories</FloatingLabel>
+            <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
-                style={styles.formInput}>Carb</FloatingLabel>
-            <FloatingLabel 
+                style={styles.formInput}
+                value={this.state.data.carbohydrate}
+                onChangeText={(event) => this.onChange('carbohydrate', event)}>Carb</FloatingLabel>
+            <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
-                style={styles.formInput}>Protein</FloatingLabel>
-            <FloatingLabel 
+                style={styles.formInput}
+                value={this.state.data.protein}
+                onChangeText={(event) => this.onChange('protein', event)}>Protein</FloatingLabel>
+            <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
-                style={styles.formInput}>Fat</FloatingLabel>
+                style={styles.formInput}
+                value={this.state.data.fat}
+                onChangeText={(event) => this.onChange('fat', event)}>Fat</FloatingLabel>
             <View style={styles.blankRow} >
               <View style={styles.blank}/>
               <View style={styles.modalButtonRow}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.onSubmit}>
                   <Text style={styles.modalButton}>SAVE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>

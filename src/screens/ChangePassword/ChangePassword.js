@@ -47,13 +47,13 @@ export default class ChangePassword extends React.Component{
   }
 
   async componentDidMount() {
-    const value = await AsyncStorage.getItem('token');
-    if (value === null) return this.props.navigation.navigate('Login')
+    const token = await AsyncStorage.getItem('token');
+    if (token === null) return this.props.navigation.navigate('Login')
 
     const headers = {"Authorization": 'Bearer ' + token}
     const response = await fetch(`http://103.252.100.230/fact/check`, {headers})
     const json = await response.json()
-    if (json.message !== "Success") return this.props.navigation.goBack()
+    if (json.message !== "Success") return this.props.navigation.navigate('Login')
   }
 
   render(){

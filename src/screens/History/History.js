@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Dimensions, ScrollView, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, ScrollView, StatusBar, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker'
 import { styles } from './styles';
@@ -49,6 +49,7 @@ export default class History extends React.Component{
     const response = await fetch(`http://103.252.100.230/fact/member/history/intake?year=${date.getFullYear()}&month=${date.getMonth() + 1}&day=${date.getDate()}`, {headers})
     const json = await response.json()
 
+    console.log("JSON #1", json)
     const data = {
       week: json.results.week,
       month: json.results.month
@@ -88,18 +89,21 @@ export default class History extends React.Component{
     await this.onRefreshIntake()
   }
 
-  render(){
+  render() {
     let date = new Date()
     let monthDate = new Date()
+    let pieData = []
     const weekLabels = []
 
     if (this.state.end !== '') {
       date = new Date(this.state.end)
       weekLabels.push(date.datetimeformat('date'))
-      for (let i=0; i<6; i++) {
-        date.setDate(date.getDate() - 1)
-        weekLabels.push(date.datetimeformat('date'))
-      }
+
+      for (let i=0; i<5; i++)
+        weekLabels.push('')
+
+      date.setDate(date.getDate() - 6)
+      weekLabels.push(date.datetimeformat('date'))
 
       date = new Date(this.state.end)
       monthDate = new Date(date.setDate(date.getDate() - 30))
@@ -114,11 +118,16 @@ export default class History extends React.Component{
       }]
     }
 
-    const pieData = [
-      { name: 'Below', calorie: this.state.data.month.below, color: Color.LIGHT_BLUE, legendFontColor: Color.BLUE, legendFontSize: 15 },
-      { name: 'Ideal', calorie: this.state.data.month.ideal, color: Color.LIGHT_GREEN, legendFontColor: Color.GREEN, legendFontSize: 15 },
-      { name: 'Over', calorie: this.state.data.month.over, color: Color.LIGHT_RED, legendFontColor: Color.RED, legendFontSize: 15 },
-    ]
+    if (this.state.data.month.below !== 0 || this.state.data.month.ideal !== 0 || this.state.data.month.over !== 0) {
+      const below = (this.state.data.month.below === 0) ? 0.00001 : this.state.data.month.below
+      const ideal = (this.state.data.month.ideal === 0) ? 0.00001 : this.state.data.month.ideal
+      const over = (this.state.data.month.over === 0) ? 0.00001 : this.state.data.month.over
+      pieData = [
+        { name: 'Below', calorie: below, color: Color.LIGHT_BLUE, legendFontColor: Color.BLUE, legendFontSize: 15 },
+        { name: 'Ideal', calorie: ideal, color: Color.LIGHT_GREEN, legendFontColor: Color.GREEN, legendFontSize: 15 },
+        { name: 'Over', calorie: over, color: Color.LIGHT_RED, legendFontColor: Color.RED, legendFontSize: 15 },
+      ]
+    }
 
     return(
       <View style={styles.container}>
@@ -182,7 +191,7 @@ export default class History extends React.Component{
               accessor="calorie"
               backgroundColor="transparent"
               paddingLeft={15}
-            /><Text style={styles.month}>({(this.state.end !== '') ? date.dateformat('date') : ''} - {(this.state.end !== '') ? monthDate.dateformat('date') : ''})</Text>
+            /><Text style={styles.month}>({(this.state.end !== '') ? date.datetimeformat('date') : ''} - {(this.state.end !== '') ? monthDate.datetimeformat('date') : ''})</Text>
             </View>:
             <View style={[styles.subContainer,styles.padBottom]}>
               <MyProgressBar progress={20}/>

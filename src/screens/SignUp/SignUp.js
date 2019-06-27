@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StatusBar } from 'react-native'
+import { View, Text, StatusBar, AsyncStorage } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels'
 import LinearGradient from 'react-native-linear-gradient'
 import { Button } from '../../components/Button'
@@ -40,11 +40,12 @@ export default class SignUp extends React.Component{
     const body = JSON.stringify(this.state.data)
     let response = await fetch(`http://103.252.100.230/fact/register`, {method: 'POST', body})
     let json = await response.json()
-
+    console.log("JSON #1", json)
     if (json.message === 'Success') {
       response = await fetch(`http://103.252.100.230/fact/login`, {method: 'POST', body})
       json = await response.json()
 
+      console.log("JSON #2", json)
       await AsyncStorage.setItem('token', json.results.token);
       this.props.navigation.navigate('FillProfileFirst')
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, AsyncStorage } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import { Button } from '../../components/Button';
 import { styles } from './styles';
@@ -24,13 +24,13 @@ export default class FillProfileSecond extends React.Component{
       this.setState({ data })
     }
 
-    next = () => {
+    next = async () => {
       const token = await AsyncStorage.getItem('token');
       const body = JSON.stringify(this.state.data)
       const headers = {"Authorization": 'Bearer ' + token}
-      let response = await fetch(`http://103.252.100.230/fact/member/user`, {method: 'PUT', body, headers})
+      let response = await fetch(`http://103.252.100.230/fact/member/activity-level`, {method: 'POST', body, headers})
       let json = await response.json()
-
+      console.log("JSON #1", json)
       if (json.message === "Success") {
         this.props.navigation.navigate('FillProfileAnalysis');
       }

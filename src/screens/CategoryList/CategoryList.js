@@ -27,25 +27,39 @@ export default class CategoryList extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: categoryArr
+      data: [],
     }
+
+    this.onRefresh = this.onRefresh.bind(this)
+  }
+
+  async onRefresh () {
+    const response = await fetch(`http://103.252.100.230/fact/food-category?name=all`)
+    const json = await response.json()
+
+    const data = json.results.categories
+    this.setState({ data })
   }
 
   back = () => {
     this.props.navigation.goBack()
   }
 
-  _onPressItem = (id) => {
-    this.props.navigation.navigate('ViewCategory')
+  _onPressItem = (category, name) => {
+    this.props.navigation.navigate('ViewCategory', { category, name })
   };
 
   _renderItem = ({item}) => (
     <SimpleListItem
       id={item.id}
-      onPressItem={this._onPressItem}
+      onPressItem={() => this._onPressItem(item.id, item.name)}
       title={item.name}
     />
   );
+
+  componentDidMount() {
+    this.onRefresh()
+  }
 
   render(){
     return(

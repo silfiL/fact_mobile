@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StatusBar } from 'react-native';
+import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '../../components/Button';
@@ -14,7 +14,7 @@ export default class FillProfileFirst extends React.Component{
             gender: 'male',
             data: {
                 birth_year: '',
-                gender: '',
+                gender: '1',
                 weight: '',
                 height: ''
             }
