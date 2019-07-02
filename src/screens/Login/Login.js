@@ -50,6 +50,20 @@ export default class Login extends React.Component{
     this.props.navigation.navigate('ForgetPassword')
   }
 
+  async componentDidMount () {
+    const token = await AsyncStorage.getItem('token');
+    if (token === null)
+      return this.props.navigation.navigate('Base')
+
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/check`, {headers})
+    const json = await response.json()
+    if (json.message !== "Success")
+      return this.props.navigation.navigate('Base')
+
+    return this.props.navigation.navigate('Homepage')
+  }
+
   render(){
     return(
      <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>

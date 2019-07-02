@@ -5,11 +5,11 @@ import Wave from 'react-native-waveview'
 import { styles } from './styles'
 import Color from '../../config/Color'
 
-const WaveProgress = ({percent,type}) => {
+const WaveProgress = ({percent,type, waveRef}) => {
   let primary;
   let secondary;
   let textStyle;
-  if (type == "carb"){
+  if (type == "carbohydrate"){
     primary = Color.LIGHT_RED,
     secondary = Color.RED,
     textStyle = [styles.percent,styles.red]
@@ -22,11 +22,12 @@ const WaveProgress = ({percent,type}) => {
     secondary = Color.BLUE,
     textStyle = [styles.percent,styles.green]
   }
-  
+
   return(
     <View style={styles.bigCircle}>
       <Text style={textStyle}>{percent} %</Text>
       <Wave
+          ref={ref => waveRef(ref, type)}
           style={styles.waveBall}
           H={percent}
           waveParams={[

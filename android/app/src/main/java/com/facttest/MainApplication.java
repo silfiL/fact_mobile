@@ -3,6 +3,7 @@ package com.facttest;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.sensors.RNSensorsPackage;
 import com.horcrux.svg.SvgPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSensorsPackage(),
             new SvgPackage(),
             new LinearGradientPackage(),
             new VectorIconsPackage(),

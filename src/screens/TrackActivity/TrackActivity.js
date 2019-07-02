@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList, StatusBar } from 'react-native'
+import { View, Text, FlatList, StatusBar, AsyncStorage } from 'react-native'
 import { Button } from '../../components/Button'
 import { Stopwatch } from 'react-native-stopwatch-timer'
 import { RowThreeListItem } from '../../components/RowThreeListItem'
@@ -8,18 +8,9 @@ import LinearGradient from 'react-native-linear-gradient'
 import { styles } from './styles'
 import Color from '../../config/Color'
 import Size from '../../config/Size'
+import { accelerometer } from "react-native-sensors";
 
-const resultArr = [{
-  id: '1',
-  activity: 'Walking',
-  time: '10 mins',
-  burnt: '200 kcal'
-},{
-  id: '2',
-  activity: 'Stairs',
-  time: '3 mins',
-  burnt: '200 kcal'
-},]
+let subscription = accelerometer
 
 export default class TrackActivity extends React.Component{
   constructor(props){
@@ -28,28 +19,52 @@ export default class TrackActivity extends React.Component{
       showButton: true,
       stopwatchStart: false,
       stopwatchStop: undefined,
-      data: resultArr
+      result: [],
+      data: []
     }
   }
 
   startStopwatch = () => {
+    const self = this
     this.setState({stopwatchStart:true})
     this.setState({showButton:false})
+    subscription = accelerometer.subscribe(
+      ({ x, y, z, timestamp }) => {
+        const data = self.state.data
+        data.push([timestamp, x, y, z])
+      }
+    )
   }
 
-  stopStopwatch = () => {
+  stopStopwatch = async () => {
     this.setState({stopwatchStart:false})
     this.setState({stopwatchStop:true})
+
+    subscription.unsubscribe()
+
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const body = JSON.stringify({
+      raw_data: this.state.data
+    })
+    const response = await fetch(`http://103.252.100.230/fact/member/burnt`, {headers, body, method: 'POST'})
+    const json = await response.json()
+
+    const result = json.results
+    this.setState({ result })
   }
 
-  _renderItem = ({item}) => (
-    <RowThreeListItem
+  _renderItem = ({item}) => {
+    let times = parseInt(item.time)
+    let minutes = (times >= 60) ? parseInt(times / 60) : 0
+    let seconds = parseInt(times % 60)
+    return (<RowThreeListItem
       id={item.id}
-      activity={item.activity}
-      time={item.time}
-      burnt={item.burnt}
-    />
-  );
+      activity={item.label}
+      time={`${(minutes > 0) ? minutes + ' min(s) ' : ''}${(seconds > 0) ? seconds + ' sec(s)' : ''}`}
+      burnt={`${parseFloat(item.burnt).toFixed(2)} kcal`}
+    />)
+  };
 
   back = () => {
     this.props.navigation.goBack()
@@ -59,7 +74,7 @@ export default class TrackActivity extends React.Component{
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
         <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
-        <HeaderBackButton onPressBack={this.back} bgColor={Color.TRANSPARENT} iconColor={Color.APP_WHITE}/> 
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.TRANSPARENT} iconColor={Color.APP_WHITE}/>
          {this.state.showButton &&
           <View style={styles.centerCont}>
             <Text style={styles.text}>Press the button below to start</Text>
@@ -83,11 +98,11 @@ export default class TrackActivity extends React.Component{
             <Text style={[styles.text,styles.smallerBelow]}>RESULT</Text>
             <FlatList
                 style={styles.list}
-                data={this.state.data}
+                data={this.state.result}
                 keyExtractor={item=>item.id}
                 renderItem={this._renderItem}
               />
-              
+
           </View>}
       </LinearGradient>
     )
