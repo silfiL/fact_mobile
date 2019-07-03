@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     modal: {
         padding: Size.WIDTH*0.05,
         width: Size.WIDTH9,
-        height: Size.HEIGHT*0.45
+        height: null
     },
     modalTitle: {
       fontFamily: 'SourceSansPro-Bold',

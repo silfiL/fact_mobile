@@ -83,8 +83,10 @@ export default class Diary extends Component {
       }
   }
 
-  goToAddFood = () => {
-    this.props.navigation.navigate('AddFood')
+  goToAddFood = (id) => {
+    this.props.navigation.navigate('AddFood', {
+      id, onDiaryRefresh: this.onRefresh
+    })
   }
 
   goToTrack = () => {
@@ -135,10 +137,10 @@ export default class Diary extends Component {
 
   renderContent = () => {
     console.log(this.state.recommendation_calorie)
-    let breakfast = (this.state.intake.breakfast.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.breakfast) - 50} recMax={parseInt(this.state.recommendation_calorie.breakfast) + 50} onPress={this.goToAddFood} text="Food"/>
-    let lunch = (this.state.intake.lunch.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.lunch) - 50} recMax={parseInt(this.state.recommendation_calorie.lunch) + 50} onPress={this.goToAddFood} text="Food"/>
-    let dinner = (this.state.intake.dinner.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.dinner) - 50} recMax={parseInt(this.state.recommendation_calorie.dinner) + 50} onPress={this.goToAddFood} text="Food"/>
-    let snack = (this.state.intake.snack.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.snack) - 50} recMax={parseInt(this.state.recommendation_calorie.snack) + 50} onPress={this.goToAddFood} text="Food"/>
+    let breakfast = (this.state.intake.breakfast.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.breakfast) - 50} recMax={parseInt(this.state.recommendation_calorie.breakfast) + 50} onPress={() => this.goToAddFood(1)} text="Food"/>
+    let lunch = (this.state.intake.lunch.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.lunch) - 50} recMax={parseInt(this.state.recommendation_calorie.lunch) + 50} onPress={() => this.goToAddFood(2)} text="Food"/>
+    let dinner = (this.state.intake.dinner.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.dinner) - 50} recMax={parseInt(this.state.recommendation_calorie.dinner) + 50} onPress={() => this.goToAddFood(3)} text="Food"/>
+    let snack = (this.state.intake.snack.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.snack) - 50} recMax={parseInt(this.state.recommendation_calorie.snack) + 50} onPress={() => this.goToAddFood(4)} text="Food"/>
     let exercise = (this.state.burnt.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.calorie.total_burnt) - 50} recMax={parseInt(this.state.calorie.total_burnt) + 50} onPress={this.goToTrack} text="Exercise"/>
     let total = {
       breakfast: 0,

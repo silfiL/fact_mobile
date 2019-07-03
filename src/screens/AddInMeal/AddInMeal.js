@@ -7,28 +7,11 @@ import { styles } from './styles'
 
 import Color from '../../config/Color'
 
-const foodArr = [{
-  id: '1',
-  name: 'Fried Noodles',
-  calorie: '200 KCAL',
-  portion: 1
-},{
-  id: '2',
-  name: 'Fried Noodles',
-  calorie: '200 KCAL',
-  portion: 1
-},{
-  id: '3',
-  name: 'Fried Noodles',
-  calorie: '200 KCAL',
-  portion: 1
-},]
-
 export default class AddInMeal extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: foodArr
+      data: []
     }
   }
 
@@ -41,7 +24,8 @@ export default class AddInMeal extends React.Component{
   };
 
   toMeal = () => {
-    this.props.navigation.navigate('Meal')
+    this.props.navigation.state.params.addFoodFromBasket(this.state.data)
+    this.props.navigation.navigate('CreateMeal')
   }
 
   _renderItem = ({item}) => (
@@ -49,10 +33,16 @@ export default class AddInMeal extends React.Component{
       id={item.id}
       onPressItem={this._onPressItem}
       name={item.name}
-      calorie={item.calorie}
-      portion={item.portion}
+      calorie={`${parseInt(parseFloat(item.calorie) * parseFloat(item.qty))} kcal`}
+      portion={item.qty}
     />
   );
+
+  componentDidMount() {
+    let {data} = this.state
+    data = this.props.navigation.state.params.foods
+    this.setState({data})
+  }
 
   render(){
     return(
@@ -65,7 +55,7 @@ export default class AddInMeal extends React.Component{
           renderItem={this._renderItem}
         />
         <View style={styles.center}>
-          <Button size="long" bgColor={Color.LIGHT_BLUE} text="SAVE AND RETURN TO MEAL" txtColor={Color.APP_WHITE} onPress={this.toMeal} />
+          <Button size="long" bgColor={Color.LIGHT_BLUE} text="SAVE AND RETURN TO CREATE MEAL" txtColor={Color.APP_WHITE} onPress={this.toMeal} />
         </View>
       </View>
     )

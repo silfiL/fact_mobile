@@ -22,7 +22,7 @@ export default class AddFood extends React.Component{
         calorie: 0,
         protein: 0,
         carbohydrate: 0,
-        category: 1
+        category: 0
       },
     }
 
@@ -66,7 +66,10 @@ export default class AddFood extends React.Component{
   }
 
   goToSearch = () => {
-    this.props.navigation.navigate('SearchFood')
+    this.props.navigation.navigate('SearchFood', {
+      id: this.props.navigation.state.params.id,
+      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh
+    })
   }
 
   recent = () => {
@@ -74,7 +77,10 @@ export default class AddFood extends React.Component{
   }
 
   meal = () => {
-    this.props.navigation.navigate('Meal')
+    this.props.navigation.navigate('Meal', {
+      id: this.props.navigation.state.params.id,
+      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh
+    })
   }
 
   categories = () => {
@@ -82,11 +88,18 @@ export default class AddFood extends React.Component{
   }
 
   render(){
+    let title = ''
+    switch (this.props.navigation.state.params.id) {
+      case 1: title = 'BREAKFAST'; break;
+      case 2: title = 'LUNCH'; break;
+      case 3: title = 'DINNER'; break;
+      case 4: title = 'SNACK'; break;
+    }
     return(
       <View style={styles.container}>
         <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
         <View style={styles.header}>
-          <HeaderBackButton title="LUNCH" onPressBack={this.back} iconColor={Color.APP_WHITE} />
+          <HeaderBackButton title={title} onPressBack={this.back} iconColor={Color.APP_WHITE} />
           <TextInput placeholder="Search Food" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onFocus={this.goToSearch}/>
         </View>
         <View style={styles.center}>

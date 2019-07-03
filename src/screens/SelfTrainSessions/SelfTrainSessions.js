@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, FlatList, Text, StatusBar, TouchableOpacity} from 'react-native'
+import { View, FlatList, Text, StatusBar, TouchableOpacity, AsyncStorage} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { ListItemWithButton } from '../../components/ListItemWithButton'
 import { FloatingButton } from '../../components/FloatingButton'
@@ -8,24 +8,16 @@ import { styles } from './styles'
 
 import Color from '../../config/Color'
 
-const sessions = [{
-  id: '1',
-  date: '22nd March 2019',
-  time: '12.30 PM'
-},{
-  id: '2',
-  date: '5th March 2019',
-  time: '05.00 PM'
-}]
-
 export default class SelfTrainSessions extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: sessions,
+      data: [],
       isOpen: false,
       deleteDate: null
     }
+
+    this.onRefresh = this.onRefresh.bind(this)
   }
 
   back = () => {
@@ -48,7 +40,34 @@ export default class SelfTrainSessions extends React.Component{
   );
 
   addSession = () => {
-    this.props.navigation.navigate('SelfTrain')
+    this.props.navigation.navigate('SelfTrain', {
+      id: this.props.navigation.state.params.id,
+      label: this.props.navigation.state.params.label
+    })
+  }
+
+  async onRefresh() {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    console.log(this.props.navigation.state.params.id, token)
+    const response = await fetch(`http://103.252.100.230/fact/member/activity?id=${this.props.navigation.state.params.id}`, {headers})
+    const json = await response.json()
+
+    let data = []
+    for (let i = 0, l = json.results.activity.length; i < l; i++) {
+      let date = new Date(json.results.activity[i].requested_at)
+      data.push({
+        id: date,
+        date: date.datetimeformat('date'),
+        time: date.datetimeformat('time')
+      })
+    }
+
+    this.setState({data})
+  }
+
+  componentDidMount() {
+    this.onRefresh()
   }
 
   render(){

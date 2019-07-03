@@ -53,7 +53,7 @@ export default class SelfTrain extends React.Component{
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const body = JSON.stringify({
-      label: 6,
+      label: this.props.navigation.state.params.id,
       raw_data: this.state.data
     })
     const response = await fetch(`http://103.252.100.230/fact/member/activity`, {headers, body, method: 'POST'})
@@ -81,7 +81,7 @@ export default class SelfTrain extends React.Component{
             <Text style={styles.text}>need your help to do the</Text>
             <Text style={styles.text}> instructions below :</Text>
           </View>
-          <Text style={styles.activity}>"Push up at the given times"</Text>
+          <Text style={styles.activity}>"{this.props.navigation.state.params.label} at the given times"</Text>
           {this.state.showButton == true ?
             <Button text="START" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} onPress={this.startTimer} size="short" />
           :<TimerCountdown
