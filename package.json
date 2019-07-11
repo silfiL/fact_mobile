@@ -24,6 +24,7 @@
     "react-native-numeric-input": "^1.6.5",
     "react-native-paper": "^2.16.0",
     "react-native-parallax-header": "^1.1.3",
+    "react-native-sensors": "^5.3.0",
     "react-native-slider": "^0.11.0",
     "react-native-stopwatch-timer": "0.0.20",
     "react-native-svg": "^9.4.0",

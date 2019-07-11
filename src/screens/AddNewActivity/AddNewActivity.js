@@ -21,25 +21,38 @@ export default class AddNewActivity extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: categoryArr
+      data: []
     }
+
+    this.onRefresh = this.onRefresh.bind(this)
   }
 
   back = () => {
     this.props.navigation.goBack()
   }
 
-  _onPressItem = (id) => {
-    this.props.navigation.navigate('SelfTrain',{actId:id})
+  _onPressItem = (id, label) => {
+    this.props.navigation.navigate('SelfTrain',{ id, label })
   };
 
   _renderItem = ({item}) => (
     <SimpleListItem
       id={item.id}
-      onPressItem={()=>this._onPressItem(item.id)}
+      onPressItem={()=>this._onPressItem(item.id, item.name)}
       title={item.name}
     />
   );
+
+  async onRefresh() {
+    const response = await fetch(`http://103.252.100.230/fact/activity?name=all`)
+    const json = await response.json()
+
+    this.setState({ data: json.results.activities })
+  }
+
+  componentDidMount() {
+    this.onRefresh()
+  }
 
   render(){
     return(

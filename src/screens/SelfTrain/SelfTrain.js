@@ -1,13 +1,16 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, TouchableOpacity, StatusBar, AsyncStorage } from 'react-native'
 import { Button } from '../../components/Button'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import TimerCountdown from 'react-native-timer-countdown'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './styles'
+import { accelerometer } from "react-native-sensors";
 
 import Color from '../../config/Color'
+
+let subscription = accelerometer
 
 export default class SelfTrain extends React.Component{
   constructor(props){
@@ -15,20 +18,48 @@ export default class SelfTrain extends React.Component{
     this.state = {
       showButton: true,
       timerDone: false,
+      data: []
     }
   }
 
   startTimer = () => {
+    const self = this
     this.setState({totalDuration:25000,showButton:false})
+    subscription = accelerometer.subscribe(
+      ({ x, y, z, timestamp }) => {
+        const data = self.state.data
+        data.push([timestamp, x, y, z])
+      }
+    )
   }
 
   reset = () => {
-    this.setState({totalDuration:25000,timerDone:false})
+    const self = this
+    this.setState({totalDuration:25000,timerDone:false, data: []})
+    subscription = accelerometer.subscribe(
+      ({ x, y, z, timestamp }) => {
+        const data = self.state.data
+        data.push([timestamp, x, y, z])
+      }
+    )
   }
 
-  handleTimerComplete = () => {
+  handleTimerComplete = async () => {
     this.setState({totalDuration:null,timerDone:true})
+    subscription.unsubscribe()
     alert('timer is completed')
+    console.log(this.state.data.length)
+
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const body = JSON.stringify({
+      label: this.props.navigation.state.params.id,
+      raw_data: this.state.data
+    })
+    const response = await fetch(`http://103.252.100.230/fact/member/activity`, {headers, body, method: 'POST'})
+    const json = await response.json()
+
+    console.log("JSON #1", json)
   }
 
   back = () => {
@@ -50,7 +81,7 @@ export default class SelfTrain extends React.Component{
             <Text style={styles.text}>need your help to do the</Text>
             <Text style={styles.text}> instructions below :</Text>
           </View>
-          <Text style={styles.activity}>"Push up at the given times"</Text>
+          <Text style={styles.activity}>"{this.props.navigation.state.params.label} at the given times"</Text>
           {this.state.showButton == true ?
             <Button text="START" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} onPress={this.startTimer} size="short" />
           :<TimerCountdown
@@ -66,7 +97,7 @@ export default class SelfTrain extends React.Component{
               allowFontScaling={true}
               style={[styles.text,styles.timer]}
           />}
-          {this.state.timerDone && 
+          {this.state.timerDone &&
               <Icon name="check-circle" size={100} color={Color.APP_WHITE} />}
           {this.state.timerDone &&
             <View>

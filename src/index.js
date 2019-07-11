@@ -1,5 +1,6 @@
 import React from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { StatusBar } from "react-native";
+import { createStackNavigator, createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IntroSlider from './screens/IntroSlider';
@@ -35,6 +36,7 @@ import SelfTrain from "./screens/SelfTrain";
 import SelfTrainSessions from './screens/SelfTrainSessions';
 import EvaluationForm from './screens/EvaluationForm';
 import EvaluationAnalysis from './screens/EvaluationAnalysis';
+import Splash from './screens/Splash';
 
 import Color from './config/Color';
 import SearchFoodMeal from "./screens/SearchFoodMeal";
@@ -43,15 +45,25 @@ Date.prototype.datetimeformat = function(option = "") {
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"];
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
-  const year = this.getFullYear()
-  const month = months[this.getMonth()]
-  const day = days[this.getDay()]
-  const date = (this.getDate() < 10) ? '0' + this.getDate() : this.getDate()
-  const hour = (this.getHours() < 10) ? '0' + this.getHours() : this.getHours()
-  const minute = (this.getMinutes() < 10) ? '0' + this.getMinutes() : this.getMinutes()
-  // const second = (this.getSeconds() < 10) ? '0' + this.getSeconds() : this.getSeconds()
+  let year = this.getFullYear()
+  let month = months[this.getMonth()]
+  let day = days[this.getDay()]
+  let date = (this.getDate() < 10) ? '0' + this.getDate() : this.getDate()
+  let hour = (this.getHours() < 10) ? '0' + this.getHours() : this.getHours()
+  let minute = (this.getMinutes() < 10) ? '0' + this.getMinutes() : this.getMinutes()
+  // let second = (this.getSeconds() < 10) ? '0' + this.getSeconds() : this.getSeconds()
+  let ampm = 'AM'
+
+  if (hour >= 12) {
+    hour = hour - 12
+    ampm = 'PM'
+  }
+
+  if (hour === 0)
+    hour = 12
 
   if (option === "date") return `${day}, ${date} ${month} ${year}`
+  if (option === "time") return `${hour}.${minute} ${ampm}`
   return `${date} ${month} ${year} ${hour}:${minute}`
 }
 
@@ -64,7 +76,13 @@ const HomepageTab = createMaterialBottomTabNavigator({
         ),
         activeColor: Color.APP_WHITE,
         inactiveColor: Color.GREEN,
-        barStyle: { backgroundColor: Color.LIGHT_GREEN }
+        barStyle: { backgroundColor: Color.LIGHT_GREEN },
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.GREEN, true);
+          StatusBar.setTranslucent(false);
+        }
       }
     },
   History: { screen: History,
@@ -75,7 +93,13 @@ const HomepageTab = createMaterialBottomTabNavigator({
         ),
         activeColor: Color.APP_WHITE,
         inactiveColor: Color.BLUE,
-        barStyle: { backgroundColor: Color.LIGHT_BLUE }
+        barStyle: { backgroundColor: Color.LIGHT_BLUE },
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.BLUE, true);
+          StatusBar.setTranslucent(false);
+        }
       }
     },
   Newsfeed: { screen: Newsfeed,
@@ -87,6 +111,12 @@ const HomepageTab = createMaterialBottomTabNavigator({
         activeColor: Color.APP_WHITE,
         inactiveColor: Color.YELLOW,
         barStyle: { backgroundColor: Color.LIGHT_YELLOW },
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.YELLOW, true);
+          StatusBar.setTranslucent(false);
+        }
       }
   },
   Profile: { screen: Profile,
@@ -94,7 +124,13 @@ const HomepageTab = createMaterialBottomTabNavigator({
         tabBarLabel:"Profile",
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" size={25} color={tintColor} />
-        )
+        ),
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.RED, true);
+          StatusBar.setTranslucent(false);
+        }
       }
     },
 }, {
@@ -104,8 +140,7 @@ const HomepageTab = createMaterialBottomTabNavigator({
   barStyle: { backgroundColor: Color.LIGHT_RED },
 });
 
-const rootStack = createStackNavigator({
-  IntroSlider: IntroSlider,
+const guessStack = createStackNavigator({
   Base: Base,
   Login: Login,
   SignUp: SignUp,
@@ -115,6 +150,12 @@ const rootStack = createStackNavigator({
   FillProfileSecond: FillProfileSecond,
   FillProfileAnalysis: FillProfileAnalysis,
   FirstTimeSTrain: FirstTimeSTrain,
+}, {
+  initialRouteName: 'Base',
+  headerMode: 'none'
+})
+
+const rootStack = createStackNavigator({
   AddFood: AddFood,
   SearchFood: SearchFood,
   RecentFood: RecentFood,
@@ -136,12 +177,22 @@ const rootStack = createStackNavigator({
   EvaluationForm: EvaluationForm,
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
-},{
-  initialRouteName: 'IntroSlider',
+}, {
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 
-const AppContainer = createAppContainer(rootStack);
+const initApp = createSwitchNavigator({
+  App1: Splash,
+  App2: IntroSlider,
+  App3: guessStack,
+  App4: rootStack
+}, {
+  initialRouteName: 'App1',
+  headerMode: 'none'
+})
+
+const AppContainer = createAppContainer(initApp);
 
 export default class App extends React.Component {
   render() {

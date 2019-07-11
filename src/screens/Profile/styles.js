@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
       paddingHorizontal: Size.WIDTH1*0.4,
       paddingVertical: Size.HEIGHT1*0.2,
       borderBottomColor: Color.FONT_GREY,
-      borderBottomWidth: 1, 
+      borderBottomWidth: 1,
       alignItems: 'center'
     },
     longRowText: {
@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
     bottomModal: {
       padding: Size.WIDTH*0.05,
       width: Size.WIDTH,
-      height: Size.HEIGHT4
+      height: null
     },
     modalTitle: {
       fontFamily: 'SourceSansPro-Bold',

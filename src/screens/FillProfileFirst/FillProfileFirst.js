@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StatusBar } from 'react-native';
+import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from '../../components/Button';
@@ -11,16 +11,41 @@ export default class FillProfileFirst extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            gender: 'male'
+            gender: 'male',
+            data: {
+                birth_year: '',
+                gender: '1',
+                weight: '',
+                height: ''
+            }
         }
+
+        this.onChange = this.onChange.bind(this)
+    }
+
+    onChange(key, text) {
+      const data = this.state.data
+      data[key] = text
+      this.setState({ data })
     }
 
     onSelect = (index, value) => {
       console.log(value)
+      const data = this.state.data
+      data.gender = value
+      this.setState({ data })
     }
- 
-    next = () => {
-      this.props.navigation.navigate('FillProfileSecond');
+
+    next = async () => {
+      const token = await AsyncStorage.getItem('token');
+      const body = JSON.stringify(this.state.data)
+      const headers = {"Authorization": 'Bearer ' + token}
+      let response = await fetch(`http://103.252.100.230/fact/member/user`, {method: 'PUT', body, headers})
+      let json = await response.json()
+
+      if (json.message === "Success") {
+        this.props.navigation.navigate('FillProfileSecond');
+      }
     }
 
     render(){
@@ -31,7 +56,13 @@ export default class FillProfileFirst extends React.Component{
             <View style={styles.form}>
                 <View style={styles.row}>
                   <Text style={styles.label}>Birth Year</Text>
-                  <TextInput style={styles.input} keyboardType="numeric" placeholder="Enter Birth Year" placeholderTextColor={Color.LIGHT_GREY}/>
+                  <TextInput
+                    style={styles.input}
+                    keyboardType="numeric"
+                    placeholder="Enter Birth Year"
+                    placeholderTextColor={Color.LIGHT_GREY}
+                    value={this.state.data.birth_year}
+                    onChangeText={(event) => this.onChange('birth_year', event)}/>
                 </View>
                 <Text style={styles.label}>Gender</Text>
                 <RadioGroup
@@ -39,11 +70,11 @@ export default class FillProfileFirst extends React.Component{
                   selectedIndex={0}
                   color={Color.LIGHT_GREEN}
                   onSelect = {(index, value) => this.onSelect(index, value)}>
-                  <RadioButton value={'male'} >
+                  <RadioButton value={'1'} >
                     <Icon name="male" color={Color.FONT_GREY} size={50} />
                     <Text style={styles.radioLabel}>Male</Text>
                   </RadioButton>
-                  <RadioButton value={'female'}>
+                  <RadioButton value={'2'}>
                     <Icon name="female" color={Color.FONT_GREY} size={50} />
                     <Text>Female</Text>
                   </RadioButton>
@@ -51,14 +82,26 @@ export default class FillProfileFirst extends React.Component{
                 <View style={styles.row}>
                   <Text style={styles.label}>Weight</Text>
                   <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <TextInput keyboardType="numeric" placeholder="Enter Your Weight" style={styles.input} placeholderTextColor={Color.LIGHT_GREY}/>
+                    <TextInput
+                      keyboardType="numeric"
+                      placeholder="Enter Your Weight"
+                      style={styles.input}
+                      placeholderTextColor={Color.LIGHT_GREY}
+                      value={this.state.data.weight}
+                      onChangeText={(event) => this.onChange('weight', event)}/>
                     <Text style={styles.metric}>kg</Text>
                   </View>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.label}>Height</Text>
                   <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <TextInput keyboardType="numeric" placeholder="Enter Your Height" style={styles.input} placeholderTextColor={Color.LIGHT_GREY}/>
+                    <TextInput
+                      keyboardType="numeric"
+                      placeholder="Enter Your Height"
+                      style={styles.input}
+                      placeholderTextColor={Color.LIGHT_GREY}
+                      value={this.state.data.height}
+                      onChangeText={(event) => this.onChange('height', event)}/>
                     <Text style={styles.metric}>cm</Text>
                   </View>
                 </View>

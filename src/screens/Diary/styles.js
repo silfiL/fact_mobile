@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     width: Size.WIDTH,
     height: Size.HEIGHT*0.08,
-    backgroundColor: Color.TRANSPARENT,
+    backgroundColor: Color.GREEN,
   },
   toolbarContent: {
     padding: Size.WIDTH1*0.3,
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 1
   },
-  row: { 
+  row: {
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
   dateInput: {
     borderColor:'transparent'
   },
-  dateText: { 
+  dateText: {
     fontFamily:'SourceSansPro-Regular',
     color:Color.APP_WHITE,
     fontSize: 17

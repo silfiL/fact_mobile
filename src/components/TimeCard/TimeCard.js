@@ -17,7 +17,7 @@ const TimeCard = ({time,children,showButton,onPress,total}) => {
             <View style={styles.cardChild}>
               {children}
             </View>
-            {total && 
+            {total !== 0 &&
             <View style={styles.totalRow}>
                 <Text style={styles.text}>Total in KCAL</Text>
                 <Text style={styles.total}>{total}</Text>

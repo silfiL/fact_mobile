@@ -2,7 +2,7 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 import { styles } from './styles';
@@ -81,8 +81,10 @@ export default class IntroSlider extends React.Component {
       </View>
     </LinearGradient>
   );
-  _goToNext = () => {
+
+  _goToNext = async () => {
     console.log("jalan")
+    await AsyncStorage.setItem('first_time', "true");
     this.props.navigation.navigate('Base')
   }
 

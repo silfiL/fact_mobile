@@ -12,7 +12,7 @@ export default class FoodItemCard extends React.Component {
         <View style={styles.row}>
           <View>
             <Text style={styles.secondLine}>{this.props.name}</Text>
-            <Text style={styles.secondLine}>{this.props.portion} serving</Text>
+            <Text style={styles.secondLine}>{this.props.portion} {this.props.noserving ? '' : 'serving'}</Text>
           </View>
           <Text style={styles.firstLine}>{this.props.cal}</Text>
         </View>

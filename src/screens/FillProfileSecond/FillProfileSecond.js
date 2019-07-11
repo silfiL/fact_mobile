@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, AsyncStorage } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import { Button } from '../../components/Button';
 import { styles } from './styles';
@@ -7,8 +7,33 @@ import { styles } from './styles';
 import Color from '../../config/Color'
 
 export default class FillProfileSecond extends React.Component{
-    next = () => {
-      this.props.navigation.navigate('FillProfileAnalysis')
+    constructor(props) {
+      super(props)
+
+      this.state = {
+        data: {
+          activity_level: ''
+        }
+      }
+    }
+
+    onSelect = (index, value) => {
+      console.log(value)
+      const data = this.state.data
+      data.activity_level = value
+      this.setState({ data })
+    }
+
+    next = async () => {
+      const token = await AsyncStorage.getItem('token');
+      const body = JSON.stringify(this.state.data)
+      const headers = {"Authorization": 'Bearer ' + token}
+      let response = await fetch(`http://103.252.100.230/fact/member/activity-level`, {method: 'POST', body, headers})
+      let json = await response.json()
+      console.log("JSON #1", json)
+      if (json.message === "Success") {
+        this.props.navigation.navigate('FillProfileAnalysis');
+      }
     }
 
     render(){
@@ -30,7 +55,7 @@ export default class FillProfileSecond extends React.Component{
                     </View>
                   </RadioButton>
 
-                  <RadioButton value={'mod'}>
+                  <RadioButton value={'medium'}>
                     <Text style={styles.radioLabel}>Moderate Activity Level</Text>
                     <View style={styles.wrapText}>
                       <View style={styles.image}/>

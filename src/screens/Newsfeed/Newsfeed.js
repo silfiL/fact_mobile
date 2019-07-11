@@ -196,7 +196,6 @@ export default class Newsfeed extends React.Component{
 
     return (
       <View style={styles.fill}>
-        <StatusBar backgroundColor={Color.YELLOW} barStyle="light-content" />
         <AnimatedListView
           contentContainerStyle={styles.contentContainer}
           dataSource={this.state.dataSource}

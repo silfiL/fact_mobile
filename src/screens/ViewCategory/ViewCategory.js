@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList, StatusBar} from 'react-native'
+import { View, Text, FlatList, StatusBar, AsyncStorage} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { FoodItem } from '../../components/FoodItem'
 import { styles } from './styles'
@@ -37,8 +37,21 @@ export default class ViewCategory extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: foodArr
+      data: []
     }
+
+    this.onRefresh = this.onRefresh.bind(this)
+  }
+
+  async onRefresh () {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/food?name=all&category=${this.props.navigation.state.params.category}`, {headers})
+    const json = await response.json()
+
+    const data = json.results.foods
+    console.log("Data", data)
+    this.setState({ data })
   }
 
   back = () => {
@@ -55,15 +68,19 @@ export default class ViewCategory extends React.Component{
       onPressItem={()=>this._onPressItem(item.id)}
       name={item.name}
       calorie={item.calorie}
-      portion={item.portion}
+      portion={1}
     />
   );
+
+  componentDidMount() {
+    this.onRefresh()
+  }
 
   render(){
     return(
       <View style={styles.container}>
         <StatusBar backgroundColor={Color.YELLOW} barStyle="light-content" />
-        <HeaderBackButton onPressBack={this.back} bgColor={Color.YELLOW} iconColor={Color.APP_WHITE} title="CATEGORY A"/>
+        <HeaderBackButton onPressBack={this.back} bgColor={Color.YELLOW} iconColor={Color.APP_WHITE} title={this.props.navigation.state.params.name}/>
         <FlatList
           data={this.state.data}
           keyExtractor={item=>item.id}

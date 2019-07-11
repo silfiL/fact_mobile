@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, FlatList, Text, StatusBar} from 'react-native'
+import { View, FlatList, Text, StatusBar, TouchableOpacity, AsyncStorage, Alert} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { ListItemWithButton } from '../../components/ListItemWithButton'
@@ -8,22 +8,16 @@ import { styles } from './styles'
 
 import Color from '../../config/Color'
 
-const mealArr = [{
-  id: '1',
-  name: 'Meal 1',
-  calorie: '520 kcal'
-},{
-  id: '2',
-  name: 'Meal 2',
-  calorie: '600 kcal'
-}]
-
 export default class Meal extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      data: mealArr
+      data: []
     }
+
+    this.onAddMeal = this.onAddMeal.bind(this)
+    this.onRefresh = this.onRefresh.bind(this)
+    this.onSelectMeal = this.onSelectMeal.bind(this)
   }
 
   back = () => {
@@ -31,22 +25,64 @@ export default class Meal extends React.Component{
   }
 
   _onLongPress = (id) => {
-    this.props.navigation.navigate('ViewMeal',{mealId:id})
+    this.props.navigation.navigate('ViewMeal',{id})
   };
 
   _renderItem = ({item}) => (
-    <ListItemWithButton
-      id={item.id}
-      firstLine={item.name}
-      secondLine={item.calorie}
-      buttonPress={this._onLongPress}
-      iconName="info"
-      iconColor={Color.LIGHT_BLUE}
-    />
+    <TouchableOpacity onPress={() => this.onSelectMeal(item)}>
+      <ListItemWithButton
+        id={item.id}
+        firstLine={item.name}
+        secondLine={`${item.calorie} kcal`}
+        buttonPress={() => this._onLongPress(item.id)}
+        iconName="info"
+        iconColor={Color.LIGHT_BLUE}/>
+    </TouchableOpacity>
   );
 
   createMeal = () => {
-    this.props.navigation.navigate('CreateMeal')
+    this.props.navigation.navigate('CreateMeal', {
+      onMealRefresh: this.onRefresh
+    })
+  }
+
+  async onAddMeal (id) {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const body = JSON.stringify({
+      id, category_intake: this.props.navigation.state.params.id
+    })
+    const response = await fetch(`http://103.252.100.230/fact/member/intake/meal`, {method: 'POST', body, headers})
+    const json = await response.json()
+
+    if (json.message === 'Success') {
+      this.props.navigation.state.params.onDiaryRefresh()
+      this.props.navigation.navigate('Diary')
+    }
+  }
+
+  onSelectMeal(item) {
+    const self = this
+    Alert.alert("Add Meal", `do you want to eat ${item.name}?`, [
+      {text: 'Cancel', style: 'cancel'},
+      {text: 'Submit', onPress: () => self.onAddMeal(item.id)}
+    ])
+  }
+
+  async onRefresh() {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/meal?name=all`, {headers})
+    const json = await response.json()
+
+    let {data} = this.state
+    data = json.results.meals
+
+    this.setState({data})
+  }
+
+  componentDidMount() {
+    this.onRefresh()
   }
 
   render(){
