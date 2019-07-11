@@ -131,7 +131,6 @@ export default class History extends React.Component{
 
     return(
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={Color.BLUE} translucent={false}/>
         <View style={styles.header}>
           <Text style={styles.headerText}>HISTORY</Text>
         </View>
@@ -183,6 +182,7 @@ export default class History extends React.Component{
             <Text style={styles.sectionTitle}>MONTH VIEW</Text>
             {this.state.index!=2?
             <View>
+              <Text style={styles.month}>({(this.state.end !== '') ? monthDate.datetimeformat('date') : ''} - {(this.state.end !== '') ? date.datetimeformat('date') : ''})</Text>
               <PieChart
               data={pieData}
               width={Size.WIDTH}
@@ -191,7 +191,7 @@ export default class History extends React.Component{
               accessor="calorie"
               backgroundColor="transparent"
               paddingLeft={15}
-            /><Text style={styles.month}>({(this.state.end !== '') ? date.datetimeformat('date') : ''} - {(this.state.end !== '') ? monthDate.datetimeformat('date') : ''})</Text>
+            />
             </View>:
             <View style={[styles.subContainer,styles.padBottom]}>
               <MyProgressBar progress={20}/>

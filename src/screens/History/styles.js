@@ -9,11 +9,12 @@ export const styles = StyleSheet.create({
       backgroundColor: Color.APP_WHITE,
     },
     header: {
-        height: Size.HEIGHT*0.08,
-        alignItems : 'center',
-        flexDirection: 'row',
-        paddingLeft: Size.WIDTH1*0.5,
-        backgroundColor: Color.BLUE
+      height: Size.HEIGHT*0.08,
+      alignItems : 'center',
+      flexDirection: 'row',
+      paddingLeft: Size.WIDTH1*0.5,
+      backgroundColor: Color.BLUE,
+      justifyContent: 'center',
     },
     headerText: {
       color: Color.APP_WHITE,

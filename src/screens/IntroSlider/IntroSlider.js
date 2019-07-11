@@ -81,18 +81,11 @@ export default class IntroSlider extends React.Component {
       </View>
     </LinearGradient>
   );
+
   _goToNext = async () => {
     console.log("jalan")
     await AsyncStorage.setItem('first_time', "true");
     this.props.navigation.navigate('Base')
-  }
-
-  async componentDidMount() {
-    const firstTime = await AsyncStorage.getItem('first_time')
-    console.log(firstTime)
-    if (firstTime !== null) {
-      return this.props.navigation.navigate('Login')
-    }
   }
 
   render() {

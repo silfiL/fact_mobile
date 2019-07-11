@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Color.YELLOW,
     borderBottomColor: Color.LIGHT_GREY,
     borderBottomWidth: 1,
-    height: NAVBAR_HEIGHT,
+    height: Size.HEIGHT*0.08,
     justifyContent: 'center',
     //paddingTop: STATUS_BAR_HEIGHT,
   },

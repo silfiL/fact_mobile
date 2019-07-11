@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     modal: {
         padding: Size.WIDTH*0.05,
         width: Size.WIDTH9,
-        height: Size.HEIGHT6
+        height: null
     },
     modalTitle: {
       fontFamily: 'SourceSansPro-Bold',
@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
         color: Color.FONT_GREY,
         fontFamily: 'SourceSansPro-Bold'
     },
-    formInput: {    
-        borderBottomWidth: 1.5, 
+    formInput: {
+        borderBottomWidth: 1.5,
         borderColor: Color.LIGHT_GREEN,
     },
     input: {

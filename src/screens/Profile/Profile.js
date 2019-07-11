@@ -111,7 +111,8 @@ export default class Profile extends React.Component{
     this.setState({isEdit:!this.state.isEdit})
   }
 
-  goToBase = () => {
+  goToBase = async () => {
+    await AsyncStorage.setItem('token', '')
     this.props.navigation.navigate('Base')
     this.setState({isOpen:false})
   }
@@ -123,7 +124,6 @@ export default class Profile extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.coloredCont}>
          <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
                 <MIcon name="edit" size={24} color={Color.APP_WHITE} />
@@ -186,8 +186,7 @@ export default class Profile extends React.Component{
               <Text style={styles.modalButton}>OK</Text>
             </TouchableOpacity>
         </Modal>
-        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo}
-          coverScreen={true}>
+        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo} coverScreen={true} backdropPressToClose={false} swipeToClose={false}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>BODY INFORMATION</Text>
               <TouchableOpacity onPress={this.toggleBody}>

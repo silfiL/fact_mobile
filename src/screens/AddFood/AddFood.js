@@ -73,7 +73,10 @@ export default class AddFood extends React.Component{
   }
 
   recent = () => {
-    this.props.navigation.navigate('RecentFood')
+    this.props.navigation.navigate('RecentFood', {
+      id: this.props.navigation.state.params.id,
+      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh
+    })
   }
 
   meal = () => {
@@ -113,7 +116,7 @@ export default class AddFood extends React.Component{
           </View>
           <Footer color={Color.FONT_GREY}/>
         </View>
-        <Modal style={styles.modal} position="center" isOpen={this.state.isOpen}>
+        <Modal style={styles.modal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>ADD CUSTOM FOOD</Text>
               <TouchableOpacity onPress={this.toggleModal}>
@@ -131,24 +134,28 @@ export default class AddFood extends React.Component{
                 inputStyle={styles.input}
                 style={styles.formInput}
                 value={this.state.data.calorie}
+                keyboardType="decimal-pad"
                 onChangeText={(event) => this.onChange('calorie', event)}>Calories</FloatingLabel>
             <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
                 style={styles.formInput}
                 value={this.state.data.carbohydrate}
+                keyboardType="decimal-pad"
                 onChangeText={(event) => this.onChange('carbohydrate', event)}>Carb</FloatingLabel>
             <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
                 style={styles.formInput}
                 value={this.state.data.protein}
+                keyboardType="decimal-pad"
                 onChangeText={(event) => this.onChange('protein', event)}>Protein</FloatingLabel>
             <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
                 style={styles.formInput}
                 value={this.state.data.fat}
+                keyboardType="decimal-pad"
                 onChangeText={(event) => this.onChange('fat', event)}>Fat</FloatingLabel>
             <View style={styles.blankRow} >
               <View style={styles.blank}/>
@@ -156,7 +163,7 @@ export default class AddFood extends React.Component{
                 <TouchableOpacity onPress={this.onSubmit}>
                   <Text style={styles.modalButton}>SAVE</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.toggleModal}>
                   <Text style={styles.modalButton}>CANCEL</Text>
                 </TouchableOpacity>
               </View>

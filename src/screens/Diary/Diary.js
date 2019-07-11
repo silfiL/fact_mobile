@@ -69,20 +69,6 @@ export default class Diary extends Component {
     this.waveRef = this.waveRef.bind(this)
   }
 
-  componentDidMount() {
-    StatusBar.setBackgroundColor(Color.GREEN, true);
-    StatusBar.setTranslucent(true);
-  }
-
-  componentWillMount() {
-      StatusBar.setBarStyle('light-content');
-
-      if (Platform.OS === 'android') {
-          StatusBar.setBackgroundColor(Color.GREEN, true);
-          StatusBar.setTranslucent(true);
-      }
-  }
-
   goToAddFood = (id) => {
     this.props.navigation.navigate('AddFood', {
       id, onDiaryRefresh: this.onRefresh
@@ -174,6 +160,7 @@ export default class Diary extends Component {
     }
     return (
       <ScrollView>
+        <StatusBar backgroundColor={Color.GREEN} barStyle="light-content"/>
         <View style={styles.scrollViewContent}>
           <TimeCard time="BREAKFAST" total={total.breakfast} onPress={this.goToAddFood} showButton={this.state.intake.breakfast.length > 0}>{breakfast}</TimeCard>
           <TimeCard time="LUNCH" total={total.lunch} onPress={this.goToAddFood} showButton={this.state.intake.lunch.length > 0}>{lunch}</TimeCard>
@@ -186,94 +173,96 @@ export default class Diary extends Component {
   }
 
   renderNavBar = () => (
-      <View style={styles.navbarRow}>
-        <TouchableOpacity onPress={this.left}>
-          <Icon name="chevron-circle-left" size={24} color={Color.APP_WHITE}/>
-        </TouchableOpacity>
-        <DatePicker
-          style={{width: 120}}
-          date={this.state.date}
-          mode="date"
-          placeholder="Start Date"
-          format="DD MMM YYYY"
-          confirmBtnText="OK"
-          cancelBtnText="Cancel"
-          showIcon={false}
-          customStyles={{dateInput:styles.dateInput,dateText:styles.dateText}}
-          onDateChange={(date) => {this.setState({date: date})}}
-        />
-        <TouchableOpacity onPress={this.right}>
-          <Icon name="chevron-circle-right" size={24} color={Color.APP_WHITE} />
-        </TouchableOpacity>
-      </View>
+    <View style={styles.navbarRow}>
+      <TouchableOpacity onPress={this.left}>
+        <Icon name="chevron-circle-left" size={24} color={Color.APP_WHITE}/>
+      </TouchableOpacity>
+      <DatePicker
+        style={{width: 120}}
+        date={this.state.date}
+        mode="date"
+        placeholder="Start Date"
+        format="DD MMM YYYY"
+        confirmBtnText="OK"
+        cancelBtnText="Cancel"
+        showIcon={false}
+        customStyles={{dateInput:styles.dateInput,dateText:styles.dateText}}
+        onDateChange={(date) => {this.setState({date: date})}}
+      />
+      <TouchableOpacity onPress={this.right}>
+        <Icon name="chevron-circle-right" size={24} color={Color.APP_WHITE} />
+      </TouchableOpacity>
+    </View>
   )
 
   renderToolBar = () => (
-      <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.toolbarContent}>
-          <View style={styles.roundedRect}>
-            <Text style={styles.text}>On the way of maintaining body weight</Text>
-          </View>
-          <View style={styles.row}>
-            <View style={styles.center}>
-              <Text style={styles.label}>CALORIE INTAKE</Text>
-              <AnimatedCircularProgress
-                size={150}
-                width={3}
-                fill={parseInt(this.state.calorie.intake * 100 / this.state.calorie.total_intake)}
-                tintColor={Color.APP_WHITE}
-                backgroundColor={Color.GREEN}
-                >
-                {
-                  (fill) => (
-                    <Text style={styles.points}>
-                      { this.state.calorie.intake } KCAL
-                    </Text>
-                  )
-                }
-              </AnimatedCircularProgress>
-              <Text style={styles.text}>GOAL: {this.state.calorie.total_intake} KCAL</Text>
-            </View>
-            <View style={styles.verticalSeperator}/>
-            <View style={styles.center}>
-              <Text style={styles.label}>CALORIE BURNT</Text>
-              <AnimatedCircularProgress
-                size={150}
-                width={3}
-                fill={parseInt(this.state.calorie.burnt * 100 / this.state.calorie.total_burnt)}
-                tintColor={Color.APP_WHITE}
-                backgroundColor={Color.GREEN}>
-                {
-                  (fill) => (
-                    <Text style={styles.points}>
-                      {this.state.calorie.burnt} KCAL
-                    </Text>
-                  )
-                }
-              </AnimatedCircularProgress>
-              <Text style={styles.text}>GOAL: {this.state.calorie.total_burnt} KCAL</Text>
-            </View>
-          </View>
-          <Text style={styles.label}>Nutritients</Text>
-          <View style={styles.nutrientRow}>
-            <WaveProgress type="carbohydrate" percent={parseInt(this.state.nutrient.carbohydrate * 100 / this.state.nutrient.total_carbohydrate)} waveRef={this.waveRef}/>
-            <WaveProgress type="protein" percent={parseInt(this.state.nutrient.protein * 100 / this.state.nutrient.total_protein)} waveRef={this.waveRef}/>
-            <WaveProgress type="fat" percent={parseInt(this.state.nutrient.fat * 100 / this.state.nutrient.total_fat)} waveRef={this.waveRef}/>
-          </View>
-        </LinearGradient>
+    <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.toolbarContent}>
+      <View style={styles.roundedRect}>
+        <Text style={styles.text}>On the way of maintaining body weight</Text>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.center}>
+          <Text style={styles.label}>CALORIE INTAKE</Text>
+          <AnimatedCircularProgress
+            size={150}
+            width={3}
+            fill={parseInt(this.state.calorie.intake * 100 / this.state.calorie.total_intake)}
+            tintColor={Color.APP_WHITE}
+            backgroundColor={Color.GREEN}
+            >
+            {
+              (fill) => (
+                <Text style={styles.points}>
+                  { this.state.calorie.intake } KCAL
+                </Text>
+              )
+            }
+          </AnimatedCircularProgress>
+          <Text style={styles.text}>GOAL: {this.state.calorie.total_intake} KCAL</Text>
+        </View>
+        <View style={styles.verticalSeperator}/>
+        <View style={styles.center}>
+          <Text style={styles.label}>CALORIE BURNT</Text>
+          <AnimatedCircularProgress
+            size={150}
+            width={3}
+            fill={parseInt(this.state.calorie.burnt * 100 / this.state.calorie.total_burnt)}
+            tintColor={Color.APP_WHITE}
+            backgroundColor={Color.GREEN}>
+            {
+              (fill) => (
+                <Text style={styles.points}>
+                  {this.state.calorie.burnt} KCAL
+                </Text>
+              )
+            }
+          </AnimatedCircularProgress>
+          <Text style={styles.text}>GOAL: {this.state.calorie.total_burnt} KCAL</Text>
+        </View>
+      </View>
+      <Text style={styles.label}>Nutritients</Text>
+      <View style={styles.nutrientRow}>
+        <WaveProgress type="carbohydrate" percent={parseInt(this.state.nutrient.carbohydrate * 100 / this.state.nutrient.total_carbohydrate)} waveRef={this.waveRef}/>
+        <WaveProgress type="protein" percent={parseInt(this.state.nutrient.protein * 100 / this.state.nutrient.total_protein)} waveRef={this.waveRef}/>
+        <WaveProgress type="fat" percent={parseInt(this.state.nutrient.fat * 100 / this.state.nutrient.total_fat)} waveRef={this.waveRef}/>
+      </View>
+    </LinearGradient>
   )
 
+  componentDidFocus () {
+    console.log("")
+  }
   render() {
     return (
       <CollapsibleToolbar
-            renderContent={this.renderContent}
-            renderNavBar={this.renderNavBar}
-            renderToolBar={this.renderToolBar}
-            imageSource="https://cdn.th3rdwave.coffee/articles/rkvHXu_Il/rkvHXu_Il-1100-700.jpg"
-            collapsedNavBarBackgroundColor={Color.GREEN}
-            translucentStatusBar
-
-            showsVerticalScrollIndicator={false}
-        />
+        renderContent={this.renderContent}
+        renderNavBar={this.renderNavBar}
+        renderToolBar={this.renderToolBar}
+        imageSource="https://cdn.th3rdwave.coffee/articles/rkvHXu_Il/rkvHXu_Il-1100-700.jpg"
+        collapsedNavBarBackgroundColor={Color.GREEN}
+        translucentStatusBar={false}
+        showsVerticalScrollIndicator={false}>
+      </CollapsibleToolbar>
     );
   }
 }

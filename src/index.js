@@ -1,5 +1,6 @@
 import React from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { StatusBar } from "react-native";
+import { createStackNavigator, createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IntroSlider from './screens/IntroSlider';
@@ -35,6 +36,7 @@ import SelfTrain from "./screens/SelfTrain";
 import SelfTrainSessions from './screens/SelfTrainSessions';
 import EvaluationForm from './screens/EvaluationForm';
 import EvaluationAnalysis from './screens/EvaluationAnalysis';
+import Splash from './screens/Splash';
 
 import Color from './config/Color';
 import SearchFoodMeal from "./screens/SearchFoodMeal";
@@ -74,7 +76,13 @@ const HomepageTab = createMaterialBottomTabNavigator({
         ),
         activeColor: Color.APP_WHITE,
         inactiveColor: Color.GREEN,
-        barStyle: { backgroundColor: Color.LIGHT_GREEN }
+        barStyle: { backgroundColor: Color.LIGHT_GREEN },
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.GREEN, true);
+          StatusBar.setTranslucent(false);
+        }
       }
     },
   History: { screen: History,
@@ -85,7 +93,13 @@ const HomepageTab = createMaterialBottomTabNavigator({
         ),
         activeColor: Color.APP_WHITE,
         inactiveColor: Color.BLUE,
-        barStyle: { backgroundColor: Color.LIGHT_BLUE }
+        barStyle: { backgroundColor: Color.LIGHT_BLUE },
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.BLUE, true);
+          StatusBar.setTranslucent(false);
+        }
       }
     },
   Newsfeed: { screen: Newsfeed,
@@ -97,6 +111,12 @@ const HomepageTab = createMaterialBottomTabNavigator({
         activeColor: Color.APP_WHITE,
         inactiveColor: Color.YELLOW,
         barStyle: { backgroundColor: Color.LIGHT_YELLOW },
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.YELLOW, true);
+          StatusBar.setTranslucent(false);
+        }
       }
   },
   Profile: { screen: Profile,
@@ -104,7 +124,13 @@ const HomepageTab = createMaterialBottomTabNavigator({
         tabBarLabel:"Profile",
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" size={25} color={tintColor} />
-        )
+        ),
+        tabBarOnPress: ({defaultHandler}) => {
+          defaultHandler()
+          StatusBar.setBarStyle('light-content');
+          StatusBar.setBackgroundColor(Color.RED, true);
+          StatusBar.setTranslucent(false);
+        }
       }
     },
 }, {
@@ -114,8 +140,7 @@ const HomepageTab = createMaterialBottomTabNavigator({
   barStyle: { backgroundColor: Color.LIGHT_RED },
 });
 
-const rootStack = createStackNavigator({
-  IntroSlider: IntroSlider,
+const guessStack = createStackNavigator({
   Base: Base,
   Login: Login,
   SignUp: SignUp,
@@ -125,6 +150,12 @@ const rootStack = createStackNavigator({
   FillProfileSecond: FillProfileSecond,
   FillProfileAnalysis: FillProfileAnalysis,
   FirstTimeSTrain: FirstTimeSTrain,
+}, {
+  initialRouteName: 'Base',
+  headerMode: 'none'
+})
+
+const rootStack = createStackNavigator({
   AddFood: AddFood,
   SearchFood: SearchFood,
   RecentFood: RecentFood,
@@ -146,12 +177,22 @@ const rootStack = createStackNavigator({
   EvaluationForm: EvaluationForm,
   EvaluationAnalysis: EvaluationAnalysis,
   Homepage: HomepageTab
-},{
-  initialRouteName: 'IntroSlider',
+}, {
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 
-const AppContainer = createAppContainer(rootStack);
+const initApp = createSwitchNavigator({
+  App1: Splash,
+  App2: IntroSlider,
+  App3: guessStack,
+  App4: rootStack
+}, {
+  initialRouteName: 'App1',
+  headerMode: 'none'
+})
+
+const AppContainer = createAppContainer(initApp);
 
 export default class App extends React.Component {
   render() {
