@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Color.LIGHT_YELLOW,
   },
   green: {
-    backgroundColor: Color.LIGHT_GREEN
+    backgroundColor: Color.LIGHT_BLUE
   },
   display: {
     alignSelf: 'center',

@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         backgroundColor: Color.LIGHT_GREEN,
         borderBottomWidth: 1,
         borderBottomColor: Color.LIGHT_GREY,
-        paddingHorizontal: Size.WIDTH1*0.3,
+        paddingHorizontal: Size.WIDTH1*0.2,
         paddingVertical: Size.HEIGHT1*0.1
     },
     time: {
@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
         borderWidth:1,
         borderColor: Color.LIGHT_GREY,
         borderTopColor: Color.TRANSPARENT,
+        backgroundColor: Color.APP_WHITE,
     },
     totalRow: {
       flexDirection:'row',
