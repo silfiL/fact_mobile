@@ -68,6 +68,7 @@ export default class SignUp extends React.Component{
               labelStyle={styles.labelInput}
               inputStyle={styles.input}
               keyboardType="email"
+              keyboardType="email-address"
               style={styles.formInput}
               value={this.state.data.email}
               onChangeText={(event) => this.onChange('email', event)}>Email Address</FloatingLabel>

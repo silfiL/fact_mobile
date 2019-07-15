@@ -67,7 +67,7 @@ export default class Profile extends React.Component{
     const headers = {"Authorization": 'Bearer ' + token}
     const response = await fetch(`http://103.252.100.230/fact/member/user`, {headers})
     const json = await response.json()
-
+    
     const user = {
       name: json.results.name,
       status: json.results.status,
@@ -125,11 +125,12 @@ export default class Profile extends React.Component{
     return(
       <View style={styles.container}>
         <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.coloredCont}>
-         <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
+            {/*<TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
                 <MIcon name="edit" size={24} color={Color.APP_WHITE} />
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
             <View style={styles.image}></View>
             <Text style={styles.name}>{this.state.user.name}</Text>
+            <Text style={styles.status}>22 y.o male</Text>
             <Text style={styles.status}>{this.state.user.status}</Text>
         </LinearGradient>
         <View style={styles.row}>
@@ -148,14 +149,14 @@ export default class Profile extends React.Component{
         </View>
         <TouchableHighlight onPress={this.changePass} underlayColor={Color.LIGHTER_GREY}>
           <View style={styles.longRowButton} >
-            <Text style={styles.longRowText}>Change Password</Text>
+            <Text style={styles.longRowText}>Edit Profile</Text>
             <AIcon name="right" size={20} color={Color.FONT_GREY} />
           </View>
         </TouchableHighlight>
         <View style={styles.buttonCont}>
           <Button text="LOG OUT" txtColor={Color.APP_WHITE} bgColor={Color.LIGHT_RED} size="long" onPress={this.logout} />
         </View>
-        <Modal style={styles.smallModal} coverScreen={true} position="center" isOpen={this.state.isEdit} backdropPressToClose={false}>
+        <Modal style={styles.smallModal} coverScreen={true} position="center" isOpen={this.state.isEdit} backdropPressToClose={false} swipeToClose={false}>
             <View style={[styles.headerModal,{margin: 0}]}>
               <Text style={styles.modalTitle}>EDIT</Text>
               <TouchableOpacity onPress={this.toggleEdit}>
@@ -186,7 +187,7 @@ export default class Profile extends React.Component{
               <Text style={styles.modalButton}>OK</Text>
             </TouchableOpacity>
         </Modal>
-        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo} coverScreen={true} backdropPressToClose={false} swipeToClose={false}>
+        <Modal style={styles.bottomModal} position="bottom" isOpen={this.state.bodyInfo} coverScreen={true} backdropPressToClose={false} swipeToClose={true}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>BODY INFORMATION</Text>
               <TouchableOpacity onPress={this.toggleBody}>
@@ -240,7 +241,7 @@ export default class Profile extends React.Component{
               <Text style={styles.text}>sddddddddddddddddddddddddddddddddddddddddddddd</Text>
             </View>
         </Modal>
-        <Modal style={styles.extraSmallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false}>
+        <Modal style={styles.extraSmallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false} swipeToClose={false}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>LOG OUT</Text>
               <TouchableOpacity onPress={this.logout}>
@@ -251,7 +252,7 @@ export default class Profile extends React.Component{
             <View style={styles.blankRow} >
               <View style={styles.blank}/>
               <View style={styles.modalButtonRow}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.setState({isOpen:false})}>
                   <Text style={styles.modalButton}>NO</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.goToBase}>

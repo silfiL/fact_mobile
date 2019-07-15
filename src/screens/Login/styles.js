@@ -28,10 +28,12 @@ export const styles = StyleSheet.create({
       marginBottom: Size.HEIGHT1
     },
     forget: {
+      alignSelf: 'flex-end',
+      marginVertical: Size.HEIGHT1*0.1
+    },
+    forgetText: {
       color: Color.APP_WHITE,
       textDecorationLine: 'underline',
       fontFamily: 'SourceSansPro-Regular',
-      alignSelf: 'flex-end',
-      marginVertical: Size.HEIGHT1*0.1
     }
 })

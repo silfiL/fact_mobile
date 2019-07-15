@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     formInput: {    
         borderBottomWidth: 1.5, 
-        borderColor: Color.LIGHT_GREEN,
+        borderColor: Color.LIGHT_RED,
     },
     input: {
         borderWidth: 0,

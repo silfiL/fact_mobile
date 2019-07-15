@@ -15,6 +15,7 @@ export default class ChangePassword extends React.Component{
 
     this.state = {
       data: {
+        name: '',
         password: '',
         re_password: '',
         old_password: ''
@@ -62,6 +63,12 @@ export default class ChangePassword extends React.Component{
         <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE} title="CHANGE PASSWORD" bgColor={Color.RED}/>
         <View style={styles.form}>
+            <FloatingLabel
+                labelStyle={styles.labelInput}
+                inputStyle={styles.input}
+                style={styles.formInput}
+                value={this.state.data.name}
+                onChangeText={(event) => this.onChange('name', event)}>Name</FloatingLabel>
             <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}

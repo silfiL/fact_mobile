@@ -116,10 +116,10 @@ export default class SearchFood extends React.Component{
             <TouchableOpacity onPress={this.back}>
               <Icon name="md-arrow-round-back" color={Color.APP_WHITE} size={24} />
             </TouchableOpacity>
-            <TextInput placeholder="Search Food" placeholderTextColor={Color.LIGHT_GREY} style={styles.search} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
+            <TextInput placeholder="Search Food Name" placeholderTextColor={Color.LIGHT_GREY} style={styles.search} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
           </View>
          {this.state.data.length === 0 ?<View style={styles.blankContainer} >
-          <Text style={styles.text}>History</Text>
+          <Text style={styles.text}>Recents</Text>
           <View style={styles.row}>
             <Badge text="Noodles" onPress={this.fillSearch}/>
             <Badge text="Rice" onPress={this.fillSearch}/>
@@ -129,7 +129,7 @@ export default class SearchFood extends React.Component{
               <Icon name="md-search" size={50} color={Color.FONT_GREY} />
               <Text style={styles.centerText}>You can search using</Text>
               <Text style={styles.centerText}>any keywords or use</Text>
-              <Text style={styles.centerText}>the ones in the history</Text>
+              <Text style={styles.centerText}>the ones in the recents</Text>
           </View>
         </View>:
         <View style={styles.blankContainer}>

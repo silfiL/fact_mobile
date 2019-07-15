@@ -5,8 +5,8 @@ import Color from '../../config/Color';
 export const styles = StyleSheet.create({
   bigCircle: {
     borderRadius:50,
-    width:100,
-    height:100,
+    width: 60,
+    height: 60,
     backgroundColor:Color.LIGHTER_GREY,
     alignItems:'center',
     justifyContent:'center'
@@ -28,9 +28,16 @@ export const styles = StyleSheet.create({
     color: Color.BLUE
   },
   waveBall: {
-      width: 100,
+      width: 60,
       aspectRatio: 1,
       borderRadius: 50,
       overflow: 'hidden',
+  },
+  display: {
+    fontFamily: 'SourceSansPro-Regular',
+    color: Color.APP_WHITE,
+    fontSize: 13,
+    marginVertical: 5,
+    alignSelf: 'center'
   }
 })

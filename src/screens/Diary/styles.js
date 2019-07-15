@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   nutrientRow: {
     flexDirection:'row',
     alignItems:'center',
-    justifyContent:'space-around'
+    justifyContent:'space-between'
   },
   scrollViewContent: {
     flexGrow: 1,

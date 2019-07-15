@@ -74,8 +74,8 @@ export default class Login extends React.Component{
                 style={styles.formInput}
                 value={this.state.data.password}
                 onChangeText={(event) => this.onChange('password', event)}>Password</FloatingLabel>
-            <TouchableOpacity onPress={this.forget}>
-              <Text style={styles.forget}>Forget Password?</Text>
+            <TouchableOpacity onPress={this.forget} style={styles.forget}>
+              <Text style={styles.forgetText}>Forget Password?</Text>
             </TouchableOpacity>
             <Button text="LOGIN" size="long" onPress={this.goToDiary} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />
         </View>
