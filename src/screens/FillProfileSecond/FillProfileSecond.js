@@ -47,29 +47,28 @@ export default class FillProfileSecond extends React.Component{
                   color={Color.LIGHT_GREEN}
                   onSelect = {(index, value) => this.onSelect(index, value)}>
                   <RadioButton value={'low'}>
-                    <Text style={styles.radioLabel}>Low Activity Level (Sedentary)</Text>
+                    <Text style={styles.radioLabel}>Sedentary or Lightly Active</Text>
                     <View style={styles.wrapText}>
                       <View style={styles.image}/>
-                      <Text style={styles.text}>ssssssssssssssssssssssssssssssss
+                      <Text style={styles.text}>75% of sitting/standing and 25% of standing/moving. Example of jobs : Designer, Office (Desk) Employee, Teacher, Host, and etc. In leisure time, have little or no exercise. Doing housework is included in this level. If doing exercise will be about 1-2 days/week.
                       </Text>
                     </View>
                   </RadioButton>
 
                   <RadioButton value={'medium'}>
-                    <Text style={styles.radioLabel}>Moderate Activity Level</Text>
+                    <Text style={styles.radioLabel}>Active or Moderately Active</Text>
                     <View style={styles.wrapText}>
                       <View style={styles.image}/>
-                      <Text style={styles.text}>ssssssssssssssssssssssssssssssss
+                      <Text style={styles.text}>40% of sitting/standing and 60% of working (moving). Example of jobs : Nurse, Chef, Server at restaurants, Trainer, and etc. Example of exercises such as light swimming/cycling, jogging, playing double tennis and etc. Gardening is included in this level of activity. If doing exercise will be about 3-5 days/week.
                       </Text>
                     </View>
                   </RadioButton>
 
                   <RadioButton value={'high'}>
-                    <Text style={styles.radioLabel}>High Activity Level</Text>
+                    <Text style={styles.radioLabel}>Very Active or Vigorously Active</Text>
                     <View style={styles.wrapText}>
                       <View style={styles.image}/>
-                      <Text style={styles.text}>Loren ipsum dslfkjsl dkfjlskjfsljpji wefdkjefjporj ei
-                        fsdlkfjsalfjsal dfslsdjflejrepirejeprjwp dflaskfjls skfjiejrpjw kjfdslfjaoisd
+                      <Text style={styles.text}>25% of sitting/standing and 75% of working (lifting and moving). Jobs that demand physical strength are included in this level such as construction workers, farmer. athlete and etc. Example of exercises such as swimming laps, running, hiking, jumping rope, playing single tennis and etc. If doing exercise will be about 6-7 days/week and 2 times/day for athlete.
                       </Text>
                     </View>
                   </RadioButton>

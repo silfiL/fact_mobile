@@ -10,30 +10,30 @@ import Color from '../../config/Color';
 
 const slides = [
   {
-    key: 'somethun',
-    title: 'Quick setup, good defaults',
-    text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
+    key: '1',
+    title: 'For all your goals',
+    text: 'A personalized app to help you lose, maintain or gain weight with monthly evaluation.',
     icon: 'md-checkmark',
     colors: [Color.GREEN,Color.LIGHT_GREEN],
   },
   {
-    key: 'somethun1',
-    title: 'Super customizable',
-    text: 'The component is also super customizable, so you can adapt it to cover your needs and wants.',
+    key: '2',
+    title: 'Knowing is half the battle',
+    text: 'Help to calculate your daily calories needed and provide with weekly & monthly statistics.',
     icon: 'md-checkmark',
     colors: [Color.BLUE,Color.LIGHT_BLUE],
   },
   {
-    key: 'somethun2',
-    title: 'No need to buy me beer',
-    text: 'Usage is all free',
+    key: '3',
+    title: 'Know what you eat',
+    text: 'Easily track your calorie and nutrient intake based on our provided food database.',
     icon: 'md-checkmark',
     colors: [Color.YELLOW,Color.LIGHT_YELLOW],
   },
   {
-    key: 'somethun3',
-    title: 'No need to buy me beer',
-    text: 'Usage is all free',
+    key: '4',
+    title: 'Also know what you do',
+    text: 'Lastly, help to track your activity and the calories burnt based on Human Activity Recognition.',
     icon: 'md-checkmark',
     colors: [Color.RED,Color.LIGHT_RED],
   }

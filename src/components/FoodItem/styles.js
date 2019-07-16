@@ -21,4 +21,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: Color.FONT_GREY
   },
+  categoriesRow: {
+    flexDirection: 'row'
+  },
+  category: {
+    borderWidth: 1,
+    borderColor: Color.GREEN,
+    fontSize: 12,
+    fontFamily: 'SourceSansPro-Regular',
+    color: Color.FONT_GREY
+  }
 })

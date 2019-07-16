@@ -121,6 +121,24 @@ export default class Profile extends React.Component{
     this.onRefresh()
   }
 
+  renderAdvice = (level) => {
+    if (level == "low")
+        return "Try to exercise more, start by 1 hours per day. There are many advantages you can get from it."
+    else if (level == "medium")
+        return "Good job! Keep it up, but don't push yourself too hard. Your body also need time to rest."
+    else
+        return "Make sure you have rest time equal to your activity/exercise."
+  }
+
+  renderParagraph = (level) => {
+    if (level == "low")
+        return "75% of sitting/standing and 25% of standing/moving. Example of jobs : Designer, Office (Desk) Employee, Teacher, Host, and etc. In leisure time, have little or no exercise. Doing housework is included in this level. If doing exercise will be about 1-2 days/week."
+    else if (level == "medium")
+        return "40% of sitting/standing and 60% of working (moving). Example of jobs : Nurse, Chef, Server at restaurants, Trainer, and etc. Example of exercises such as light swimming/cycling, jogging, playing double tennis and etc. Gardening is included in this level of activity. If doing exercise will be about 3-5 days/week."
+    else
+        return "25% of sitting/standing and 75% of working (lifting and moving). Jobs that demand physical strength are included in this level such as construction workers, farmer. athlete and etc. Example of exercises such as swimming laps, running, hiking, jumping rope, playing single tennis and etc. If doing exercise will be about 6-7 days/week and 2 times/day for athlete."
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -231,14 +249,14 @@ export default class Profile extends React.Component{
                 <AIcon name="close" size={20} />
               </TouchableOpacity>
             </View>
-            <Text style={[styles.bold,styles.belowMargin]}>{this.state.user.activity_level.toUpperCase()} ACTIVITY (SEDENTARY)</Text>
+            <Text style={[styles.bold,styles.belowMargin]}>{this.state.user.activity_level.toUpperCase()}</Text>
             <View style={[styles.row,styles.belowMargin]}>
               <View style={styles.square} />
-              <Text style={[styles.text,styles.paragraph]}>Are you sure you want to log out your account? loren ipsum adkslsadja dsfksldjf dsfkjdlf eiewr. sdfksalfdaslsdkfj sdfksdfjslfjsofsi </Text>
+              <Text style={[styles.text,styles.paragraph]}>{this.renderParagraph(this.state.user.activity_level)}</Text>
             </View>
             <View style={[styles.roundedBox,styles.vertical]}>
               <Text style={styles.bold}>Advices :</Text>
-              <Text style={styles.text}>sddddddddddddddddddddddddddddddddddddddddddddd</Text>
+              <Text style={styles.text}>{this.renderAdvice(this.state.user.activity_level)}</Text>
             </View>
         </Modal>
         <Modal style={styles.extraSmallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false} swipeToClose={false}>
