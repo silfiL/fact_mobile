@@ -66,6 +66,6 @@ export const styles = StyleSheet.create({
   dateText: {
     fontFamily:'SourceSansPro-Regular',
     color:Color.APP_WHITE,
-    fontSize: 17
+    fontSize: 20
   },
 })

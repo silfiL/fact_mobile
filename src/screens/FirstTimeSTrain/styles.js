@@ -42,5 +42,23 @@ export const styles = StyleSheet.create({
     },
     timer: {
       fontSize: Size.HEIGHT1,
-    }
+    },
+    radioText: {
+      fontFamily: 'SourceSansPro-Regular',
+      color: Color.APP_WHITE,
+      fontSize: 17,
+      marginLeft: 8,
+    },
+    radio: {
+      height: '10%'
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginLeft: 10,
+      marginBottom: 10,
+    },
+    disabledText: {
+      color: Color.FONT_GREY
+    },
 })

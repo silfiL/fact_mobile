@@ -84,7 +84,12 @@ export default class Diary extends Component {
     await this.setState({date: new Date(temp)})
     await this.onRefresh()
   }
-
+  componentDidUpdate(prevState) {
+    if (prevState.date != this.state.date){
+      console.log(this.state.date)
+      this.onRefresh()
+    }
+  }
   right = async () => {
     let temp = moment(this.state.date).add(1,"days");
     await this.setState({date: new Date(temp)})
@@ -93,6 +98,19 @@ export default class Diary extends Component {
 
   componentDidMount() {
     this.onRefresh()
+  }
+
+  renderGoal = (status) => {
+    if (status == "underweight")
+      return "On the way to gain proper body weight"
+    else if (status == "normal")
+      return "On the way to maintain body weight"
+    else if (status == "overweight")
+      return "On the way to lose some weight"
+    else if (status == "obese")
+      return "Need to lose more weight and become healthy"
+    else if (status == "extremely obese")
+      return "Need to lose weight seriously to live longer"
   }
 
   waveRef (ref, type) {
@@ -175,7 +193,7 @@ export default class Diary extends Component {
   renderNavBar = () => (
     <View style={styles.navbarRow}>
       <TouchableOpacity onPress={this.left}>
-        <Icon name="chevron-circle-left" size={24} color={Color.APP_WHITE}/>
+        <Icon name="chevron-circle-left" size={28} color={Color.APP_WHITE}/>
       </TouchableOpacity>
       <DatePicker
         style={{width: 120}}
@@ -187,10 +205,10 @@ export default class Diary extends Component {
         cancelBtnText="Cancel"
         showIcon={false}
         customStyles={{dateInput:styles.dateInput,dateText:styles.dateText}}
-        onDateChange={(date) => {this.setState({date: date})}}
+        onDateChange={(date) => {this.setState({date: new Date(date)})}}
       />
       <TouchableOpacity onPress={this.right}>
-        <Icon name="chevron-circle-right" size={24} color={Color.APP_WHITE} />
+        <Icon name="chevron-circle-right" size={28} color={Color.APP_WHITE} />
       </TouchableOpacity>
     </View>
   )
@@ -198,7 +216,7 @@ export default class Diary extends Component {
   renderToolBar = () => (
     <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.toolbarContent}>
       <View style={styles.roundedRect}>
-        <Text style={styles.text}>On the way of maintaining body weight</Text>
+        <Text style={styles.text}>{this.renderGoal("normal")}</Text>
       </View>
       <View style={styles.row}>
         <View style={styles.center}>

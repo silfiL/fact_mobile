@@ -1,16 +1,17 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StatusBar, AsyncStorage } from 'react-native'
 import { Button } from '../../components/Button'
-import { Timer } from 'react-native-stopwatch-timer'
 import TimerCountdown from 'react-native-timer-countdown'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './styles'
 import { accelerometer } from "react-native-sensors";
+import { RadioButton, RadioGroup } from 'react-native-flexi-radio-button'
 
 import Color from '../../config/Color'
 
-const activitiesArr = ["Walk Around","Go up and down stairs","Stand Still"]
+let activitiesArr = ["Walk Around","Run Around","Stand Still"]
+let doneActivities = []
 
 let subscription = accelerometer
 
@@ -38,7 +39,7 @@ export default class FirstTimeSTrain extends React.Component{
 
   handleTimerComplete = async () => {
     this.setState({totalDuration:null})
-    alert('Timer is completed')
+    alert('Self Train is completed')
     this.setState({done:true})
 
     subscription.unsubscribe()
@@ -65,13 +66,18 @@ export default class FirstTimeSTrain extends React.Component{
   }
 
   next = () => {
-    if (this.state.index == 2)
-      this.props.navigation.navigate('Homepage')
-    else
-      this.setState({index:this.state.index+1})
+    this.setState({showButton:true,done:false})
+    doneActivities.push(activitiesArr[this.state.index])
+    activitiesArr.splice(this.state.index,1)
+    this.setState({index:0})
+  }
+
+  onSelect = (index, value) => {
+    this.setState({index:index})
   }
 
   render(){
+    console.log("done",doneActivities)
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.container}>
         <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
@@ -79,13 +85,32 @@ export default class FirstTimeSTrain extends React.Component{
           <Text style={styles.h1}>You're almost there!!</Text>
           <View>
             <Text style={styles.text}>To increase accuracy, we</Text>
-            <Text style={styles.text}>need your help to do the</Text>
-            <Text style={styles.text}>instructions below :</Text>
+            <Text style={styles.text}>need your help to do each</Text>
+            <Text style={styles.text}>instructions for 25 secs :</Text>
           </View>
-          <Text style={styles.activity}>"{activitiesArr[this.state.index]}"</Text>
+          {this.state.showButton == true ? <View style={styles.radio}>
+            {doneActivities.map((done)=>
+              <View style={styles.row}>
+                   <Icon name="check-circle" size={24} color={Color.LIGHT_GREEN} />
+                  <Text style={styles.radioText}>{done}</Text>
+              </View>
+            )}
+            <RadioGroup
+              thickness={2}
+              color={Color.APP_WHITE}
+              selectedIndex={this.state.index}
+              onSelect = {(index, value) => this.onSelect(index, value)}
+            >
+              {activitiesArr.map((activity,index) => <RadioButton 
+                value={index}
+              >
+                <Text style={styles.radioText}>{activity}</Text>
+              </RadioButton>)}
+            </RadioGroup>  
+          </View>:<Text style={styles.activity}>"{activitiesArr[this.state.index]}"</Text>}
           {this.state.showButton == true ?
-            <Button text="START" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} onPress={this.startTimer} size="short" />
-          :<TimerCountdown
+            <Button text="START" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} onPress={this.startTimer} size="short" />:
+          <TimerCountdown
               initialMilliseconds={this.state.totalDuration}
               onTick={(milliseconds) => console.log("tick", milliseconds)}
               onExpire={this.handleTimerComplete}
@@ -101,11 +126,11 @@ export default class FirstTimeSTrain extends React.Component{
           {this.state.done && <Icon name="check-circle" size={100} color={Color.APP_WHITE} />}
         </View>
         <View style={styles.rowButton}>
-          <TouchableOpacity onPress={this.toDiary}>
-            <Text style={styles.button}>REMIND LATER</Text>
+          <TouchableOpacity onPress={this.toDiary} disabled={!this.state.showButton||doneActivities.length==3}>
+            <Text style={[styles.button,!this.state.showButton||doneActivities.length==3?styles.disabledText:null]}>REMIND LATER</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.next}>
-            <Text style={styles.button}>NEXT</Text>
+          <TouchableOpacity onPress={this.next} disabled={!this.state.done&&doneActivities.length!=3}>
+            <Text style={[styles.button,!this.state.done&&doneActivities.length!=3?styles.disabledText:null]}>NEXT</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>

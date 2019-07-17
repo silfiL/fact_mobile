@@ -11,11 +11,11 @@ export default class FoodItem extends React.Component {
       <TouchableHighlight onPress={this.props.onPressItem} underlayColor={Color.LIGHTER_GREY}>
         <View style={styles.row}>
           <Text style={styles.firstLine}>{this.props.name}</Text>
-          <View style={styles.categoriesRow}>
+          {/* <View style={styles.categoriesRow}>
               {this.props.categories.map(cat=>{
                 <Text style={styles.category}>{cat}</Text>
               })}
-          </View>
+          </View> */}
           <Text style={styles.secondLine}>{this.props.calorie} . {this.props.portion} serving</Text>
         </View>
       </TouchableHighlight>

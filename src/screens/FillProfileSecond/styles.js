@@ -26,15 +26,19 @@ export const styles = StyleSheet.create({
       marginBottom: Size.HEIGHT1
     },
     wrapText: {
+      marginLeft: -Size.WIDTH*0.15,
       flexDirection: 'row',
-      alignItems: 'center'
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: Size.WIDTH9
     },
     text: {
       flex: 1,
       fontSize: 12,
       flexWrap: 'wrap',
-      marginHorizontal: Size.WIDTH1*0.2,
-      fontFamily: 'SourceSansPro-Regular'
+      paddingHorizontal: Size.WIDTH1*0.4,
+      fontFamily: 'SourceSansPro-Regular',
+      textAlign: 'justify',
     },
     image: {
       width: Size.WIDTH2,
