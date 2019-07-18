@@ -6,7 +6,7 @@ import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
 import { Form, Field } from 'react-native-validate-form'
-import InputField  from '../../components/InputField'
+import InputField from '../../components/InputField'
 
 import Color from '../../config/Color'
 import Size from '../../config/Size'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, ImageBackground, Platform, View, Text, ListView, TouchableOpacity, StatusBar } from 'react-native';
+import { Animated, ImageBackground, Platform, View, Text, ListView, TouchableOpacity, StatusBar, RefreshControl } from 'react-native';
 import Color from '../../config/Color'
 import Size from '../../config/Size'
 
@@ -83,6 +83,7 @@ export default class Newsfeed extends React.Component{
     const offsetAnim = new Animated.Value(0);
 
     this.state = {
+      refreshing: false,
       page: 1,
       articles: [],
       dataSource: dataSource.cloneWithRows(data),
@@ -110,6 +111,7 @@ export default class Newsfeed extends React.Component{
   _scrollValue = 0;
 
   async onRefresh() {
+    this.setState({refreshing: true}) //start rendering spinner
     const response = await fetch(`http://103.252.100.230/fact/member/newsfeed?page=${this.state.page}`)
     const json = await response.json()
 
@@ -120,6 +122,7 @@ export default class Newsfeed extends React.Component{
     page += 1
     articles.push.apply(articles, json.results.articles)
     this.setState({page, articles, dataSource:dataSource.cloneWithRows(articles) })
+    this.setState({refreshing: false}) //stop rendering spinner
   }
 
   componentDidMount() {
@@ -180,6 +183,14 @@ export default class Newsfeed extends React.Component{
     );
   };
 
+  _refreshControl(){
+    return (
+      <RefreshControl
+        refreshing={this.state.refreshing}
+        onRefresh={()=>this.onRefresh()} />
+    )
+  }
+
   render() {
     const { clampedScroll } = this.state;
 
@@ -204,6 +215,7 @@ export default class Newsfeed extends React.Component{
           onMomentumScrollBegin={this._onMomentumScrollBegin}
           onMomentumScrollEnd={this._onMomentumScrollEnd}
           onScrollEndDrag={this._onScrollEndDrag}
+          refreshControl={this._refreshControl()}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }],
             { useNativeDriver: true },

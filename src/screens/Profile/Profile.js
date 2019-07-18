@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, StatusBar, TextInput, AsyncStorage } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, StatusBar, TextInput, AsyncStorage, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -130,6 +130,15 @@ export default class Profile extends React.Component{
         return "Make sure you have rest time equal to your activity/exercise."
   }
 
+  renderPict = (level) => {
+    if (level == "low")
+      return require('../../assets/img/light.png')
+    else if (level == "medium")
+      return require('../../assets/img/medium.png')
+    else
+      return require('../../assets/img/very.png')
+  }
+
   renderParagraph = (level) => {
     if (level == "low")
         return "75% of sitting/standing and 25% of standing/moving. Example of jobs : Designer, Office (Desk) Employee, Teacher, Host, and etc. In leisure time, have little or no exercise. Doing housework is included in this level. If doing exercise will be about 1-2 days/week."
@@ -251,7 +260,7 @@ export default class Profile extends React.Component{
             </View>
             <Text style={[styles.bold,styles.belowMargin]}>{this.state.user.activity_level.toUpperCase()}</Text>
             <View style={[styles.row,styles.belowMargin]}>
-              <View style={styles.square} />
+              <Image style={styles.square} source={this.renderPict(this.state.user.activity_level)} />
               <Text style={[styles.text,styles.paragraph]}>{this.renderParagraph(this.state.user.activity_level)}</Text>
             </View>
             <View style={[styles.roundedBox,styles.vertical]}>

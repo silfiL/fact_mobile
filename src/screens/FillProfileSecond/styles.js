@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     },
     radioGroup: {
       width: Size.WIDTH,
-      marginBottom: Size.HEIGHT1
+      marginBottom: Size.HEIGHT1*0.3
     },
     wrapText: {
       marginLeft: -Size.WIDTH*0.15,
@@ -41,8 +41,7 @@ export const styles = StyleSheet.create({
       textAlign: 'justify',
     },
     image: {
-      width: Size.WIDTH2,
-      height: Size.WIDTH2,
-      backgroundColor: Color.LIGHT_GREEN
+      width: Size.WIDTH3,
+      height: Size.WIDTH3,
     }
 })

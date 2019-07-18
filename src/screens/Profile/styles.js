@@ -137,9 +137,8 @@ export const styles = StyleSheet.create({
       color: Color.FONT_GREY,
     },
     square: {
-      width: 100,
-      height: 100,
-      backgroundColor: Color.LIGHT_GREEN,
+      width: 120,
+      height: 120,
       marginRight: Size.WIDTH1*0.2
     },
     paragraph: {

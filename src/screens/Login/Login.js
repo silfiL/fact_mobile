@@ -7,9 +7,14 @@ import { Title } from '../../components/Title'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+import { Form, Field  } from "react-native";
+import FloatingInputField  from '../../components/FloatingInputField'
 
 import Color from '../../config/Color'
 import Size from '../../config/Size'
+
+const required = value => (value ? undefined : 'This is a required field.');
+const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,5}$/i.test(value) ? 'Please provide a valid email address.' : undefined;
 
 export default class Login extends React.Component{
   constructor(props) {
@@ -18,7 +23,8 @@ export default class Login extends React.Component{
     this.state = {
       data: {
         email: '',
-        password: ''
+        password: '',
+        errors: []
       }
     }
 
@@ -46,6 +52,18 @@ export default class Login extends React.Component{
     }
   }
 
+  submitForm = () => {
+    let submitResults = this.myForm.validate();
+ 
+    let errors = [];
+ 
+    submitResults.forEach(item => {
+      errors.push({ field: item.fieldName, error: item.error });
+    });
+ 
+    this.setState({ errors: errors });
+  }
+
   forget = () => {
     this.props.navigation.navigate('ForgetPassword')
   }
@@ -59,6 +77,27 @@ export default class Login extends React.Component{
           <Title size="small"/>
         </View>
         <View style={styles.form}>
+        {/* <Form
+          ref={(ref) => this.myForm = ref}
+          validate={true}
+          submit={this.goToDiary}
+          errors={this.state.errors}
+        >
+          <Field
+            required
+            component={FloatingInputField}
+            validations={[ required, email ]}
+            name="email"
+            value={this.state.email}
+            onChangeText={(val) => this.onChange("email",val)}
+            customStyle={styles.formInput}
+            keyboardType="email-address"
+            inputStyle={styles.input}
+            labelStyle={styles.labelInput}
+            placeholder="Email Address"
+          />
+        </Form> */}
+
             <FloatingLabel
                 labelStyle={styles.labelInput}
                 inputStyle={styles.input}
