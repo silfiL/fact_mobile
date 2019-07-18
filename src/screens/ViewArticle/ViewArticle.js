@@ -73,7 +73,7 @@ export default class ViewArticle extends Component {
     );
 
     renderNavBar = () => (
-        <HeaderBackButton title={this.state.title} iconColor={Color.APP_WHITE} onPressBack={this.back}/>
+        <HeaderBackButton title="View Article" iconColor={Color.APP_WHITE} onPressBack={this.back}/>
     );
 
     render() {

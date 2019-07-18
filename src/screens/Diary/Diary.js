@@ -107,10 +107,8 @@ export default class Diary extends Component {
       return "On the way to maintain body weight"
     else if (status == "overweight")
       return "On the way to lose some weight"
-    else if (status == "obese")
-      return "Need to lose more weight and become healthy"
-    else if (status == "extremely obese")
-      return "Need to lose weight seriously to live longer"
+    else
+      return "On the way to lose weight seriously and become healthier"
   }
 
   waveRef (ref, type) {

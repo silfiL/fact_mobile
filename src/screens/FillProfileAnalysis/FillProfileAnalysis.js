@@ -33,6 +33,17 @@ export default class FillProfileAnalysis extends React.Component{
       this.setState({ user })
     }
 
+    renderText = (status) => {
+      if (status == "underweight")
+        return "You are lighter than you should be. Let's gain more weight! Fulfill your calories intake goal and burn not more than the burnt goal."
+      else if (status == "normal")
+        return "You have normal body weight. Good!! Let's maintain your body weight! Balance your calories intake and burnt."
+      else if (status == "overweight")
+        return "You are heavier than you should be. Let's lose some weight! Fulfill not more than your calories intake goal and burn according to the burnt goal."
+      else
+        return "You are in the obese state. Let's work harder to become normal and healthy. You should never fulfill more than your calories intake goal and burn less than the burnt goal. You also need to watch about the food you eat."
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -42,9 +53,7 @@ export default class FillProfileAnalysis extends React.Component{
                 <Text style={styles.title}>you are</Text>
                 <Text style={styles.weight}>"{this.state.user.status}"</Text>
                 <View style={styles.image} />
-                <Text style={styles.text}>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaderfer
+                <Text style={styles.text}>{this.renderText(this.state.user.status)}
                 </Text>
                  <Button text="START" size="short" onPress={this.next} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />
             </View>

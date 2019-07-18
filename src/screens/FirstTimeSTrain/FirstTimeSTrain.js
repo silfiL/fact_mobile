@@ -10,7 +10,7 @@ import { RadioButton, RadioGroup } from 'react-native-flexi-radio-button'
 
 import Color from '../../config/Color'
 
-let activitiesArr = ["Walk Around","Run Around","Stand Still"]
+let activitiesArr = ["Walk Around","Run here and there","Go up and down stairs"]
 let doneActivities = []
 
 let subscription = accelerometer
