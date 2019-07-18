@@ -1,8 +1,10 @@
 import { Dimensions } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
+const  sWidth  = Dimensions.get('screen').width
 
 const Size = {
+  SWIDTH: sWidth,
   WIDTH: width,
   HEIGHT: height,
   WIDTH1: width*0.1,

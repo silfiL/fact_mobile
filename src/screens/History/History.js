@@ -97,13 +97,15 @@ export default class History extends React.Component {
 
         if (this.state.end !== '') {
             date = new Date(this.state.end)
-            weekLabels.push(date.datetimeformat('date'))
+            weekLabels.push(moment(date).format('DD MMM'))
+            //weekLabels.push(date.datetimeformat('date'))
 
             for (let i = 0; i < 5; i++)
                 weekLabels.push('')
 
             date.setDate(date.getDate() - 6)
-            weekLabels.push(date.datetimeformat('date'))
+            weekLabels.push(moment(date).format('DD MMM'))
+            //weekLabels.push(date.datetimeformat('date'))
 
             date = new Date(this.state.end)
             monthDate = new Date(date.setDate(date.getDate() - 30))
@@ -114,7 +116,7 @@ export default class History extends React.Component {
         const data = {
             labels: weekLabels.reverse(),
             datasets: [{
-                data: this.state.data.week
+                data: this.state.data.week.map(e => e.toFixed(0))
             }]
         }
 
@@ -181,16 +183,15 @@ export default class History extends React.Component {
                 </View> 
                 <Text style = { styles.sectionTitle } > WEEK VIEW </Text> 
                 <BarChart data = { data }
-                  width = { Size.WIDTH9 }
+                  width = { Size.SWIDTH }
                   height = { 220 }
+                  fromZero ={true}
                   chartConfig = { chartConfig }
                   /> 
                 <Text style = { styles.sectionTitle } > MONTH VIEW </Text> 
                 {this.state.index != 2 ?
-                <View>
-                  <Text style = { styles.month } > ({(this.state.end !== '') ? monthDate.datetimeformat('date') : ''
-                } - {(this.state.end !== '') ? date.datetimeformat('date') : ''
-                }) </Text> 
+                <View> 
+                  <Text style = { styles.month } > ({moment(this.state.end).format('MMMM YYYY')})</Text> 
                   <PieChart data = { pieData }
                     width = { Size.WIDTH }
                     height = { 220 }

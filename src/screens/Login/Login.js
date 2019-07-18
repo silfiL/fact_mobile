@@ -77,7 +77,7 @@ export default class Login extends React.Component{
           <Title size="small"/>
         </View>
         <View style={styles.form}>
-        {/* <Form
+         {/*<Form
           ref={(ref) => this.myForm = ref}
           validate={true}
           submit={this.goToDiary}

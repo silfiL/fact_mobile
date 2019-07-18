@@ -222,6 +222,7 @@ export default class Diary extends Component {
           <AnimatedCircularProgress
             size={150}
             width={3}
+            rotation={0}
             fill={parseInt(this.state.calorie.intake * 100 / this.state.calorie.total_intake)}
             tintColor={Color.APP_WHITE}
             backgroundColor={Color.GREEN}
