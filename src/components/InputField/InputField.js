@@ -8,7 +8,8 @@ const InputField = ({
   value,          // field value
   disabled,
   placeholder,
-  errors,         // this array prop is automatically passed down to this component from <Form />
+  errors,
+  keyboardType         // this array prop is automatically passed down to this component from <Form />
 }) => {
   return (
     <View>
@@ -18,6 +19,7 @@ const InputField = ({
         placeholder={placeholder ? placeholder : ""}
         disabled={disabled}
         style={customStyle ? customStyle : {}}
+        keyboardType={keyboardType}
       />
 
       { errors && errors.length > 0 && errors.map((item, index) =>

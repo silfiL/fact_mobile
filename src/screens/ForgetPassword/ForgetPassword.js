@@ -86,6 +86,7 @@ export default class ForgetPassword extends React.Component{
                     component={InputField}
                     validations={[ required, email ]}
                     name="email"
+                    keyboardType="email-address"
                     value={this.state.email}
                     onChangeText={(val) => this.setState({ email: val })}
                     customStyle={styles.input}

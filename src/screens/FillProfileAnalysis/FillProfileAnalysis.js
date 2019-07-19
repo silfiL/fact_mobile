@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StatusBar, AsyncStorage } from 'react-native';
 import { Button } from '../../components/Button';
 import { styles } from './styles';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import Color from '../../config/Color'
 
@@ -34,6 +35,7 @@ export default class FillProfileAnalysis extends React.Component{
     }
 
     renderText = (status) => {
+      status = status.toLowerCase()
       if (status == "underweight")
         return "You are lighter than you should be. Let's gain more weight! Fulfill your calories intake goal and burn not more than the burnt goal."
       else if (status == "normal")
@@ -44,6 +46,18 @@ export default class FillProfileAnalysis extends React.Component{
         return "You are in the obese state. Let's work harder to become normal and healthy. You should never fulfill more than your calories intake goal and burn less than the burnt goal. You also need to watch about the food you eat."
     }
 
+    renderIconName = (status) => {
+      status = status.toLowerCase()
+      if (status == "underweight")
+        return "emoticon-cry"
+      else if (status == "normal")
+        return "emoticon-excited"
+      else if (status == "overweight")
+        return "emoticon-neutral"
+      else
+        return "emoticon-dead"
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -52,7 +66,7 @@ export default class FillProfileAnalysis extends React.Component{
                 <Text style={styles.title}>we can conclude that</Text>
                 <Text style={styles.title}>you are</Text>
                 <Text style={styles.weight}>"{this.state.user.status}"</Text>
-                <View style={styles.image} />
+                <Icon name={this.renderIconName(this.state.user.status)} size={80} color={Color.LIGHT_YELLOW} />
                 <Text style={styles.text}>{this.renderText(this.state.user.status)}
                 </Text>
                  <Button text="START" size="short" onPress={this.next} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />

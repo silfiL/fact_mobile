@@ -8,15 +8,22 @@ import { Button } from '../../components/Button';
 import { CircleWithText } from '../../components/CircleWithText'
 import AIcon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modalbox'
+import { Form, Field } from 'react-native-validate-form'
+import InputField from '../../components/InputField'
 import { styles } from './styles'
 
 import Color from '../../config/Color'
-import Size from '../../config/Size'
+
+const required = value => (value ? undefined : 'Required');
+const weight = value => value && ( value < 30 || value > 200) ? 'Should be in range 30-300' : undefined;
+const height = value => value && ( value < 100 || value > 270) ? 'Should be in range 100-270' : undefined;
+const isNumber = value => value && (isNaN(parseFloat(value)) && !isFinite(value)) ? 'Should be number' : undefined;
 
 export default class Profile extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+      errors: [],
       isOpen: false,
       activityInfo: false,
       bodyInfo: false,
@@ -148,6 +155,18 @@ export default class Profile extends React.Component{
         return "25% of sitting/standing and 75% of working (lifting and moving). Jobs that demand physical strength are included in this level such as construction workers, farmer. athlete and etc. Example of exercises such as swimming laps, running, hiking, jumping rope, playing single tennis and etc. If doing exercise will be about 6-7 days/week and 2 times/day for athlete."
   }
 
+  submitForm = () => {
+    let submitResults = this.myForm.validate();
+ 
+    let errors = [];
+ 
+    submitResults.forEach(item => {
+      errors.push({ field: item.fieldName, error: item.error });
+    });
+ 
+    this.setState({ errors: errors });
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -190,27 +209,56 @@ export default class Profile extends React.Component{
                 <AIcon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>Weight</Text>
-              <TextInput
-                placeholder="40"
-                keyboardType="numeric"
-                style={styles.numInput}
-                value={this.state.data.weight}
-                onChangeText={(event) => this.onChange('weight', event)}/>
-              <Text style={styles.text}>kg</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>Height</Text>
-              <TextInput
-                placeholder="162"
-                keyboardType="numeric"
-                style={styles.numInput}
-                value={this.state.data.height}
-                onChangeText={(event) => this.onChange('height', event)}/>
-              <Text style={styles.text}>cm</Text>
-            </View>
-            <TouchableOpacity onPress={this.onSubmit}>
+            <Form
+              ref={(ref) => this.myForm = ref}
+              validate={true}
+              submit={this.onSubmit}
+              errors={this.state.errors} // you still need to pass errors as props to Form
+            >
+              <View style={styles.row}>
+                <Text style={styles.label}>Weight</Text>
+                <Field
+                    required
+                    component={InputField}
+                    validations={[ required, weight, isNumber ]}
+                    name="weight"
+                    value={this.state.data.weight}
+                    onChangeText={(val) => this.onChange('weight',val)}
+                    customStyle={styles.numInput}
+                    keyboardType="numeric"
+                    errors={this.state.errors} // explicitly pass down errors as props if your <Field /> is inside an element
+                  />
+                {/* <TextInput
+                  placeholder="40"
+                  keyboardType="numeric"
+                  style={styles.numInput}
+                  value={this.state.data.weight}
+                  onChangeText={(event) => this.onChange('weight', event)}/> */}
+                <Text style={styles.text}>kg</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Height</Text>
+                <Field
+                  required
+                  component={InputField}
+                  validations={[ required, height, isNumber ]}
+                  name="height"
+                  value={this.state.data.height}
+                  keyboardType="numeric"
+                  onChangeText={(val) => this.onChange('height', val)}
+                  customStyle={styles.numInput}
+                  errors={this.state.errors} // explicitly pass down errors as props if your <Field /> is inside an element
+                />
+                {/* <TextInput
+                  placeholder="162"
+                  keyboardType="numeric"
+                  style={styles.numInput}
+                  value={this.state.data.height}
+                  onChangeText={(event) => this.onChange('height', event)}/> */}
+                <Text style={styles.text}>cm</Text>
+              </View>
+            </Form>
+            <TouchableOpacity onPress={this.submitForm}>
               <Text style={styles.modalButton}>OK</Text>
             </TouchableOpacity>
         </Modal>
@@ -223,6 +271,7 @@ export default class Profile extends React.Component{
             </View>
             <View style={styles.roundedBox}>
               <View style={styles.half}>
+                
                 <View style={[styles.row,styles.evenly]}>
                   <Text style={styles.label}>Weight</Text>
                   <Text style={styles.text}>:</Text>
