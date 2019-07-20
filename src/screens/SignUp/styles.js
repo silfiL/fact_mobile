@@ -25,6 +25,6 @@ export const styles = StyleSheet.create({
         fontFamily: 'SourceSansPro-Regular'
     },
     below: {
-      marginBottom: Size.HEIGHT1
+      marginTop: Size.HEIGHT1
     }
 })

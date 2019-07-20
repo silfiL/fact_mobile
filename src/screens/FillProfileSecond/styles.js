@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     },
     radioGroup: {
       width: Size.WIDTH,
-      marginBottom: Size.HEIGHT1*0.3
+      marginBottom: Size.HEIGHT1*0.12
     },
     wrapText: {
       marginLeft: -Size.WIDTH*0.15,

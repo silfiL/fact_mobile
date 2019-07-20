@@ -7,14 +7,15 @@ import { Title } from '../../components/Title'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
-import { Form, Field  } from "react-native";
+import { Form, Field } from 'react-native-validate-form';
 import FloatingInputField  from '../../components/FloatingInputField'
 
 import Color from '../../config/Color'
 import Size from '../../config/Size'
 
 const required = value => (value ? undefined : 'This is a required field.');
-const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,5}$/i.test(value) ? 'Please provide a valid email address.' : undefined;
+const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,5}$/i.test(value) ? 'Please enter a valid email address.' : undefined;
+const password = value => value && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/i.test(value) ? 'Password minimum 8 and maximum 16 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number' : undefined;
 
 export default class Login extends React.Component{
   constructor(props) {
@@ -24,7 +25,6 @@ export default class Login extends React.Component{
       data: {
         email: '',
         password: '',
-        errors: []
       }
     }
 
@@ -77,46 +77,43 @@ export default class Login extends React.Component{
           <Title size="small"/>
         </View>
         <View style={styles.form}>
-         {/*<Form
-          ref={(ref) => this.myForm = ref}
-          validate={true}
-          submit={this.goToDiary}
-          errors={this.state.errors}
-        >
-          <Field
-            required
-            component={FloatingInputField}
-            validations={[ required, email ]}
-            name="email"
-            value={this.state.email}
-            onChangeText={(val) => this.onChange("email",val)}
-            customStyle={styles.formInput}
-            keyboardType="email-address"
-            inputStyle={styles.input}
-            labelStyle={styles.labelInput}
-            placeholder="Email Address"
-          />
-        </Form> */}
-
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                style={styles.formInput}
-                keyboardType='email-address'
-                autoCapitalize='none'
-                value={this.state.data.email}
-                onChangeText={(event) => this.onChange('email', event)}>Email Address</FloatingLabel>
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                password={true}
-                style={styles.formInput}
-                value={this.state.data.password}
-                onChangeText={(event) => this.onChange('password', event)}>Password</FloatingLabel>
-            <TouchableOpacity onPress={this.forget} style={styles.forget}>
+          <Form
+            ref={(ref) => this.myForm = ref}
+            validate={true}
+            submit={this.goToDiary}
+            errors={this.state.errors}
+          >
+            <Field
+              required
+              component={FloatingInputField}
+              validations={[ required, email ]}
+              name="email"
+              value={this.state.data.email}
+              onChangeText={(val) => this.onChange("email",val)}
+              customStyle={styles.formInput}
+              keyboardType="email-address"
+              inputStyle={styles.input}
+              labelStyle={styles.labelInput}
+              placeholder="Email Address"
+            />
+            <Field
+              required
+              component={FloatingInputField}
+              validations={[ required, password ]}
+              name="password"
+              value={this.state.data.password}
+              onChangeText={(val) => this.onChange("password",val)}
+              customStyle={styles.formInput}
+              password={true}
+              inputStyle={styles.input}
+              labelStyle={styles.labelInput}
+              placeholder="Password"
+            />
+          </Form>
+          <TouchableOpacity onPress={this.forget} style={styles.forget}>
               <Text style={styles.forgetText}>Forget Password?</Text>
             </TouchableOpacity>
-            <Button text="LOGIN" size="long" onPress={this.goToDiary} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />
+            <Button text="LOGIN" size="long" onPress={this.submitForm} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />
         </View>
         <Footer />
       </LinearGradient>

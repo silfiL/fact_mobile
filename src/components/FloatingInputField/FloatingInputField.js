@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import FloatingLabel from 'react-native-floating-labels'
 
+import Color from '../../config/Color'
+
 const FloatingInputField = ({
   name,           // field name - required
   customStyle,
@@ -11,7 +13,8 @@ const FloatingInputField = ({
   errors,  // this array prop is automatically passed down to this component from <Form />
   keyboardType,
   labelStyle,
-  inputStyle
+  inputStyle,
+  password
 }) => {
   return (
     <View>
@@ -22,13 +25,14 @@ const FloatingInputField = ({
         keyboardType={keyboardType}
         labelStyle={labelStyle ? labelStyle : {}}
         inputStyle={inputStyle? inputStyle : {}}
+        password={password}
       >
       {placeholder ? placeholder : ""}
       </FloatingLabel>
 
       { errors && errors.length > 0 && errors.map((item, index) =>
           item.field === name && item.error ?
-            <Text style={{ color: 'red' }}>
+            <Text style={{ color: Color.RED, fontWeight: 'bold' }}>
               {item.error}
             </Text>
           : <View />

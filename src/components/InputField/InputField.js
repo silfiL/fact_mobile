@@ -1,6 +1,8 @@
 import React from 'react';
 import { TextInput, Text, View } from 'react-native';
 
+import Color from '../../config/Color'
+
 const InputField = ({
   name,           // field name - required
   customStyle,
@@ -24,7 +26,7 @@ const InputField = ({
 
       { errors && errors.length > 0 && errors.map((item, index) =>
           item.field === name && item.error ?
-            <Text style={{ color: 'red' }}>
+            <Text style={{ color: Color.RED, fontWeight: 'bold' }}>
               {item.error}
             </Text>
           : <View />

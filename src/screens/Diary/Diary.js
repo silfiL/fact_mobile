@@ -26,8 +26,9 @@ import moment from 'moment'
 export default class Diary extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
+      status: 'normal',
       date: new Date(),
       fill1: 50,
       fill2: 82,
@@ -214,7 +215,7 @@ export default class Diary extends Component {
   renderToolBar = () => (
     <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.toolbarContent}>
       <View style={styles.roundedRect}>
-        <Text style={styles.text}>{this.renderGoal("normal")}</Text>
+        <Text style={styles.text}>{this.renderGoal(this.state.status)}</Text>
       </View>
       <View style={styles.row}>
         <View style={styles.center}>
@@ -229,9 +230,12 @@ export default class Diary extends Component {
             >
             {
               (fill) => (
-                <Text style={styles.points}>
-                  { this.state.calorie.intake } KCAL
-                </Text>
+                <View style={{alignItems:'center'}}>
+                    <Text style={styles.points}>
+                    { this.state.calorie.intake }
+                  </Text>
+                  <Text style={[styles.points,styles.kcal]}>KCAL</Text>
+                </View>
               )
             }
           </AnimatedCircularProgress>
@@ -248,9 +252,12 @@ export default class Diary extends Component {
             backgroundColor={Color.GREEN}>
             {
               (fill) => (
-                <Text style={styles.points}>
-                  {this.state.calorie.burnt} KCAL
-                </Text>
+                <View style={{alignItems:'center'}}>
+                    <Text style={styles.points}>
+                    { this.state.calorie.burnt }
+                  </Text>
+                  <Text style={[styles.points,styles.kcal]}>KCAL</Text>
+                </View>
               )
             }
           </AnimatedCircularProgress>

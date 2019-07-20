@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
       width: 100,
       height: 100,
       marginTop: Size.HEIGHT1*0.8,
-      marginBottom: Size.HEIGHT1*0.2
+      marginBottom: Size.HEIGHT1*0.2,
     },
     row: {
       flexDirection: 'row',
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     smallModal: {
         padding: Size.WIDTH*0.05,
         width: Size.WIDTH9,
-        height: Size.HEIGHT*0.25
+        height: null
     },
     bottomModal: {
       padding: Size.WIDTH*0.05,
@@ -128,7 +128,7 @@ export const styles = StyleSheet.create({
       borderBottomColor: Color.LIGHT_GREEN,
       borderBottomWidth: 1,
       marginRight: Size.WIDTH1*0.1,
-      width: Size.WIDTH1,
+      width: Size.WIDTH2,
       paddingHorizontal: Size.WIDTH1*0.2,
       paddingVertical: 5
     },
@@ -161,7 +161,7 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: Size.WIDTH1*0.2,
-      marginVertical: Size.HEIGHT1*0.2
+      marginTop: Size.HEIGHT1*0.2,
     },
     blank: {
       width: Size.WIDTH5
@@ -169,6 +169,6 @@ export const styles = StyleSheet.create({
     extraSmallModal : {
       padding: Size.WIDTH*0.05,
       width: Size.WIDTH9,
-      height: Size.HEIGHT2
+      height: null
     },
 })

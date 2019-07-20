@@ -7,8 +7,16 @@ import { Title } from '../../components/Title'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+import { Form, Field } from 'react-native-validate-form';
+import FloatingInputField  from '../../components/FloatingInputField'
 
 import Color from '../../config/Color'
+
+const required = value => (value ? undefined : 'This is a required field.');
+const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,5}$/i.test(value) ? 'Please enter a valid email address.' : undefined;
+const password = value => value && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/i.test(value) ? 'Password minimum 8 and maximum 16 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number' : undefined;
+const name = value => value && !/^[a-z].*/i.test(value) ? 'Name should start with letter (A-Z)' : undefined;
+const nameLength = value => value && value.length > 30 ? "Name's maximum is 30 characters" : undefined;
 
 export default class SignUp extends React.Component{
   constructor (props) {
@@ -51,6 +59,18 @@ export default class SignUp extends React.Component{
     }
   }
 
+  submitForm = () => {
+    let submitResults = this.myForm.validate();
+ 
+    let errors = [];
+ 
+    submitResults.forEach(item => {
+      errors.push({ field: item.fieldName, error: item.error });
+    });
+ 
+    this.setState({ errors: errors });
+  }
+
   render(){
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.GREEN,Color.LIGHT_GREEN]} style={styles.container}>
@@ -58,35 +78,67 @@ export default class SignUp extends React.Component{
         <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE}/>
         <Title size="small"/>
         <View style={styles.form}>
-          <FloatingLabel
-              labelStyle={styles.labelInput}
-              inputStyle={styles.input}
-              style={styles.formInput}
+          <Form
+            ref={(ref) => this.myForm = ref}
+            validate={true}
+            submit={this.goToFillProfile}
+            errors={this.state.errors}
+          >
+            <Field
+              required
+              component={FloatingInputField}
+              validations={[ required, name, nameLength ]}
+              name="name"
               value={this.state.data.name}
-              onChangeText={(event) => this.onChange('name', event)}>Name</FloatingLabel>
-          <FloatingLabel
-              labelStyle={styles.labelInput}
+              onChangeText={(val) => this.onChange("name",val)}
+              customStyle={styles.formInput}
               inputStyle={styles.input}
-              keyboardType="email"
-              keyboardType="email-address"
-              style={styles.formInput}
+              labelStyle={styles.labelInput}
+              placeholder="Name"
+            />
+            <Field
+              required
+              component={FloatingInputField}
+              validations={[ required, email ]}
+              name="email"
               value={this.state.data.email}
-              onChangeText={(event) => this.onChange('email', event)}>Email Address</FloatingLabel>
-          <FloatingLabel
-              labelStyle={styles.labelInput}
+              onChangeText={(val) => this.onChange("email",val)}
+              customStyle={styles.formInput}
+              keyboardType="email-address"
               inputStyle={styles.input}
-              password={true}
-              style={styles.formInput}
+              labelStyle={styles.labelInput}
+              placeholder="Email Address"
+            />
+            <Field
+              required
+              component={FloatingInputField}
+              validations={[ required, password ]}
+              name="password"
               value={this.state.data.password}
-              onChangeText={(event) => this.onChange('password', event)}>Password</FloatingLabel>
-          <FloatingLabel
-              labelStyle={styles.labelInput}
-              inputStyle={styles.input}
+              onChangeText={(val) => this.onChange("password",val)}
+              customStyle={styles.formInput}
               password={true}
-              style={[styles.formInput,styles.below]}
+              inputStyle={styles.input}
+              labelStyle={styles.labelInput}
+              placeholder="Password"
+            />
+            <Field
+              required
+              component={FloatingInputField}
+              validations={[ required, password ]}
+              name="re_password"
               value={this.state.data.re_password}
-              onChangeText={(event) => this.onChange('re_password', event)}>Re-Password</FloatingLabel>
-          <Button text="SIGN UP" size="long" onPress={this.goToFillProfile} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />
+              onChangeText={(val) => this.onChange("re_password",val)}
+              customStyle={styles.formInput}
+              password={true}
+              inputStyle={styles.input}
+              labelStyle={styles.labelInput}
+              placeholder="Re-Password"
+            />
+          </Form>
+          <View style={styles.below}>
+            <Button text="SIGN UP" size="long" onPress={this.submitForm} bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_GREEN} />
+          </View>
         </View>
         <Footer />
       </LinearGradient>

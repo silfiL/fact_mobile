@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, StatusBar, TextInput, AsyncStorage, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, AsyncStorage, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -34,6 +34,8 @@ export default class Profile extends React.Component{
       },
       user: {
         name: '',
+        age: '',
+        gender: '',
         status: '',
         weight: '',
         height: '',
@@ -74,9 +76,11 @@ export default class Profile extends React.Component{
     const headers = {"Authorization": 'Bearer ' + token}
     const response = await fetch(`http://103.252.100.230/fact/member/user`, {headers})
     const json = await response.json()
-    
+    console.log("profile json",json)
     const user = {
       name: json.results.name,
+      age: new Date().getFullYear() - json.results.birth_year,
+      gender: json.results.gender == 1 ? "male" : "female",
       status: json.results.status,
       weight: json.results.weight,
       height: json.results.height,
@@ -167,6 +171,13 @@ export default class Profile extends React.Component{
     this.setState({ errors: errors });
   }
 
+  renderSource = (gender) => {
+    if (gender == "male")
+      return require('../../assets/img/male.png')
+    else
+      return require('../../assets/img/female.png')
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -174,9 +185,9 @@ export default class Profile extends React.Component{
             {/*<TouchableOpacity style={{alignSelf:'flex-end'}} onPress={this.editProfile}>
                 <MIcon name="edit" size={24} color={Color.APP_WHITE} />
             </TouchableOpacity>*/}
-            <View style={styles.image}></View>
+            <Image style={styles.image} source={this.renderSource(this.state.user.gender)} />
             <Text style={styles.name}>{this.state.user.name}</Text>
-            <Text style={styles.status}>22 y.o male</Text>
+            <Text style={styles.status}>{this.state.user.age} y.o {this.state.user.gender}</Text>
             <Text style={styles.status}>{this.state.user.status}</Text>
         </LinearGradient>
         <View style={styles.row}>
@@ -228,12 +239,6 @@ export default class Profile extends React.Component{
                     keyboardType="numeric"
                     errors={this.state.errors} // explicitly pass down errors as props if your <Field /> is inside an element
                   />
-                {/* <TextInput
-                  placeholder="40"
-                  keyboardType="numeric"
-                  style={styles.numInput}
-                  value={this.state.data.weight}
-                  onChangeText={(event) => this.onChange('weight', event)}/> */}
                 <Text style={styles.text}>kg</Text>
               </View>
               <View style={styles.row}>
@@ -249,12 +254,6 @@ export default class Profile extends React.Component{
                   customStyle={styles.numInput}
                   errors={this.state.errors} // explicitly pass down errors as props if your <Field /> is inside an element
                 />
-                {/* <TextInput
-                  placeholder="162"
-                  keyboardType="numeric"
-                  style={styles.numInput}
-                  value={this.state.data.height}
-                  onChangeText={(event) => this.onChange('height', event)}/> */}
                 <Text style={styles.text}>cm</Text>
               </View>
             </Form>
@@ -289,7 +288,7 @@ export default class Profile extends React.Component{
                 </View>
               </View>
               <TouchableOpacity onPress={this.toggleEdit}>
-                <MIcon name="edit" size={18} color={Color.RED} />
+                <MIcon name="edit" size={20} color={Color.RED} />
               </TouchableOpacity>
             </View>
             <Text style={[styles.label,styles.belowMargin]}>Nutritions</Text>

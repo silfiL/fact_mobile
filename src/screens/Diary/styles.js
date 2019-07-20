@@ -41,6 +41,9 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: Color.APP_WHITE,
   },
+  kcal: {
+    fontSize: 14,
+  },  
   label: {
     fontFamily: 'SourceSansPro-Bold',
     color: Color.APP_WHITE,

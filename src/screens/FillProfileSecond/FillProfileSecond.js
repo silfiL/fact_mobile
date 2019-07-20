@@ -26,7 +26,7 @@ export default class FillProfileSecond extends React.Component{
 
     next = async () => {
       if (this.state.data.activity_level === '')
-        return Alert.alert("WARNING","Required Fields can't be empty",[{text: 'OK'}])
+        return Alert.alert("Warning","Required Field can't be empty",[{text: 'OK'}])
       const token = await AsyncStorage.getItem('token');
       const body = JSON.stringify(this.state.data)
       const headers = {"Authorization": 'Bearer ' + token}
