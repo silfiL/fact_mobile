@@ -15,16 +15,15 @@ export const styles = StyleSheet.create({
         color: Color.FONT_GREY,
         fontFamily: 'SourceSansPro-Bold'
     },
-    formInput: {    
+    formInput: {
         borderBottomWidth: 1.5, 
         borderColor: Color.LIGHT_BLUE,
-        marginBottom: Size.HEIGHT*0.02
     },
     input: {
         borderWidth: 0,
         color: Color.FONT_GREY,
         fontSize: 16,
-        fontFamily: 'SourceSansPro-Regular'
+        fontFamily: 'SourceSansPro-Regular',
     },
     row: {
         flexDirection: 'row',
@@ -38,12 +37,12 @@ export const styles = StyleSheet.create({
         color: Color.FONT_GREY,
     },
     text: {
-        fontSize: 17,
+        fontSize: 15,
         fontFamily: 'SourceSansPro-Regular',
         color: Color.FONT_GREY
     },
     rowGroup: {
-        marginBottom: Size.HEIGHT*0.02
+        marginVertical: Size.HEIGHT*0.02
     },
     infoContainer: {
         justifyContent: 'center',

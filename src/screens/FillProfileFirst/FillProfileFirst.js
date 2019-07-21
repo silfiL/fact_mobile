@@ -87,7 +87,7 @@ export default class FillProfileFirst extends React.Component{
                         required
                         placeholder="Enter Birth Year"
                         component={InputField}
-                        validations={[ required, age ]}
+                        validations={[ required, age, isNumber ]}
                         name="birth_year"
                         value={this.state.data.birth_year}
                         onChangeText={(val) => this.onChange('birth_year',val)}

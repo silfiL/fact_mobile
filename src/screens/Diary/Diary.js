@@ -110,8 +110,12 @@ export default class Diary extends Component {
   }
 
   componentDidMount() {
-    this.onRefresh()
-    this.getStatus()
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      console.log("did focus")
+      this.getStatus()
+      this.onRefresh()
+    });
   }
 
   renderGoal = (status) => {
@@ -248,8 +252,9 @@ export default class Diary extends Component {
             {
               (fill) => (
                 <View style={{alignItems:'center'}}>
+                    {this.state.calorie.intake > this.state.calorie.total_intake ? <Text style={styles.points}>OVER</Text>:null}
                     <Text style={styles.points}>
-                    { this.state.calorie.intake }
+                    { this.state.calorie.intake > this.state.calorie.total_intake ? this.state.calorie.intake - this.state.calorie.total_intake : this.state.calorie.intake }
                   </Text>
                   <Text style={[styles.points,styles.kcal]}>KCAL</Text>
                 </View>
@@ -270,8 +275,9 @@ export default class Diary extends Component {
             {
               (fill) => (
                 <View style={{alignItems:'center'}}>
+                    {this.state.calorie.burnt > this.state.calorie.total_burnt ? <Text style={styles.points}>OVER</Text>:null}
                     <Text style={styles.points}>
-                    { this.state.calorie.burnt }
+                    { this.state.calorie.burnt > this.state.calorie.total_burnt ? ('OVER ' + this.state.calorie.burnt-this.state.calorie.total_burnt) : this.state.calorie.burnt }
                   </Text>
                   <Text style={[styles.points,styles.kcal]}>KCAL</Text>
                 </View>

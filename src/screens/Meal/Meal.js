@@ -63,9 +63,9 @@ export default class Meal extends React.Component{
 
   onSelectMeal(item) {
     const self = this
-    Alert.alert("Add Meal", `do you want to eat ${item.name}?`, [
-      {text: 'Cancel', style: 'cancel'},
-      {text: 'Submit', onPress: () => self.onAddMeal(item.id)}
+    Alert.alert("Add Meal", `Do you want to eat ${item.name}?`, [
+      {text: 'NO', style: 'cancel'},
+      {text: 'YES', onPress: () => self.onAddMeal(item.id)}
     ])
   }
 

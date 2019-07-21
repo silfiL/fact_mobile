@@ -102,7 +102,7 @@ export default class SearchFood extends React.Component{
     console.log(token, this.state.add)
     const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
     const json = await response.json()
-
+    console.log("submit on search page",json)
     if (json.message === "Success") {
       this.setState({isOpen:!this.state.isOpen})
     }

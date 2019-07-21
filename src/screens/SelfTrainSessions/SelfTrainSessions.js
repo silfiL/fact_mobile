@@ -57,7 +57,7 @@ export default class SelfTrainSessions extends React.Component{
     for (let i = 0, l = json.results.activity.length; i < l; i++) {
       let date = new Date(json.results.activity[i].requested_at)
       data.push({
-        id: date,
+        id: date.toString(),
         date: date.datetimeformat('date'),
         time: date.datetimeformat('time')
       })
@@ -67,7 +67,12 @@ export default class SelfTrainSessions extends React.Component{
   }
 
   componentDidMount() {
-    this.onRefresh()
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      console.log("did focus")
+      this.onRefresh()
+    });
+    //this.onRefresh()
   }
 
   render(){

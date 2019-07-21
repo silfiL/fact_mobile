@@ -23,11 +23,20 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1.5,
         borderColor: Color.LIGHT_GREEN,
     },
+    formRow: {
+      marginTop: Size.HEIGHT1*0.05,
+      marginBottom: Size.HEIGHT1*0.4
+    },
+    label: {
+      fontFamily: 'SourceSansPro-Bold',
+      color: Color.FONT_GREY,
+      fontSize: 18
+    },
     input: {
-        borderWidth: 0,
-        color: Color.FONT_GREY,
-        fontSize: 16,
-        fontFamily: 'SourceSansPro-Regular'
+      borderBottomColor: Color.LIGHT_GREEN,
+      borderBottomWidth: 1,
+      fontFamily: 'SourceSansPro-Regular',
+      fontSize: 16
     },
     container: {
         flex: 1,

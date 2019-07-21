@@ -67,13 +67,14 @@ export default class RecentFood extends React.Component{
   onSelectMeal(item) {
     console.log(item)
     const self = this
-    Alert.alert("Add Meal", `do you want to eat ${item.name} (${item.portion} serving)?`, [
-      {text: 'Cancel', style: 'cancel'},
-      {text: 'Submit', onPress: () => self.onAddMeal(item.id, item.type)}
+    Alert.alert("Add Food", `Do you want to eat ${item.name} (${item.portion} serving)?`, [
+      {text: 'NO', style: 'cancel'},
+      {text: 'YES', onPress: () => self.onAddMeal(item.id, item.type)}
     ])
   }
 
   async onAddMeal (id, type) {
+    console.log("on add meal jalan")
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const body = JSON.stringify({
@@ -82,7 +83,7 @@ export default class RecentFood extends React.Component{
     console.log(type, body)
     const response = await fetch(`http://103.252.100.230/fact/member/intake/${type}`, {method: 'POST', body, headers})
     const json = await response.json()
-
+    console.log("add recents json",json)
     if (json.message === 'Success') {
       this.props.navigation.state.params.onDiaryRefresh()
       this.props.navigation.navigate('Diary')
@@ -90,7 +91,12 @@ export default class RecentFood extends React.Component{
   }
 
   componentDidMount() {
-    this.onRefresh()
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      console.log("did focus")
+      this.onRefresh()
+    });
+    //this.onRefresh()
   }
 
   render(){

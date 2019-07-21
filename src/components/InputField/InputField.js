@@ -26,7 +26,7 @@ const InputField = ({
 
       { errors && errors.length > 0 && errors.map((item, index) =>
           item.field === name && item.error ?
-            <Text style={{ color: Color.RED, fontWeight: 'bold' }}>
+            <Text style={{ color: Color.RED, fontWeight: 'bold', fontSize: 12 }}>
               {item.error}
             </Text>
           : <View />

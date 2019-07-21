@@ -47,9 +47,15 @@ export default class SelfTrain extends React.Component{
   handleTimerComplete = async () => {
     this.setState({totalDuration:null,timerDone:true})
     subscription.unsubscribe()
-    alert('timer is completed')
+    alert('Timer is completed')
     console.log(this.state.data.length)
+  }
 
+  back = () => {
+    this.props.navigation.goBack()
+  }
+
+  done = async() => {
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const body = JSON.stringify({
@@ -60,14 +66,8 @@ export default class SelfTrain extends React.Component{
     const json = await response.json()
 
     console.log("JSON #1", json)
-  }
-
-  back = () => {
-    this.props.navigation.goBack()
-  }
-
-  done = () => {
-    this.props.navigation.navigate('SelfTrainSessions')
+    if (json.message == "Success")
+      this.props.navigation.navigate('SelfTrainSessions')
   }
 
   render(){

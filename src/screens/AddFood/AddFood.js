@@ -7,21 +7,30 @@ import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { GridButton } from '../../components/GridButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+import { Form, Field } from 'react-native-validate-form';
+import InputField  from '../../components/InputField'
 
 import Color from '../../config/Color'
+
+const required = value => (value ? undefined : 'Required');
+const calories = value => value && ( value < 0 || value > 5000) ? 'Food Calories should be in range 0-5000 kcal' : undefined;
+const nutrient = value => value && ( value < 0 || value > 100) ? 'Carb/Protein/Fat should be in range 0-100 g' : undefined;
+const isNumber = value => value && (isNaN(parseFloat(value)) && !isFinite(value)) ? 'Total Calories/Carb/Protein/Fat should be number' : undefined;
+const name = value => value && !/^[a-z].*/i.test(value) ? 'Food name should start with letter (A-Z)' : undefined;
+const nameLength = value => value && value.length > 30 ? "Food name's maximum is 40 characters" : undefined;
 
 export default class AddFood extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       isOpen: false,
-      value: 0,
+      //value: 0,
       data: {
         name: '',
-        fat: 0,
-        calorie: 0,
-        protein: 0,
-        carbohydrate: 0,
+        fat: '0',
+        calorie: '0',
+        protein: '0',
+        carbohydrate: '0',
         category: 0
       },
     }
@@ -36,20 +45,21 @@ export default class AddFood extends React.Component{
     this.setState({ data })
   }
 
-  async onSubmit() {
+  onSubmit = async() => {
+    console.log("INi jalan kok")
     const body = JSON.stringify(this.state.data)
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     let response = await fetch(`http://103.252.100.230/fact/member/food`, {method: 'POST', body, headers})
     let json = await response.json()
-
+    console.log("add custom json",json)
     if (json.message === 'Success') {
       const data = {
         name: '',
-        fat: 0,
-        calorie: 0,
-        protein: 0,
-        carbohydrate: 0,
+        fat: '',
+        calorie: '',
+        protein: '',
+        carbohydrate: '',
         category: 1
       }
 
@@ -90,6 +100,19 @@ export default class AddFood extends React.Component{
     this.props.navigation.navigate('CategoryList')
   }
 
+  submitForm = () => {
+    //this.setState({errMessage: ''})
+    let submitResults = this.myForm.validate();
+ 
+    let errors = [];
+ 
+    submitResults.forEach(item => {
+      errors.push({ field: item.fieldName, error: item.error });
+    });
+
+    this.setState({ errors: errors });
+  }
+
   render(){
     let title = ''
     switch (this.props.navigation.state.params.id) {
@@ -123,44 +146,91 @@ export default class AddFood extends React.Component{
                 <Icon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                style={styles.formInput}
-                value={this.state.data.name}
-                onChangeText={(event) => this.onChange('name', event)}>Food Name</FloatingLabel>
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                style={styles.formInput}
-                value={this.state.data.calorie}
-                keyboardType="decimal-pad"
-                onChangeText={(event) => this.onChange('calorie', event)}>Calories</FloatingLabel>
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                style={styles.formInput}
-                value={this.state.data.carbohydrate}
-                keyboardType="decimal-pad"
-                onChangeText={(event) => this.onChange('carbohydrate', event)}>Carb</FloatingLabel>
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                style={styles.formInput}
-                value={this.state.data.protein}
-                keyboardType="decimal-pad"
-                onChangeText={(event) => this.onChange('protein', event)}>Protein</FloatingLabel>
-            <FloatingLabel
-                labelStyle={styles.labelInput}
-                inputStyle={styles.input}
-                style={styles.formInput}
-                value={this.state.data.fat}
-                keyboardType="decimal-pad"
-                onChangeText={(event) => this.onChange('fat', event)}>Fat</FloatingLabel>
+            <Form
+              ref={(ref) => this.myForm = ref}
+              validate={true}
+              submit={this.onSubmit}
+              errors={this.state.errors}
+            >
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Food Name</Text>
+                <Field
+                    required
+                    component={InputField}
+                    validations={[ required, name, nameLength ]}
+                    name="name"
+                    placeholder="Enter Food Name"
+                    value={this.state.data.name}
+                    onChangeText={(val) => this.onChange('name',val)}
+                    customStyle={styles.input}
+                    errors={this.state.errors}     
+                    />
+              </View>
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Total Calories (in kcal)</Text>
+                <Field
+                    required
+                    component={InputField}
+                    validations={[ required, isNumber, calories ]}
+                    name="calorie"
+                    placeholder="Enter Total Calorie"
+                    value={this.state.data.calorie}
+                    onChangeText={(val) => this.onChange('calorie',val)}
+                    customStyle={styles.input}
+                    keyboardType="decimal-pad"
+                    errors={this.state.errors}
+                    />
+              </View>
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Total Carb (in g)</Text>
+                <Field
+                    required
+                    component={InputField}
+                    validations={[ isNumber, nutrient ]}
+                    name="carb"
+                    placeholder="Enter Total Carb"
+                    value={this.state.data.carbohydrate}
+                    onChangeText={(val) => this.onChange('carbohydrate',val)}
+                    customStyle={styles.input}
+                    keyboardType="decimal-pad"
+                    errors={this.state.errors}
+                    />
+              </View>
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Total Protein (in g)</Text>
+                <Field
+                    required
+                    component={InputField}
+                    validations={[ isNumber, nutrient ]}
+                    name="protein"
+                    placeholder="Enter Total Protein"
+                    value={this.state.data.protein}
+                    onChangeText={(val) => this.onChange('protein',val)}
+                    customStyle={styles.input}
+                    keyboardType="decimal-pad"
+                    errors={this.state.errors}
+                    />
+              </View>
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Total Fat (in g)</Text>
+                <Field
+                    required
+                    component={InputField}
+                    validations={[ isNumber, nutrient ]}
+                    name="fat"
+                    placeholder="Enter Total Fat"
+                    value={this.state.data.fat}
+                    onChangeText={(val) => this.onChange('fat',val)}
+                    customStyle={styles.input}
+                    keyboardType="decimal-pad"
+                    errors={this.state.errors}
+                    />
+              </View>
+            </Form>
             <View style={styles.blankRow} >
               <View style={styles.blank}/>
               <View style={styles.modalButtonRow}>
-                <TouchableOpacity onPress={this.onSubmit}>
+                <TouchableOpacity onPress={this.submitForm}>
                   <Text style={styles.modalButton}>SAVE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.toggleModal}>

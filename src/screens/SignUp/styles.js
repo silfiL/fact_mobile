@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
         fontFamily: 'SourceSansPro-Regular'
     },
     below: {
-      marginTop: Size.HEIGHT1
+      marginTop: Size.HEIGHT1*0.2
     },
     errMessage: {
       backgroundColor: Color.RED,

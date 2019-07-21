@@ -8,7 +8,7 @@ import Color from '../../config/Color'
 export default class FoodItem extends React.Component {
   render() {
     return (
-      <TouchableHighlight onPress={this.props.onPressItem} underlayColor={Color.LIGHTER_GREY}>
+      <TouchableHighlight onPress={this.props.onPressItem} underlayColor={Color.LIGHTER_GREY} onLongPress={this.props.onLongPress}>
         <View style={styles.row}>
           <Text style={styles.firstLine}>{this.props.name}</Text>
           {/* <View style={styles.categoriesRow}>

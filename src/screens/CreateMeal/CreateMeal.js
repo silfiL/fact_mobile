@@ -1,13 +1,19 @@
 import React from 'react'
-import { View, Text, StatusBar, AsyncStorage, ScrollView } from 'react-native'
+import { View, Text, StatusBar, AsyncStorage, ScrollView, Alert } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels';
 import { Button } from '../../components/Button'
 import { FoodItemCard } from '../../components/FoodItemCard';
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { Footer } from '../../components/Footer'
 import { styles } from './styles'
+import { Form, Field } from 'react-native-validate-form';
+import FloatingInputField  from '../../components/FloatingInputField'
 
 import Color from '../../config/Color'
+
+const required = value => (value ? undefined : 'This is a required field.');
+const name = value => value && !/^[a-z].*/i.test(value) ? 'Meal name should start with letter (A-Z)' : undefined;
+const nameLength = value => value && value.length > 30 ? "Meal name's maximum is 40 characters" : undefined;
 
 export default class CreateMeal extends React.Component{
   constructor(props) {
@@ -39,7 +45,22 @@ export default class CreateMeal extends React.Component{
     this.setState({ name })
   }
 
+  submitForm = () => {
+    this.setState({errMessage: ''})
+    let submitResults = this.myForm.validate();
+ 
+    let errors = [];
+ 
+    submitResults.forEach(item => {
+      errors.push({ field: item.fieldName, error: item.error });
+    });
+
+    this.setState({ errors: errors });
+  }
+
   async onSubmit() {
+    if (this.state.foods.length == 0)
+      return Alert.alert("Warning","Foods need to be added ",[{text:'OK'}])
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const body = JSON.stringify({
@@ -48,7 +69,7 @@ export default class CreateMeal extends React.Component{
     })
     let response = await fetch(`http://103.252.100.230/fact/member/meal`, {method: 'POST', body, headers})
     let json = await response.json()
-
+    console.log("create meal json",json)
     if (json.message === 'Success') {
       this.props.navigation.state.params.onMealRefresh()
       this.props.navigation.navigate('Meal')
@@ -81,40 +102,59 @@ export default class CreateMeal extends React.Component{
           <StatusBar backgroundColor={Color.BLUE} barStyle="light-content" />
           <HeaderBackButton onPressBack={this.back} title="CREATE MEAL" bgColor={Color.BLUE} iconColor={Color.APP_WHITE} />
 
-      <ScrollView>
-          <View style={styles.form}>
-              <FloatingLabel
-                  labelStyle={styles.labelInput}
-                  inputStyle={styles.input}
-                  style={styles.formInput}
-                  onChangeText={this.onChangeName}>Meal Name</FloatingLabel>
-              <View style={styles.rowGroup}>
-                <Text style={styles.label}>Contains :</Text>
-                <View>{containFood}</View>
-                <Button text="ADD FOOD" size="short" bgColor={Color.TRANSPARENT} txtColor={Color.BLUE} border={Color.BLUE} onPress={this.addFood}/>
-              </View>
-              <Text style={styles.label}>Nutritions Info :</Text>
-              <View style={styles.infoContainer}>
-                <View style={[styles.row,styles.rowGroup]}>
-                  <Text style={styles.label}>Calories</Text>
-                  <Text style={styles.text}>{calorie} kcal</Text>
+          <ScrollView>
+              <View style={styles.form}>
+                  <Form
+                    ref={(ref) => this.myForm = ref}
+                    validate={true}
+                    submit={this.onSubmit}
+                    errors={this.state.errors}
+                  >
+                    <Field
+                      required
+                      component={FloatingInputField}
+                      validations={[ required, name, nameLength ]}
+                      name="name"
+                      value={this.state.name}
+                      onChangeText={this.onChangeName}
+                      customStyle={styles.formInput}
+                      inputStyle={styles.input}
+                      labelStyle={styles.labelInput}
+                      placeholder="Meal Name"
+                    />
+                  {/*<FloatingLabel
+                      labelStyle={styles.labelInput}
+                      inputStyle={styles.input}
+                      style={styles.formInput}
+                      onChangeText={this.onChangeName}>Meal Name</FloatingLabel>*/}
+                  <View style={styles.rowGroup}>
+                    <Text style={styles.label}>Contains :</Text>
+                    <View>{containFood}</View>
+                    <Button text="ADD FOOD" size="short" bgColor={Color.TRANSPARENT} txtColor={Color.BLUE} border={Color.BLUE} onPress={this.addFood}/>
+                  </View>
+                  <Text style={styles.label}>Nutritions Info :</Text>
+                  <View style={styles.infoContainer}>
+                    <View style={[styles.row,styles.rowGroup]}>
+                      <Text style={styles.label}>Calories</Text>
+                      <Text style={styles.text}>{calorie} kcal</Text>
+                    </View>
+                    <View style={[styles.row,styles.rowGroup]}>
+                      <Text style={styles.label}>Carbs</Text>
+                      <Text style={styles.text}>{carbohydrate} g</Text>
+                    </View>
+                    <View style={[styles.row,styles.rowGroup]}>
+                      <Text style={styles.label}>Protein</Text>
+                      <Text style={styles.text}>{protein} g</Text>
+                    </View>
+                    <View style={[styles.row,styles.rowGroup]}>
+                      <Text style={styles.label}>Fat</Text>
+                      <Text style={styles.text}>{fat} g</Text>
+                    </View>  
+                  </View>
+                  </Form>
+                  <Button text="SAVE" size="long" onPress={this.submitForm} bgColor={Color.LIGHT_BLUE} txtColor={Color.APP_WHITE} />
                 </View>
-                <View style={[styles.row,styles.rowGroup]}>
-                  <Text style={styles.label}>Carbs</Text>
-                  <Text style={styles.text}>{carbohydrate} g</Text>
-                </View>
-                <View style={[styles.row,styles.rowGroup]}>
-                  <Text style={styles.label}>Protein</Text>
-                  <Text style={styles.text}>{protein} g</Text>
-                </View>
-                <View style={[styles.row,styles.rowGroup]}>
-                  <Text style={styles.label}>Fat</Text>
-                  <Text style={styles.text}>{fat} g</Text>
-                </View>
-              </View>
-              <Button text="SAVE" size="long" onPress={this.onSubmit} bgColor={Color.LIGHT_BLUE} txtColor={Color.APP_WHITE} />
-          </View>
-          </ScrollView>
+              </ScrollView>
           <Footer />
         </View>
     )

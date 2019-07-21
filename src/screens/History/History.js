@@ -14,10 +14,12 @@ import { MyProgressBar } from '../../components/MyProgressBar';
 import { CircleWithDate } from '../../components/CircleWithDate';
 
 const chartConfig = {
+    backgroundColor: Color.TRANSPARENT,
     backgroundGradientFrom: Color.APP_WHITE,
     backgroundGradientTo: Color.APP_WHITE,
     color: (opacity = 1) => Color.LIGHT_BLUE,
-    strokeWidth: 2 // optional, default 3
+    strokeWidth: 2, // optional, default 3
+    decimalPlaces: 0
 }
 
 const historyArr = ["Calorie Intake", "Burnt Calorie", "Activity Level"]
@@ -27,7 +29,7 @@ export default class History extends React.Component {
         super(props)
         this.state = {
             start: '',
-            end: '',
+            end: moment(),
             index: 0,
             data: {
                 week: [],
@@ -80,12 +82,13 @@ export default class History extends React.Component {
     }
 
     selectDate = (date) => {
-        let temp = moment(date).subtract(7, "days");
+        let temp = moment(date).subtract(6, "days");
         this.setState({ end: date, start: temp })
     }
 
     async componentDidMount() {
-        await this.setState({ end: moment() })
+        let temp = moment(this.state.end).subtract(6, "days")
+        await this.setState({ start : temp})
         await this.onRefreshIntake()
     }
 
@@ -100,8 +103,9 @@ export default class History extends React.Component {
             weekLabels.push(moment(date).format('DD MMM'))
             //weekLabels.push(date.datetimeformat('date'))
 
-            for (let i = 0; i < 5; i++)
+            for (let i = 0; i < 5; i++){
                 weekLabels.push('')
+            }
 
             date.setDate(date.getDate() - 6)
             weekLabels.push(moment(date).format('DD MMM'))
@@ -116,7 +120,7 @@ export default class History extends React.Component {
         const data = {
             labels: weekLabels.reverse(),
             datasets: [{
-                data: this.state.data.week.map(e => e.toFixed(0))
+                data: this.state.data.week
             }]
         }
 
@@ -181,17 +185,18 @@ export default class History extends React.Component {
                     }
                   /> 
                 </View> 
-                <Text style = { styles.sectionTitle } > WEEK VIEW </Text> 
+                <Text style = { styles.sectionTitle } > WEEK VIEW </Text>
+                <Text style={styles.month}> ({moment(this.state.start).format('dddd, DD MMM') + ' - ' +moment(this.state.end).format('dddd, DD MMM')}) </Text> 
                 <BarChart data = { data }
-                  width = { Size.SWIDTH }
-                  height = { 220 }
+                  width = { Size.WIDTH }
+                  height = { Size.HEIGHT4 }
                   fromZero ={true}
                   chartConfig = { chartConfig }
-                  /> 
+                  />
                 <Text style = { styles.sectionTitle } > MONTH VIEW </Text> 
+                <Text style = { styles.month } > ({moment(this.state.end).format('MMMM YYYY')})</Text> 
                 {this.state.index != 2 ?
                 <View> 
-                  <Text style = { styles.month } > ({moment(this.state.end).format('MMMM YYYY')})</Text> 
                   <PieChart data = { pieData }
                     width = { Size.WIDTH }
                     height = { 220 }
