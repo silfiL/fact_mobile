@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, AsyncStorage, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, AsyncStorage, Image, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -67,7 +67,7 @@ export default class Profile extends React.Component{
     console.log("JSON #1", json)
     if (json.message === "Success") {
       this.onRefresh()
-      this.setState({isEdit:!this.state.isEdit})
+      Alert.alert('Success','Height and Weight updated',[{text:'OK',onPress: ()=>this.setState({isEdit:!this.state.isEdit})}])
     }
   }
 
@@ -90,8 +90,13 @@ export default class Profile extends React.Component{
       fat: json.results.fat,
       activity_level: json.results.activity_level
     }
+    const data = {
+      weight: json.results.weight.toString(),
+      height: json.results.height.toString()
+    }
 
     this.setState({ user })
+    this.setState({ data })
   }
 
   editProfile = () => {

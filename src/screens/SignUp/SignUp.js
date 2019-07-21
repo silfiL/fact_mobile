@@ -28,7 +28,8 @@ export default class SignUp extends React.Component{
         email: '',
         password: '',
         re_password: '',
-      }
+      },
+      errMessage: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -56,10 +57,12 @@ export default class SignUp extends React.Component{
       console.log("JSON #2", json)
       await AsyncStorage.setItem('token', json.results.token);
       this.props.navigation.navigate('FillProfileFirst')
-    }
+    } else 
+      this.setState({errMessage : json.message})
   }
 
   submitForm = () => {
+    this.setState({errMessage: ''})
     let submitResults = this.myForm.validate();
  
     let errors = [];
@@ -67,6 +70,10 @@ export default class SignUp extends React.Component{
     submitResults.forEach(item => {
       errors.push({ field: item.fieldName, error: item.error });
     });
+
+    if (this.state.data.password != this.state.data.re_password){
+      errors.push({field:"re_password",error:"Password and confirm password must be same"})
+    }
  
     this.setState({ errors: errors });
   }
@@ -78,6 +85,7 @@ export default class SignUp extends React.Component{
         <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE}/>
         <Title size="small"/>
         <View style={styles.form}>
+          {this.state.errMessage !== '' && <Text style={styles.errMessage}>{this.state.errMessage}</Text>}
           <Form
             ref={(ref) => this.myForm = ref}
             validate={true}

@@ -25,7 +25,8 @@ export default class Login extends React.Component{
       data: {
         email: '',
         password: '',
-      }
+      },
+      errMessage: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -45,14 +46,15 @@ export default class Login extends React.Component{
     const body = JSON.stringify(this.state.data)
     const response = await fetch(`http://103.252.100.230/fact/login`, {method: 'POST', body})
     const json = await response.json()
-
     if (typeof json.results !== 'undefined') {
       await AsyncStorage.setItem('token', json.results.token);
       this.props.navigation.navigate('Homepage')
-    }
+    } else
+      this.setState({errMessage : json.message})
   }
 
   submitForm = () => {
+    this.setState({errMessage: ''})
     let submitResults = this.myForm.validate();
  
     let errors = [];
@@ -77,6 +79,7 @@ export default class Login extends React.Component{
           <Title size="small"/>
         </View>
         <View style={styles.form}>
+          {this.state.errMessage !== '' && <Text style={styles.errMessage}>{this.state.errMessage}</Text>}
           <Form
             ref={(ref) => this.myForm = ref}
             validate={true}
@@ -86,7 +89,7 @@ export default class Login extends React.Component{
             <Field
               required
               component={FloatingInputField}
-              validations={[ required, email ]}
+              validations={[ required ]}
               name="email"
               value={this.state.data.email}
               onChangeText={(val) => this.onChange("email",val)}
@@ -99,7 +102,7 @@ export default class Login extends React.Component{
             <Field
               required
               component={FloatingInputField}
-              validations={[ required, password ]}
+              validations={[ required ]}
               name="password"
               value={this.state.data.password}
               onChangeText={(val) => this.onChange("password",val)}

@@ -26,5 +26,13 @@ export const styles = StyleSheet.create({
     },
     below: {
       marginTop: Size.HEIGHT1
+    },
+    errMessage: {
+      backgroundColor: Color.RED,
+      alignContent: 'center',
+      color: Color.APP_WHITE,
+      textTransform: 'uppercase',
+      padding: 5,
+      fontSize: 14
     }
 })

@@ -38,7 +38,7 @@ export default class ForgetPassword extends React.Component{
     const body = JSON.stringify({ email: this.state.email })
     const response = await fetch(`http://103.252.100.230/fact/forgot-password`, {method: 'POST', body})
     const json = await response.json()
-
+    console.log("forget json",json)
     if (json.message === 'Success') {
       Alert.alert("Success", `Please check your email.`, [
         {text: 'Done', style: 'cancel'}
@@ -92,7 +92,6 @@ export default class ForgetPassword extends React.Component{
                     customStyle={styles.input}
                   />
                 </Form>
-              {/*<TextInput placeholder="Email Address" style={styles.input} placeholderTextColor={Color.FONT_GREY} onChangeText={(event) => this.onChange(event)}/>*/}
             </View>
             <Button text="SEND RESET LINK" size="long" onPress={this.submitForm} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />
         </View>

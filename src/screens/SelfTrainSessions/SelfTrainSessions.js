@@ -87,7 +87,7 @@ export default class SelfTrainSessions extends React.Component{
         />
         }
         <FloatingButton iconName="plus" onPress={this.addSession} bgColor={Color.RED} />
-        <Modal style={styles.extraSmallModal} position="center" isOpen={this.state.isOpen} backdropPressToClose={false}>
+        <Modal style={styles.extraSmallModal} position="center" swipeToClose={false} isOpen={this.state.isOpen} backdropPressToClose={false}>
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>DELETE SESSION</Text>
             </View>

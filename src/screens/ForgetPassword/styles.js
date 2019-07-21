@@ -29,5 +29,13 @@ export const styles = StyleSheet.create({
       borderBottomColor: Color.LIGHT_GREEN,
       color: Color.FONT_GREY,
       fontFamily: 'SourceSansPro-Regular'
+    },
+    errMessage: {
+      backgroundColor: Color.RED,
+      alignContent: 'center',
+      color: Color.APP_WHITE,
+      textTransform: 'uppercase',
+      padding: 5,
+      fontSize: 14
     }
 })

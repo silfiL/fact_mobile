@@ -32,6 +32,23 @@ export default class ResetPassword extends React.Component{
     );
   }
 
+  submitForm = () => {
+    this.setState({errMessage: ''})
+    let submitResults = this.myForm.validate();
+ 
+    let errors = [];
+ 
+    submitResults.forEach(item => {
+      errors.push({ field: item.fieldName, error: item.error });
+    });
+
+    if (this.state.data.password != this.state.data.re_password){
+      errors.push({field:"re_password",error:"Password and confirm password must be same"})
+    }
+ 
+    this.setState({ errors: errors });
+  }
+
   render(){
     return(
       <View style={styles.container}>

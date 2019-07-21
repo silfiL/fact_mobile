@@ -28,7 +28,7 @@ export default class Diary extends Component {
     super(props);
     
     this.state = {
-      status: 'normal',
+      status: '',
       date: new Date(),
       fill1: 50,
       fill2: 82,
@@ -76,6 +76,17 @@ export default class Diary extends Component {
     })
   }
 
+  getStatus = async() => {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/user`, {headers})
+    const json = await response.json();
+    console.log("status json",json)
+    if (typeof json.results !== 'undefined') {
+      this.setState({status: json.results.status})
+    }
+  }
+
   goToTrack = () => {
     this.props.navigation.navigate('TrackActivity')
   }
@@ -85,12 +96,13 @@ export default class Diary extends Component {
     await this.setState({date: new Date(temp)})
     await this.onRefresh()
   }
-  componentDidUpdate(prevState) {
-    if (prevState.date != this.state.date){
-      console.log(this.state.date)
-      this.onRefresh()
-    }
+  
+  selectDate = async(date) => {
+    this.setState({date: new Date(date)});
+    console.log("lala date",this.state.date)
+    await this.onRefresh()
   }
+
   right = async () => {
     let temp = moment(this.state.date).add(1,"days");
     await this.setState({date: new Date(temp)})
@@ -99,17 +111,22 @@ export default class Diary extends Component {
 
   componentDidMount() {
     this.onRefresh()
+    this.getStatus()
   }
 
   renderGoal = (status) => {
-    if (status == "underweight")
-      return "On the way to gain proper body weight"
-    else if (status == "normal")
-      return "On the way to maintain body weight"
-    else if (status == "overweight")
-      return "On the way to lose some weight"
-    else
-      return "On the way to lose weight seriously and become healthier"
+    status = status.toLowerCase()
+    if (status !== ''){
+      if (status == "underweight")
+        return "On the way to gain proper body weight"
+      else if (status == "normal")
+        return "On the way to maintain body weight"
+      else if (status == "overweight")
+        return "On the way to lose some weight"
+      else
+        return "On the way to lose weight seriously and become healthier"
+    } else 
+      return "--"
   }
 
   waveRef (ref, type) {
@@ -204,7 +221,7 @@ export default class Diary extends Component {
         cancelBtnText="Cancel"
         showIcon={false}
         customStyles={{dateInput:styles.dateInput,dateText:styles.dateText}}
-        onDateChange={(date) => {this.setState({date: new Date(date)})}}
+        onDateChange={(date) => this.selectDate(date)}
       />
       <TouchableOpacity onPress={this.right}>
         <Icon name="chevron-circle-right" size={28} color={Color.APP_WHITE} />
