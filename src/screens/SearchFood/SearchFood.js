@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, TextInput, FlatList, StatusBar, AsyncStorage } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import AIcon from 'react-native-vector-icons/AntDesign'
+import { HeaderBackButton } from '../../components/HeaderBackButton'
 import Modal from 'react-native-modalbox'
 import { styles } from './styles'
 import { Badge } from '../../components/Badge';
@@ -29,7 +30,8 @@ export default class SearchFood extends React.Component{
         carbohydrate: 0,
         calorie: 0,
         category_intake: 1
-      }
+      },
+      badge: []
     }
 
     this.onChange = this.onChange.bind(this)
@@ -40,6 +42,24 @@ export default class SearchFood extends React.Component{
 
   back = () => {
     this.props.navigation.goBack();
+  }
+
+  async onRefresh() {
+    const token = await AsyncStorage.getItem('token');
+    console.log("Token", token)
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/recent`, {headers})
+    const json = await response.json()
+
+    console.log("JSON #1", json)
+    if (json.results != undefined){
+      let newArr = []
+      
+    }
+  }
+
+  componentDidMount() {
+    this.onRefresh()
   }
 
   toggleModal = (item) => {
@@ -56,9 +76,8 @@ export default class SearchFood extends React.Component{
     }})
   }
 
-  fillSearch = () => {
-    console.log(this.props.text)
-    this.setState({search:this.props.text})
+  fillSearch = (item) => {
+    this.setState({search: item.name})
   }
 
   _renderItem = ({item}) => (
@@ -112,12 +131,17 @@ export default class SearchFood extends React.Component{
     return(
       <View style={styles.container}>
           <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
-          <View style={styles.rowSearch}>
+          <View style={styles.header}>
+            <HeaderBackButton title="SEARCH FOOD" onPressBack={this.back} iconColor={Color.APP_WHITE} />
+            <TextInput autoFocus placeholder="Search Food Name" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
+          </View>
+        
+          {/*<View style={styles.rowSearch}>
             <TouchableOpacity onPress={this.back}>
               <Icon name="md-arrow-round-back" color={Color.APP_WHITE} size={24} />
             </TouchableOpacity>
             <TextInput placeholder="Search Food Name" placeholderTextColor={Color.LIGHT_GREY} style={styles.search} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
-          </View>
+          </View>*/}
          {this.state.data.length === 0 ?<View style={styles.blankContainer} >
           <Text style={styles.text}>Recents</Text>
           <View style={styles.row}>
