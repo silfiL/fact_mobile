@@ -97,7 +97,9 @@ export default class AddFood extends React.Component{
   }
 
   categories = () => {
-    this.props.navigation.navigate('CategoryList')
+    this.props.navigation.navigate('CategoryList',{
+      id: this.props.navigation.state.params.id
+    })
   }
 
   submitForm = () => {

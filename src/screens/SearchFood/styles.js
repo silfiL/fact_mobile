@@ -31,13 +31,13 @@ export const styles = StyleSheet.create({
       backgroundColor: Color.GREEN,
       paddingBottom: Size.HEIGHT1*0.1
     },
-    rowSearch: {
-      backgroundColor: Color.GREEN,
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: 10,
-      justifyContent: 'space-between'
-    },
+    // rowSearch: {
+    //   backgroundColor: Color.GREEN,
+    //   flexDirection: 'row',
+    //   alignItems: 'center',
+    //   padding: 10,
+    //   justifyContent: 'space-between'
+    // },
     search: {
       borderRadius: 20,
       borderWidth: 1,

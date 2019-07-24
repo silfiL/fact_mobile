@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, FlatList, StatusBar, AsyncStor
 import Icon from 'react-native-vector-icons/Ionicons'
 import AIcon from 'react-native-vector-icons/AntDesign'
 import Modal from 'react-native-modalbox'
+import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { styles } from './styles'
 import { Badge } from '../../components/Badge';
 import { FoodItem } from '../../components/FoodItem'
@@ -105,14 +106,18 @@ export default class SearchFoodMeal extends React.Component{
     return(
       <View style={styles.container}>
           <StatusBar backgroundColor={Color.BLUE} barStyle="light-content" />
-          <View style={styles.rowSearch}>
+          <View style={styles.header}>
+            <HeaderBackButton title="SEARCH FOOD" onPressBack={this.back} iconColor={Color.APP_WHITE} />
+            <TextInput placeholder="Search Food Name" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
+          </View>
+          {/*<View style={styles.rowSearch}>
             <TouchableOpacity onPress={this.back}>
               <Icon name="md-arrow-round-back" color={Color.APP_WHITE} size={24} />
             </TouchableOpacity>
             <TextInput placeholder="Search Food" placeholderTextColor={Color.LIGHT_GREY} style={styles.search} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
-          </View>
+          </View>*/}
          {this.state.search==''?<View style={styles.blankContainer} >
-          <Text style={styles.text}>History</Text>
+          <Text style={styles.text}>Recents</Text>
           <View style={styles.row}>
             <Badge text="Noodles" onPress={this.fillSearch} bgColor={Color.LIGHT_BLUE}/>
             <Badge text="Rice" onPress={this.fillSearch} bgColor={Color.LIGHT_BLUE}/>
@@ -122,7 +127,7 @@ export default class SearchFoodMeal extends React.Component{
               <Icon name="md-search" size={50} color={Color.FONT_GREY} />
               <Text style={styles.centerText}>You can search using</Text>
               <Text style={styles.centerText}>any keywords or use</Text>
-              <Text style={styles.centerText}>the ones in the history</Text>
+              <Text style={styles.centerText}>the ones in the recents</Text>
           </View>
         </View>:
         <View style={styles.blankContainer}>

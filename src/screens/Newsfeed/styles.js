@@ -9,6 +9,7 @@ const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 export const styles = StyleSheet.create({
   fill: {
     flex: 1,
+    backgroundColor: Color.APP_WHITE
   },
   navbar: {
     position: 'absolute',

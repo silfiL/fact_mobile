@@ -199,7 +199,7 @@ export default class SearchFood extends React.Component{
                 <TouchableOpacity onPress={this.onSubmitIntake}>
                   <Text style={styles.modalButton}>ADD</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.setState({isOpen:!this.state.isOpen})}>
                   <Text style={styles.modalButton}>CANCEL</Text>
                 </TouchableOpacity>
               </View>

@@ -200,10 +200,10 @@ export default class Diary extends Component {
       <ScrollView>
         <StatusBar backgroundColor={Color.GREEN} barStyle="light-content"/>
         <View style={styles.scrollViewContent}>
-          <TimeCard time="BREAKFAST" total={total.breakfast} onPress={this.goToAddFood} showButton={this.state.intake.breakfast.length > 0}>{breakfast}</TimeCard>
-          <TimeCard time="LUNCH" total={total.lunch} onPress={this.goToAddFood} showButton={this.state.intake.lunch.length > 0}>{lunch}</TimeCard>
-          <TimeCard time="DINNER" total={total.dinner} onPress={this.goToAddFood} showButton={this.state.intake.dinner.length > 0}>{dinner}</TimeCard>
-          <TimeCard time="SNACK" total={total.snack} onPress={this.goToAddFood} showButton={this.state.intake.snack.length > 0}>{snack}</TimeCard>
+          <TimeCard time="BREAKFAST" total={total.breakfast} onPress={()=>this.goToAddFood(1)} showButton={this.state.intake.breakfast.length > 0}>{breakfast}</TimeCard>
+          <TimeCard time="LUNCH" total={total.lunch} onPress={()=>this.goToAddFood(2)} showButton={this.state.intake.lunch.length > 0}>{lunch}</TimeCard>
+          <TimeCard time="DINNER" total={total.dinner} onPress={()=>this.goToAddFood(3)} showButton={this.state.intake.dinner.length > 0}>{dinner}</TimeCard>
+          <TimeCard time="SNACK" total={total.snack} onPress={()=>this.goToAddFood(4)} showButton={this.state.intake.snack.length > 0}>{snack}</TimeCard>
           <TimeCard time="EXERCISE" total={total.exercise} onPress={this.goToTrack} showButton={this.state.burnt.length > 0}>{exercise}</TimeCard>
         </View>
       </ScrollView>

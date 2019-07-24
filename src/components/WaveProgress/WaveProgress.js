@@ -30,7 +30,7 @@ const WaveProgress = ({percent,type, waveRef}) => {
         <Wave
             ref={ref => waveRef(ref, type)}
             style={styles.waveBall}
-            H={30}
+            H={percent}
             waveParams={[
                 {A: 5, T: 180, fill: primary},
                 {A: 10, T: 160, fill: secondary},
