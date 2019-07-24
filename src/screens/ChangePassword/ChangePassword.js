@@ -52,7 +52,8 @@ export default class ChangePassword extends React.Component{
     console.log("change json",json)
     if (json.message === "Success") {
       Alert.alert('Success','User Profile updated !',[{text:'OK',onPress: ()=>this.props.navigation.goBack()}])
-    }
+    } else
+      this.setState({errMessage:json.message})
   }
 
   submitForm = () => {
@@ -98,7 +99,7 @@ export default class ChangePassword extends React.Component{
     return(
       <View style={styles.container}>
         <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
-        <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE} title="CHANGE PASSWORD" bgColor={Color.RED}/>
+        <HeaderBackButton onPressBack={this.back} iconColor={Color.APP_WHITE} title="EDIT PROFILE" bgColor={Color.RED}/>
         <View style={styles.form}>
             {this.state.errMessage !== '' && <Text style={styles.errMessage}>{this.state.errMessage}</Text>}
             <Form
@@ -133,7 +134,7 @@ export default class ChangePassword extends React.Component{
                 placeholder="Current Password"
               />
               <Field
-                required={this.state.data.re_password!==''}
+                required={this.state.data.re_password!==''||this.state.data.old_password!==''}
                 component={FloatingInputField}
                 validations={[ required, password ]}
                 name="password"
@@ -146,7 +147,7 @@ export default class ChangePassword extends React.Component{
                 placeholder="New Password"
               />
               <Field
-                required={this.state.data.password!==''}
+                required={this.state.data.password!==''||this.state.data.old_password!==''}
                 component={FloatingInputField}
                 validations={[ required, password ]}
                 name="re_password"

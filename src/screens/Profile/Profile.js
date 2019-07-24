@@ -134,7 +134,11 @@ export default class Profile extends React.Component{
   }
 
   componentDidMount() {
-    this.onRefresh()
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      console.log("did focus")
+      this.onRefresh()
+    });
   }
 
   renderAdvice = (level) => {

@@ -100,7 +100,7 @@ export default class History extends React.Component {
 
         if (this.state.end !== '') {
             date = new Date(this.state.end)
-            weekLabels.push(moment(date).format('DD MMM'))
+            weekLabels.push(moment(date).format('Do'))
             //weekLabels.push(date.datetimeformat('date'))
 
             for (let i = 0; i < 5; i++){
@@ -108,7 +108,7 @@ export default class History extends React.Component {
             }
 
             date.setDate(date.getDate() - 6)
-            weekLabels.push(moment(date).format('DD MMM'))
+            weekLabels.push(moment(date).format('Do'))
             //weekLabels.push(date.datetimeformat('date'))
 
             date = new Date(this.state.end)
@@ -191,6 +191,7 @@ export default class History extends React.Component {
                   width = { Size.WIDTH }
                   height = { Size.HEIGHT4 }
                   fromZero ={true}
+                  style={{marginLeft:-Size.WIDTH1}}
                   chartConfig = { chartConfig }
                   />
                 <Text style = { styles.sectionTitle } > MONTH VIEW </Text> 
