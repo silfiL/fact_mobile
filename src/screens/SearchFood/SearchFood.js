@@ -54,7 +54,7 @@ export default class SearchFood extends React.Component{
     console.log("JSON #1", json)
     if (json.results != undefined){
       let newArr = []
-      
+
     }
   }
 
@@ -114,14 +114,18 @@ export default class SearchFood extends React.Component{
   }
 
   async onSubmitIntake() {
-    console.log("Masuk")
+    let date = this.props.navigation.state.params.date
+    let data = this.state.add
+
+    data.year = date.getFullYear()
+    data.month = date.getMonth() + 1
+    data.day = date.getDate()
+
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
-    const body = JSON.stringify(this.state.add)
-    console.log(token, this.state.add)
+    const body = JSON.stringify(data)
     const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
     const json = await response.json()
-    console.log("submit on search page",json)
     if (json.message === "Success") {
       this.setState({isOpen:!this.state.isOpen})
     }
@@ -135,7 +139,7 @@ export default class SearchFood extends React.Component{
             <HeaderBackButton title="SEARCH FOOD" onPressBack={this.back} iconColor={Color.APP_WHITE} />
             <TextInput autoFocus placeholder="Search Food Name" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
           </View>
-        
+
           {/*<View style={styles.rowSearch}>
             <TouchableOpacity onPress={this.back}>
               <Icon name="md-arrow-round-back" color={Color.APP_WHITE} size={24} />

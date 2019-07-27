@@ -10,8 +10,6 @@ import { RadioButton, RadioGroup } from 'react-native-flexi-radio-button'
 
 import Color from '../../config/Color'
 
-let activitiesArr = ["Walk Around","Run here and there","Go up and down stairs"]
-let doneActivities = []
 
 let subscription = accelerometer
 
@@ -22,7 +20,9 @@ export default class FirstTimeSTrain extends React.Component{
       showButton: true,
       done: false,
       index: 0,
-      data: []
+      data: [],
+      activitiesArr: ["Walk Around","Run here and there","Go up and down stairs"],
+      doneActivities: []
     }
   }
 
@@ -45,10 +45,10 @@ export default class FirstTimeSTrain extends React.Component{
     subscription.unsubscribe()
 
     let label = -1
-    switch (this.state.index) {
-      case 0: label = 2; break;
-      case 1: label = 4; break;
-      case 2: label = 1; break;
+    switch (this.state.activitiesArr[this.state.index]) {
+      case "Walk Around": label = 2; break;
+      case "Run here and there": label = 3; break;
+      case "Go up and down stairs": label = 4; break;
     }
 
     const token = await AsyncStorage.getItem('token');
@@ -62,13 +62,16 @@ export default class FirstTimeSTrain extends React.Component{
   }
 
   toDiary = () => {
-    this.props.navigation.navigate('Homepage')
+    if (typeof this.props.navigation.state.params === 'undefined')
+      return this.props.navigation.navigate('Homepage')
+    else
+      return this.props.navigation.goBack();
   }
 
   next = () => {
     this.setState({showButton:true,done:false})
-    doneActivities.push(activitiesArr[this.state.index])
-    activitiesArr.splice(this.state.index,1)
+    this.state.doneActivities.push(this.state.activitiesArr[this.state.index])
+    this.state.activitiesArr.splice(this.state.index,1)
     this.setState({index:0})
   }
 
@@ -76,8 +79,25 @@ export default class FirstTimeSTrain extends React.Component{
     this.setState({index:index})
   }
 
+  componentDidMount() {
+    let {doneActivities, activitiesArr} = this.state
+    if (typeof this.props.navigation.state.params !== 'undefined') {
+      for (let i = 0; i < 3; i++) {
+        if (this.props.navigation.state.params.activity[i] !== 0) {
+          doneActivities.push(this.state.activitiesArr[i])
+          for (let j = 0; j < 3; j++)
+            if (activitiesArr[j] === this.state.activitiesArr[i])
+              activitiesArr.splice(j, 1)
+          console.log(doneActivities)
+        }
+      }
+    }
+
+    this.setState({index: 0, doneActivities, activitiesArr})
+  }
+
   render(){
-    console.log("done",doneActivities)
+    console.log("done",this.state.doneActivities)
     return(
       <LinearGradient start={{x: 0, y: .1}} end={{x: .1, y: 1}} colors={[Color.RED,Color.LIGHT_RED]} style={styles.container}>
         <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
@@ -89,7 +109,7 @@ export default class FirstTimeSTrain extends React.Component{
             <Text style={styles.text}>instructions for 25 secs :</Text>
           </View>
           {this.state.showButton == true ? <View style={styles.radio}>
-            {doneActivities.map((done)=>
+            {this.state.doneActivities.map((done)=>
               <View style={styles.row}>
                    <Icon name="check-circle" size={24} color={Color.LIGHT_GREEN} />
                   <Text style={styles.radioText}>{done}</Text>
@@ -101,13 +121,13 @@ export default class FirstTimeSTrain extends React.Component{
               selectedIndex={this.state.index}
               onSelect = {(index, value) => this.onSelect(index, value)}
             >
-              {activitiesArr.map((activity,index) => <RadioButton 
+              {this.state.activitiesArr.map((activity,index) => <RadioButton
                 value={index}
               >
                 <Text style={styles.radioText}>{activity}</Text>
               </RadioButton>)}
-            </RadioGroup>  
-          </View>:<Text style={styles.activity}>"{activitiesArr[this.state.index]}"</Text>}
+            </RadioGroup>
+          </View>:<Text style={styles.activity}>"{this.state.activitiesArr[this.state.index]}"</Text>}
           {this.state.showButton == true ?
             <Button text="START" bgColor={Color.APP_WHITE} txtColor={Color.LIGHT_RED} onPress={this.startTimer} size="short" />:
           <TimerCountdown
@@ -126,11 +146,11 @@ export default class FirstTimeSTrain extends React.Component{
           {this.state.done && <Icon name="check-circle" size={100} color={Color.APP_WHITE} />}
         </View>
         <View style={styles.rowButton}>
-          <TouchableOpacity onPress={this.toDiary} disabled={!this.state.showButton||doneActivities.length==3}>
-            <Text style={[styles.button,!this.state.showButton||doneActivities.length==3?styles.disabledText:null]}>REMIND LATER</Text>
+          <TouchableOpacity onPress={this.toDiary} disabled={!this.state.showButton||this.state.doneActivities.length==3}>
+            <Text style={[styles.button,!this.state.showButton||this.state.doneActivities.length==3?styles.disabledText:null]}>REMIND LATER</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.next} disabled={!this.state.done&&doneActivities.length!=3}>
-            <Text style={[styles.button,!this.state.done&&doneActivities.length!=3?styles.disabledText:null]}>NEXT</Text>
+          <TouchableOpacity onPress={this.next} disabled={!this.state.done&&this.state.doneActivities.length!=3}>
+            <Text style={[styles.button,!this.state.done&&this.state.doneActivities.length!=3?styles.disabledText:null]}>NEXT</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>

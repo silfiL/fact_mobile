@@ -109,26 +109,21 @@ export default class ViewCategory extends React.Component{
   }
 
   async onSubmitIntake() {
+    let date = this.props.navigation.state.params.date
+    let data = this.state.add
+
+    data.year = date.getFullYear()
+    data.month = date.getMonth() + 1
+    data.day = date.getDate()
+
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
-    const response = await fetch(`http://103.252.100.230/fact/member/food?name=${this.state.name}&category=${this.props.navigation.state.params.category}`, {headers})
+    const body = JSON.stringify(data)
+    const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
     const json = await response.json()
-
-    const data = json.results.foods
-    this.setState({ data })
-
-    console.log("JSON", json)
-    // console.log("Masuk")
-    // const token = await AsyncStorage.getItem('token');
-    // const headers = {"Authorization": 'Bearer ' + token}
-    // const body = JSON.stringify(this.state.add)
-    // console.log(token, this.state.add)
-    // const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
-    // const json = await response.json()
-    // console.log("submit on search page",json)
-    // if (json.message === "Success") {
-    //   this.setState({isOpen:!this.state.isOpen})
-    // }
+    if (json.message === "Success") {
+      this.setState({isOpen:!this.state.isOpen})
+    }
   }
 
   componentDidMount() {

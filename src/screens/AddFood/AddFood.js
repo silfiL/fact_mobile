@@ -78,36 +78,40 @@ export default class AddFood extends React.Component{
   goToSearch = () => {
     this.props.navigation.navigate('SearchFood', {
       id: this.props.navigation.state.params.id,
-      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh
+      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh,
+      date: this.props.navigation.state.params.date
     })
   }
 
   recent = () => {
     this.props.navigation.navigate('RecentFood', {
       id: this.props.navigation.state.params.id,
-      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh
+      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh,
+      date: this.props.navigation.state.params.date
     })
   }
 
   meal = () => {
     this.props.navigation.navigate('Meal', {
       id: this.props.navigation.state.params.id,
-      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh
+      onDiaryRefresh: this.props.navigation.state.params.onDiaryRefresh,
+      date: this.props.navigation.state.params.date
     })
   }
 
   categories = () => {
     this.props.navigation.navigate('CategoryList',{
-      id: this.props.navigation.state.params.id
+      id: this.props.navigation.state.params.id,
+      date: this.props.navigation.state.params.date
     })
   }
 
   submitForm = () => {
     //this.setState({errMessage: ''})
     let submitResults = this.myForm.validate();
- 
+
     let errors = [];
- 
+
     submitResults.forEach(item => {
       errors.push({ field: item.fieldName, error: item.error });
     });
@@ -165,7 +169,7 @@ export default class AddFood extends React.Component{
                     value={this.state.data.name}
                     onChangeText={(val) => this.onChange('name',val)}
                     customStyle={styles.input}
-                    errors={this.state.errors}     
+                    errors={this.state.errors}
                     />
               </View>
               <View style={styles.formRow}>
