@@ -47,11 +47,18 @@ export default class Meal extends React.Component{
   }
 
   async onAddMeal (id) {
+    let date = this.props.navigation.state.params.date
+
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const body = JSON.stringify({
-      id, category_intake: this.props.navigation.state.params.id
+      id,
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+      category_intake: this.props.navigation.state.params.id
     })
+
     const response = await fetch(`http://103.252.100.230/fact/member/intake/meal`, {method: 'POST', body, headers})
     const json = await response.json()
 

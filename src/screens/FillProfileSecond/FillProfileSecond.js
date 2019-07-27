@@ -5,6 +5,7 @@ import { Button } from '../../components/Button';
 import { styles } from './styles';
 
 import Color from '../../config/Color'
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class FillProfileSecond extends React.Component{
     constructor(props) {
@@ -40,6 +41,7 @@ export default class FillProfileSecond extends React.Component{
 
     render(){
         return(
+          <ScrollView>
             <View style={styles.container}>
               <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
               <Text style={styles.title}>Which activity level are you in ?</Text>
@@ -48,7 +50,7 @@ export default class FillProfileSecond extends React.Component{
                   style={styles.radioGroup}
                   color={Color.LIGHT_GREEN}
                   onSelect = {(index, value) => this.onSelect(index, value)}>
-                  <RadioButton value={'low'}>
+                  <RadioButton value={'Low'}>
                     <Text style={styles.radioLabel}>Sedentary or Lightly Active</Text>
                     <View style={styles.wrapText}>
                       <Image style={styles.image} source={require('../../assets/img/light.png')}/>
@@ -57,7 +59,7 @@ export default class FillProfileSecond extends React.Component{
                     </View>
                   </RadioButton>
 
-                  <RadioButton value={'medium'}>
+                  <RadioButton value={'Medium'}>
                     <Text style={styles.radioLabel}>Active or Moderately Active</Text>
                     <View style={styles.wrapText}>
                       <Image style={styles.image} source={require('../../assets/img/medium.png')}/>
@@ -66,7 +68,7 @@ export default class FillProfileSecond extends React.Component{
                     </View>
                   </RadioButton>
 
-                  <RadioButton value={'high'}>
+                  <RadioButton value={'High'}>
                     <Text style={styles.radioLabel}>Very Active or Vigorously Active</Text>
                     <View style={styles.wrapText}>
                       <Image style={styles.image} source={require('../../assets/img/very.png')}/>
@@ -77,6 +79,7 @@ export default class FillProfileSecond extends React.Component{
               </RadioGroup>
               <Button text="NEXT" size="short" onPress={this.next} bgColor={Color.LIGHT_GREEN} txtColor={Color.APP_WHITE} />
             </View>
+          </ScrollView>
         )
     }
 }

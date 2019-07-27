@@ -108,14 +108,18 @@ export default class ViewCategory extends React.Component{
   }
 
   async onSubmitIntake() {
-    console.log("Masuk")
+    let date = this.props.navigation.state.params.date
+    let data = this.state.add
+
+    data.year = date.getFullYear()
+    data.month = date.getMonth() + 1
+    data.day = date.getDate()
+
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
-    const body = JSON.stringify(this.state.add)
-    console.log(token, this.state.add)
+    const body = JSON.stringify(data)
     const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
     const json = await response.json()
-    console.log("submit on search page",json)
     if (json.message === "Success") {
       this.setState({isOpen:!this.state.isOpen})
     }

@@ -46,7 +46,12 @@ export default class CategoryList extends React.Component{
   }
 
   _onPressItem = (category, name) => {
-    this.props.navigation.navigate('ViewCategory', { category, name, id: this.props.navigation.state.params.id })
+    this.props.navigation.navigate('ViewCategory', {
+      category,
+      name,
+      id: this.props.navigation.state.params.id,
+      date:  this.props.navigation.state.params.date
+    })
   };
 
   _renderItem = ({item}) => (

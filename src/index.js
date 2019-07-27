@@ -176,7 +176,8 @@ const rootStack = createStackNavigator({
   SelfTrainSessions: SelfTrainSessions,
   EvaluationForm: EvaluationForm,
   EvaluationAnalysis: EvaluationAnalysis,
-  Homepage: HomepageTab
+  Homepage: HomepageTab,
+  FirstTimeSTrain: FirstTimeSTrain,
 }, {
   initialRouteName: 'Homepage',
   headerMode: 'none'

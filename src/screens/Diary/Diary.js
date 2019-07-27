@@ -26,8 +26,9 @@ import moment from 'moment'
 export default class Diary extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
+      isSelfTrain: false,
       status: '',
       date: new Date(),
       fill1: 50,
@@ -63,7 +64,8 @@ export default class Diary extends Component {
         fat: null,
         protein: null,
         carbohydrate: null,
-      }
+      },
+      activity: []
     };
 
     this.onRefresh = this.onRefresh.bind(this)
@@ -72,7 +74,7 @@ export default class Diary extends Component {
 
   goToAddFood = (id) => {
     this.props.navigation.navigate('AddFood', {
-      id, onDiaryRefresh: this.onRefresh
+      id, onDiaryRefresh: this.onRefresh, date: this.state.date
     })
   }
 
@@ -96,7 +98,7 @@ export default class Diary extends Component {
     await this.setState({date: new Date(temp)})
     await this.onRefresh()
   }
-  
+
   selectDate = async(date) => {
     this.setState({date: new Date(date)});
     console.log("lala date",this.state.date)
@@ -109,12 +111,12 @@ export default class Diary extends Component {
     await this.onRefresh()
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { navigation } = this.props;
-    this.focusListener = navigation.addListener("didFocus", () => {
+    this.focusListener = await navigation.addListener("didFocus", async () => {
       console.log("did focus")
-      this.getStatus()
-      this.onRefresh()
+      await this.getStatus()
+      await this.onRefresh()
     });
   }
 
@@ -129,7 +131,7 @@ export default class Diary extends Component {
         return "On the way to lose some weight"
       else
         return "On the way to lose weight seriously and become healthier"
-    } else 
+    } else
       return "--"
   }
 
@@ -139,6 +141,7 @@ export default class Diary extends Component {
   }
 
   async onRefresh() {
+    console.log("debug")
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     console.log(`year=${this.state.date.getFullYear()}&month=${this.state.date.getMonth() + 1}&day=${this.state.date.getDate()}`)
@@ -157,6 +160,11 @@ export default class Diary extends Component {
     this.state.wave.fat && this.state.wave.fat.setWaterHeight(parseInt(this.state.nutrient.fat * 100 / this.state.nutrient.total_fat))
     this.state.wave.protein && this.state.wave.protein.setWaterHeight(parseInt(this.state.nutrient.protein * 100 / this.state.nutrient.total_protein))
     this.state.wave.carbohydrate && this.state.wave.carbohydrate.setWaterHeight(parseInt(this.state.nutrient.carbohydrate * 100 / this.state.nutrient.total_carbohydrate))
+
+    if (!this.state.isSelfTrain && (json.results.activity[0] === 0 || json.results.activity[1] === 0 || json.results.activity[2] === 0)) {
+      this.props.navigation.navigate('FirstTimeSTrain', { activity: json.results.activity })
+      this.setState({ isSelfTrain: true })
+    }
   }
 
   renderContent = () => {
