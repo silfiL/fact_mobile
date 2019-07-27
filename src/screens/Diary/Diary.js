@@ -243,7 +243,7 @@ export default class Diary extends Component {
           <Text style={styles.label}>CALORIE INTAKE</Text>
           <AnimatedCircularProgress
             size={150}
-            width={3}
+            width={8}
             rotation={0}
             fill={parseInt(this.state.calorie.intake * 100 / this.state.calorie.total_intake)}
             tintColor={Color.APP_WHITE}
@@ -268,7 +268,8 @@ export default class Diary extends Component {
           <Text style={styles.label}>CALORIE BURNT</Text>
           <AnimatedCircularProgress
             size={150}
-            width={3}
+            width={8}
+            rotation={0}
             fill={parseInt(this.state.calorie.burnt * 100 / this.state.calorie.total_burnt)}
             tintColor={Color.APP_WHITE}
             backgroundColor={Color.GREEN}>

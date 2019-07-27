@@ -59,6 +59,7 @@ export default class ViewCategory extends React.Component{
     this.onRefresh = this.onRefresh.bind(this)
     this.onQtyChange = this.onQtyChange.bind(this)
     this.onSubmitIntake = this.onSubmitIntake.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   toggleModal = (item) => {
@@ -108,17 +109,26 @@ export default class ViewCategory extends React.Component{
   }
 
   async onSubmitIntake() {
-    console.log("Masuk")
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
-    const body = JSON.stringify(this.state.add)
-    console.log(token, this.state.add)
-    const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
+    const response = await fetch(`http://103.252.100.230/fact/member/food?name=${this.state.name}&category=${this.props.navigation.state.params.category}`, {headers})
     const json = await response.json()
-    console.log("submit on search page",json)
-    if (json.message === "Success") {
-      this.setState({isOpen:!this.state.isOpen})
-    }
+
+    const data = json.results.foods
+    this.setState({ data })
+
+    console.log("JSON", json)
+    // console.log("Masuk")
+    // const token = await AsyncStorage.getItem('token');
+    // const headers = {"Authorization": 'Bearer ' + token}
+    // const body = JSON.stringify(this.state.add)
+    // console.log(token, this.state.add)
+    // const response = await fetch('http://103.252.100.230/fact/member/intake/food', {method: "POST", headers, body})
+    // const json = await response.json()
+    // console.log("submit on search page",json)
+    // if (json.message === "Success") {
+    //   this.setState({isOpen:!this.state.isOpen})
+    // }
   }
 
   componentDidMount() {
@@ -133,16 +143,17 @@ export default class ViewCategory extends React.Component{
     this.setState({ name: text })
   }
 
-  async onSubmit() {
-    const token = await AsyncStorage.getItem('token');
-    const headers = {"Authorization": 'Bearer ' + token}
-    const response = await fetch(`http://103.252.100.230/fact/member/food?name=${this.state.name}&category=${this.props.navigation.state.params.category}`, {headers})
-    const json = await response.json()
-
-    const data = json.results.foods
-    this.setState({ data })
-
-    console.log("JSON", json)
+  onSubmit() {
+    const { data, name } = this.state;
+    this.onRefresh()
+    let newList
+    if (name != ''){
+      newList = data.filter(d => {
+        let filter = name.toLowerCase()
+        return d.name.toLowerCase().match(filter)
+      })
+      this.setState({data:newList})
+    }
   }
 
   render(){
