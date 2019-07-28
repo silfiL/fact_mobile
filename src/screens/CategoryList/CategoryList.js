@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, FlatList, StatusBar, TextInput} from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { SimpleListItem } from '../../components/SimpleListItem'
+import { FoodItem } from '../../components/FoodItem'
 import { styles } from './styles'
 
 import Color from '../../config/Color'
@@ -28,6 +29,8 @@ export default class CategoryList extends React.Component{
     super(props);
     this.state = {
       data: [],
+      searchView: false,
+      name: ''
     }
 
     this.onRefresh = this.onRefresh.bind(this)
@@ -62,6 +65,16 @@ export default class CategoryList extends React.Component{
     />
   );
 
+  render_Item = ({item}) => (
+    <FoodItem
+      id={item.id}
+      onPressItem={() => this.toggleModal(item)}
+      name={item.name}
+      calorie={item.calorie}
+      portion={1}
+    />
+  );
+
   componentDidMount() {
     this.onRefresh()
     console.log("state params id",this.props.navigation.state.params.id)
@@ -72,6 +85,10 @@ export default class CategoryList extends React.Component{
   }
 
   async onSubmit() {
+    if (this.state.name != '')
+        this.setState({searchView:true})
+    else
+        this.setState({searchView:false})
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const response = await fetch(`http://103.252.100.230/fact/member/food?name=${this.state.name}&category=0`, {headers})
@@ -93,9 +110,10 @@ export default class CategoryList extends React.Component{
           </View>
         {/*<HeaderBackButton onPressBack={this.back} bgColor={Color.YELLOW} iconColor={Color.APP_WHITE} title="CATEGORIES"/>*/}
         <FlatList
+            extraData={this.state}
             data={this.state.data}
             keyExtractor={item=>item.id}
-            renderItem={this._renderItem}
+            renderItem={this.state.searchView?this.render_Item:this._renderItem}
           />
       </View>
     )

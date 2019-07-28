@@ -138,17 +138,26 @@ export default class ViewCategory extends React.Component{
     this.setState({ name: text })
   }
 
-  onSubmit() {
-    const { data, name } = this.state;
-    this.onRefresh()
-    let newList
-    if (name != ''){
-      newList = data.filter(d => {
-        let filter = name.toLowerCase()
-        return d.name.toLowerCase().match(filter)
-      })
-      this.setState({data:newList})
-    }
+  async onSubmit() {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/food?name=${this.state.name}&category=${this.props.navigation.state.params.category}`, {headers})
+    const json = await response.json()
+
+    const data = json.results.foods
+    this.setState({ data })
+
+    console.log("JSON", json)
+    // const { data, name } = this.state;
+    // this.onRefresh()
+    // let newList
+    // if (name != ''){
+    //   newList = data.filter(d => {
+    //     let filter = name.toLowerCase()
+    //     return d.name.toLowerCase().match(filter)
+    //   })
+    //   this.setState({data:newList})
+    // }
   }
 
   render(){

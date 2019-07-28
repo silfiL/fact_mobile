@@ -115,6 +115,7 @@ export default class Diary extends Component {
     const { navigation } = this.props;
     this.focusListener = await navigation.addListener("didFocus", async () => {
       console.log("did focus")
+      StatusBar.setBackgroundColor(Color.GREEN)
       await this.getStatus()
       await this.onRefresh()
     });
