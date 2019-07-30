@@ -69,10 +69,15 @@ export default class FirstTimeSTrain extends React.Component{
   }
 
   next = () => {
-    this.setState({showButton:true,done:false})
-    this.state.doneActivities.push(this.state.activitiesArr[this.state.index])
-    this.state.activitiesArr.splice(this.state.index,1)
-    this.setState({index:0})
+    if (this.state.activitiesArr.length > 0) {
+      this.setState({showButton:true,done:false})
+      this.state.doneActivities.push(this.state.activitiesArr[this.state.index])
+      this.state.activitiesArr.splice(this.state.index,1)
+      this.setState({index:0})
+    }
+    else {
+      this.toDiary()
+    }
   }
 
   onSelect = (index, value) => {
