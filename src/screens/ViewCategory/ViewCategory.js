@@ -59,6 +59,7 @@ export default class ViewCategory extends React.Component{
     this.onRefresh = this.onRefresh.bind(this)
     this.onQtyChange = this.onQtyChange.bind(this)
     this.onSubmitIntake = this.onSubmitIntake.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   toggleModal = (item) => {
@@ -147,6 +148,16 @@ export default class ViewCategory extends React.Component{
     this.setState({ data })
 
     console.log("JSON", json)
+    // const { data, name } = this.state;
+    // this.onRefresh()
+    // let newList
+    // if (name != ''){
+    //   newList = data.filter(d => {
+    //     let filter = name.toLowerCase()
+    //     return d.name.toLowerCase().match(filter)
+    //   })
+    //   this.setState({data:newList})
+    // }
   }
 
   render(){
