@@ -21,6 +21,7 @@ export default class ForgetPassword extends React.Component{
     this.state = {
       email: '',
       errors: [],
+      errMessage: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -43,10 +44,12 @@ export default class ForgetPassword extends React.Component{
       Alert.alert("Success", `Please check your email.`, [
         {text: 'Done', style: 'cancel'}
       ])
-    }
+    } else
+      this.setState({errMessage:json.message})
   }
 
   submitForm = () => {
+    this.setState({errMessage: ''})
     let submitResults = this.myForm.validate();
 
     let errors = [];
@@ -71,6 +74,7 @@ export default class ForgetPassword extends React.Component{
           <Title size="small" titleColor={Color.GREEN}/>
         </View>
         <View style={styles.form}>
+            {this.state.errMessage !== '' && <Text style={styles.errMessage}>{this.state.errMessage}</Text>}
             <View style={styles.roundedContainer}>
               <Text style={styles.label}>Please write down your email below</Text>
                <Form

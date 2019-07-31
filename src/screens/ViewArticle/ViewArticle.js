@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StatusBar, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { Platform, StatusBar, Text, View, ScrollView, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import { HeaderBackButton } from '../../components/HeaderBackButton';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -23,8 +23,11 @@ export default class ViewArticle extends Component {
 
     async onRefresh () {
       console.log(this.props.navigation.state.params.id)
-      const response = await fetch(`http://103.252.100.230/fact/member/article/${this.props.navigation.state.params.id}`)
+      const token = await AsyncStorage.getItem('token');
+      const headers = {"Authorization": 'Bearer ' + token}
+      const response = await fetch(`http://103.252.100.230/fact/member/article/${this.props.navigation.state.params.id}`,{headers})
       const json = await response.json()
+      //console.log("articles json",json)
 
       let {title, image, author, content, published_on} = this.state
       title = json.results.title
