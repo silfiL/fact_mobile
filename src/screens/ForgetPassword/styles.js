@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
       borderWidth: 2,
       padding: Size.WIDTH1*0.5,
       marginBottom: Size.HEIGHT1*0.4,
+      marginTop: Size.HEIGHT1*0.2
     },
     label: {
       fontSize: 20,

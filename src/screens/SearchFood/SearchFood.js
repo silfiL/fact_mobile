@@ -116,7 +116,7 @@ export default class SearchFood extends React.Component{
   async onSubmitIntake() {
     let date = this.props.navigation.state.params.date
     let data = this.state.add
-
+    console.log("params date",date)
     data.year = date.getFullYear()
     data.month = date.getMonth() + 1
     data.day = date.getDate()

@@ -7,7 +7,8 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import LinearGradient from 'react-native-linear-gradient'
@@ -168,6 +169,27 @@ export default class Diary extends Component {
     }
   }
 
+  confirmDelete = (time, item) => {
+    Alert.alert('Remove Food',`Are you sure you want to remove ${item.name} ?`,[
+      {text:'NO',style:'cancel'},{text:'YES',onPress:() => this.removeFood(time,item.id)}  
+    ])
+  }
+
+  removeFood = async(time, id) => {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const arr = []
+    arr.push(id)
+    const body = JSON.stringify({
+      eat_time: time,
+      data: arr
+    })
+    console.log("body",body)
+    const response = await fetch(`http://103.252.100.230/fact/`+{method:"DELETE",headers,body})
+    const json = await response.json()
+    console.log("delete json",json)
+  }
+
   renderContent = () => {
     console.log(this.state.recommendation_calorie)
     let breakfast = (this.state.intake.breakfast.length > 0) ? [] : <EmptyCardList recMin={parseInt(this.state.recommendation_calorie.breakfast) - 50} recMax={parseInt(this.state.recommendation_calorie.breakfast) + 50} onPress={() => this.goToAddFood(1)} text="Food"/>
@@ -183,19 +205,19 @@ export default class Diary extends Component {
       exercise: 0,
     }
     for (let i = 0, l = this.state.intake.breakfast.length; i < l; i++) {
-      breakfast.push(<FoodItemCard name={this.state.intake.breakfast[i].name} cal={parseFloat(parseFloat(this.state.intake.breakfast[i].calorie) * parseFloat(this.state.intake.breakfast[i].qty)).toFixed(2)} portion={this.state.intake.breakfast[i].qty}/>)
+      breakfast.push(<FoodItemCard name={this.state.intake.breakfast[i].name} cal={parseFloat(parseFloat(this.state.intake.breakfast[i].calorie) * parseFloat(this.state.intake.breakfast[i].qty)).toFixed(2)} portion={this.state.intake.breakfast[i].qty} onPressItem={()=>this.confirmDelete(1,this.state.intake.breakfast[i])}/>)
       total.breakfast += parseFloat(this.state.intake.breakfast[i].calorie) * parseFloat(this.state.intake.breakfast[i].qty)
     }
     for (let i = 0, l = this.state.intake.lunch.length; i < l; i++) {
-      lunch.push(<FoodItemCard name={this.state.intake.lunch[i].name} cal={parseFloat(parseFloat(this.state.intake.lunch[i].calorie) * parseFloat(this.state.intake.lunch[i].qty)).toFixed(2)} portion={this.state.intake.lunch[i].qty}/>)
+      lunch.push(<FoodItemCard name={this.state.intake.lunch[i].name} cal={parseFloat(parseFloat(this.state.intake.lunch[i].calorie) * parseFloat(this.state.intake.lunch[i].qty)).toFixed(2)} portion={this.state.intake.lunch[i].qty} onPressItem={()=>this.confirmDelete(2,this.state.intake.lunch[i])} />)
       total.lunch += parseFloat(this.state.intake.lunch[i].calorie) * parseFloat(this.state.intake.lunch[i].qty)
     }
     for (let i = 0, l = this.state.intake.dinner.length; i < l; i++) {
-      dinner.push(<FoodItemCard name={this.state.intake.dinner[i].name} cal={parseFloat(parseFloat(this.state.intake.dinner[i].calorie) * parseFloat(this.state.intake.dinner[i].qty)).toFixed(2)} portion={this.state.intake.dinner[i].qty}/>)
+      dinner.push(<FoodItemCard name={this.state.intake.dinner[i].name} cal={parseFloat(parseFloat(this.state.intake.dinner[i].calorie) * parseFloat(this.state.intake.dinner[i].qty)).toFixed(2)} portion={this.state.intake.dinner[i].qty} onPressItem={()=>this.confirmDelete(3,this.state.intake.dinner[i])} />)
       total.dinner += parseFloat(this.state.intake.dinner[i].calorie) * parseFloat(this.state.intake.dinner[i].qty)
     }
     for (let i = 0, l = this.state.intake.snack.length; i < l; i++) {
-      snack.push(<FoodItemCard name={this.state.intake.snack[i].name} cal={parseFloat(parseFloat(this.state.intake.snack[i].calorie) * parseFloat(this.state.intake.snack[i].qty)).toFixed(2)} portion={this.state.intake.snack[i].qty}/>)
+      snack.push(<FoodItemCard name={this.state.intake.snack[i].name} cal={parseFloat(parseFloat(this.state.intake.snack[i].calorie) * parseFloat(this.state.intake.snack[i].qty)).toFixed(2)} portion={this.state.intake.snack[i].qty} onPressItem={()=>this.confirmDelete(4,this.state.intake.snack[i])}/>)
       total.snack += parseFloat(this.state.intake.snack[i].calorie) * parseFloat(this.state.intake.snack[i].qty)
     }
     for (let i = 0, l = this.state.burnt.length; i < l; i++) {
