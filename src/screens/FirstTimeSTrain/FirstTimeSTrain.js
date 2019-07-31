@@ -86,19 +86,20 @@ export default class FirstTimeSTrain extends React.Component{
 
   componentDidMount() {
     let {doneActivities, activitiesArr} = this.state
+    let temp = ["Walk Around","Run here and there","Go up and down stairs"]
+
     if (typeof this.props.navigation.state.params !== 'undefined') {
       for (let i = 0; i < 3; i++) {
         if (this.props.navigation.state.params.activity[i] !== 0) {
-          doneActivities.push(this.state.activitiesArr[i])
-          for (let j = 0; j < 3; j++)
-            if (activitiesArr[j] === this.state.activitiesArr[i])
-              activitiesArr.splice(j, 1)
-          console.log(doneActivities)
+          doneActivities.push(activitiesArr[i])
+          for (let j = 0; j < temp.length; j++)
+            if (temp[j] === activitiesArr[i])
+              temp.splice(j, 1)
         }
       }
     }
 
-    this.setState({index: 0, doneActivities, activitiesArr})
+    this.setState({index: 0, doneActivities, activitiesArr: temp})
   }
 
   render(){
