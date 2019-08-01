@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { styles } from './styles'
 
-const CircleWithDate = ({date,month,hour}) => {
+const CircleWithDate = ({date,month,min}) => {
   let display;
   if (date == 1)
     display="st"
@@ -18,7 +18,7 @@ const CircleWithDate = ({date,month,hour}) => {
       <View style={styles.circle}>
         <Text style={styles.date}>{date}{display}</Text>
         <Text style={styles.date}>{month}</Text>
-        <Text style={styles.hour}>{hour} hours</Text>
+        <Text style={styles.hour}>{min} mins</Text>
       </View>
     </View>
   )

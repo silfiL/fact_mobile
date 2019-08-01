@@ -8,9 +8,9 @@ export const styles = StyleSheet.create({
         padding: Size.WIDTH*0.012,
         backgroundColor: Color.LIGHT_GREEN,
         borderRadius: 20,
-        width: Size.WIDTH*0.15,
         alignItems:'center',
         justifyContent: 'center',
+        marginBottom: Size.HEIGHT*0.01,
         marginRight: Size.WIDTH*0.02
     },
     badgeText: {

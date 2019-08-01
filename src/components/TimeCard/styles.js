@@ -29,14 +29,16 @@ export const styles = StyleSheet.create({
         borderTopColor: Color.TRANSPARENT,
         backgroundColor: Color.APP_WHITE,
     },
+    bottomCard: {
+      borderWidth:1,
+      borderColor: Color.LIGHT_GREY,
+      borderTopColor: Color.TRANSPARENT,
+    },
     totalRow: {
       flexDirection:'row',
       alignItems:'center',
       justifyContent:'space-between',
       backgroundColor: Color.APP_WHITE,
-      borderWidth:1,
-      borderColor: Color.LIGHT_GREY,
-      borderTopColor: Color.TRANSPARENT,
       paddingHorizontal : Size.WIDTH1*0.2,
       paddingVertical: Size.HEIGHT1*0.02
     },
@@ -48,5 +50,15 @@ export const styles = StyleSheet.create({
       fontFamily: 'SourceSansPro-Bold',
       color: Color.LIGHT_GREEN,
       fontSize: 17
+    },
+    advice: {
+      borderTopColor: Color.LIGHT_GREEN,
+      borderTopWidth: 1,
+      marginVertical: Size.WIDTH*0.01,
+      marginHorizontal: Size.WIDTH*0.02,
+      fontFamily: 'SourceSansPro-Bold',
+      color: Color.LIGHT_GREEN,
+      fontSize: 14,
+      paddingTop: Size.HEIGHT*0.01
     }
 })

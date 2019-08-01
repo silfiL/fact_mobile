@@ -61,6 +61,12 @@ export default class Diary extends Component {
         dinner: 0,
         snack: 0,
       },
+      recommendation_activity: {
+        breakfast: {running: 0, walking: 0, stair:0},
+        lunch: {running:0, walking:0, stair: 0},
+        dinner: {running:0, walking:0, stair:0},
+        snack: {running:0, walking:0, stair:0}
+      },
       wave: {
         fat: null,
         protein: null,
@@ -157,7 +163,8 @@ export default class Diary extends Component {
     const burnt = json.results.burnt
     const nutrient = json.results.nutrient
     const recommendation_calorie = json.results.recommendation_calorie
-    await this.setState({ calorie, intake, burnt, nutrient, recommendation_calorie })
+    const recommendation_activity = json.results.recommendation_activity
+    await this.setState({ calorie, intake, burnt, nutrient, recommendation_calorie, recommendation_activity })
 
     this.state.wave.fat && this.state.wave.fat.setWaterHeight(parseInt(this.state.nutrient.fat * 100 / this.state.nutrient.total_fat))
     this.state.wave.protein && this.state.wave.protein.setWaterHeight(parseInt(this.state.nutrient.protein * 100 / this.state.nutrient.total_protein))
@@ -182,11 +189,14 @@ export default class Diary extends Component {
     ])
   }
 
-  removeActivity = async(id) => {
+  removeActivity = async(idActivity) => {
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
     const arr = []
-    arr.push(id)
+    console.log("id activity",idActivity)
+    for (id of idActivity)
+      arr.push(id)
+
     const body = JSON.stringify({
       data: arr
     })
@@ -235,6 +245,12 @@ export default class Diary extends Component {
       snack: 0,
       exercise: 0,
     }
+    // let rec_act = {
+    //   breakfast: {running: 0, walking: 0, stair:0},
+    //   lunch: {running:0, walking:0, stair: 0},
+    //   dinner: {running:0, walking:0, stair:0},
+    //   snack: {running:0, walking:0, stair:0}
+    // }
     for (let i = 0, l = this.state.intake.breakfast.length; i < l; i++) {
       breakfast.push(<FoodItemCard name={this.state.intake.breakfast[i].name} cal={parseFloat(parseFloat(this.state.intake.breakfast[i].calorie) * parseFloat(this.state.intake.breakfast[i].qty)).toFixed(2)} portion={this.state.intake.breakfast[i].qty} onPressItem={()=>this.confirmDelete(1,this.state.intake.breakfast[i])}/>)
       total.breakfast += parseFloat(this.state.intake.breakfast[i].calorie) * parseFloat(this.state.intake.breakfast[i].qty)
@@ -256,16 +272,39 @@ export default class Diary extends Component {
       let minutes = (times >= 60) ? parseInt(times / 60) : 0
       let seconds = parseInt(times % 60)
       exercise.push(<FoodItemCard name={this.state.burnt[i].label} cal={parseFloat(this.state.burnt[i].calorie).toFixed(2)} portion={`${(minutes > 0) ? minutes + ' min(s) ' : ''}${(seconds > 0) ? seconds + ' sec(s)' : ''}`} noserving onPressItem={()=>this.confirmRemove(this.state.burnt[i])}/>)
-      total.exercise += parseFloat(this.state.burnt[i].calorie)
+      total.exercise += Math.round(parseFloat(this.state.burnt[i].calorie)*100)/100
     }
     return (
       <ScrollView>
         <StatusBar backgroundColor={Color.GREEN} barStyle="light-content"/>
         <View style={styles.scrollViewContent}>
-          <TimeCard time="BREAKFAST" total={total.breakfast} onPress={()=>this.goToAddFood(1)} showButton={this.state.intake.breakfast.length > 0}>{breakfast}</TimeCard>
-          <TimeCard time="LUNCH" total={total.lunch} onPress={()=>this.goToAddFood(2)} showButton={this.state.intake.lunch.length > 0}>{lunch}</TimeCard>
-          <TimeCard time="DINNER" total={total.dinner} onPress={()=>this.goToAddFood(3)} showButton={this.state.intake.dinner.length > 0}>{dinner}</TimeCard>
-          <TimeCard time="SNACK" total={total.snack} onPress={()=>this.goToAddFood(4)} showButton={this.state.intake.snack.length > 0}>{snack}</TimeCard>
+          <TimeCard time="BREAKFAST" total={total.breakfast} onPress={()=>this.goToAddFood(1)} 
+            more={total.breakfast-this.state.recommendation_calorie.breakfast}
+            run={parseInt(this.state.recommendation_activity.breakfast.running/60)}
+            walk={parseInt(this.state.recommendation_activity.breakfast.walking/60)}
+            stair={parseInt(this.state.recommendation_activity.breakfast.stair/60)}
+            showButton={this.state.intake.breakfast.length > 0}>
+            {breakfast}
+          </TimeCard>
+
+          <TimeCard time="LUNCH" total={total.lunch} onPress={()=>this.goToAddFood(2)} 
+            more={total.lunch-this.state.recommendation_calorie.lunch}
+            run={parseInt(this.state.recommendation_activity.lunch.running/60)}
+            walk={parseInt(this.state.recommendation_activity.lunch.walking/60)}
+            stair={parseInt(this.state.recommendation_activity.lunch.stair/60)}
+            showButton={this.state.intake.lunch.length > 0}>{lunch}</TimeCard>
+          <TimeCard time="DINNER" total={total.dinner} onPress={()=>this.goToAddFood(3)} 
+            more={total.dinner-this.state.recommendation_calorie.dinner}
+            run={parseInt(this.state.recommendation_activity.dinner.running/60)}
+            walk={parseInt(this.state.recommendation_activity.dinner.walking/60)}
+            stair={parseInt(this.state.recommendation_activity.dinner.stair/60)}
+            showButton={this.state.intake.dinner.length > 0}>{dinner}</TimeCard>
+          <TimeCard time="SNACK" total={total.snack} onPress={()=>this.goToAddFood(4)} 
+            more={total.snack-this.state.recommendation_calorie.snack}
+            run={parseInt(this.state.recommendation_activity.snack.running/60)}
+            walk={parseInt(this.state.recommendation_activity.snack.walking/60)}
+            stair={parseInt(this.state.recommendation_activity.snack.stair/60)}
+            showButton={this.state.intake.snack.length > 0}>{snack}</TimeCard>
           <TimeCard time="EXERCISE" total={total.exercise} onPress={this.goToTrack} showButton={this.state.burnt.length > 0}>{exercise}</TimeCard>
         </View>
       </ScrollView>
@@ -340,7 +379,7 @@ export default class Diary extends Component {
                 <View style={{alignItems:'center'}}>
                     {this.state.calorie.burnt > this.state.calorie.total_burnt ? <Text style={styles.points}>OVER</Text>:null}
                     <Text style={styles.points}>
-                    { this.state.calorie.burnt > this.state.calorie.total_burnt ? ('OVER ' + this.state.calorie.burnt-this.state.calorie.total_burnt) : this.state.calorie.burnt }
+                    { this.state.calorie.burnt > this.state.calorie.total_burnt ? ('OVER ' + this.state.calorie.burnt-this.state.calorie.total_burnt) : Math.round(parseFloat(this.state.calorie.burnt)*100)/100 }
                   </Text>
                   <Text style={[styles.points,styles.kcal]}>KCAL</Text>
                 </View>

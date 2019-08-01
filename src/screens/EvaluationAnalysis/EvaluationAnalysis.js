@@ -3,7 +3,8 @@ import {
   Text,
   View,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AIcon from 'react-native-vector-icons/AntDesign'
@@ -29,20 +30,39 @@ const chartConfig = {
 }
 
 export default class EvaluationAnalysis extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      status: '',
+    }
+  }
   goToDiary = () => {
     this.props.navigation.navigate('Homepage')
   }
+
+  componentDidMount(){
+    this.onRefresh()
+  }
   
+  onRefresh = async() => {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/evaluation`, {headers})
+    const json = await response.json()
+    if (json.results !== undefined)
+        this.setState({status:json.results})
+  }
+
   render(){    
     return (
       <Swiper style={styles.wrapper} showsButtons={false} loop={false} activeDotColor={Color.LIGHT_GREEN} dotColor={Color.LIGHT_GREY}>
         <View style={styles.slide}>
           <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />
-          <Text style={styles.text}>Congratulations!!</Text>
-          <Text style={styles.text}>You have reached your target</Text>
-          <Text style={styles.weightStatus}>"Ideal Body Weight"</Text>
-          <Icon name="trophy" size={180} color={Color.LIGHT_YELLOW} />
-          <Text style={styles.goodWords}>Hard work pays off</Text>
+          <Text style={styles.text}>{this.state.status!=''&&this.state.status == 'Normal'?'Congratulations !!':'Too Bad..'}</Text>
+          <Text style={styles.text}>{this.state.status!=''&&this.state.status == 'Normal'?'You have reached your target':"You've almost reached your target"}</Text>
+          <Text style={styles.weightStatus}>"{this.state.status!=''&&this.state.status == 'Normal'?'Ideal Body Weight':'Still ' +this.state.status}"</Text>
+          <Icon name={this.state.status!=''&&this.state.status == 'Normal'?'trophy':'smile-o'} size={180} color={Color.LIGHT_YELLOW} />
+          <Text style={styles.goodWords}>{this.state.status!=''&&this.state.status == 'Normal'?'Hard work pays off':"Winner never quits. Don't give up!!"}</Text>
         </View>
         <View style={styles.slide}>
           <StatusBar backgroundColor={Color.APP_WHITE} barStyle="dark-content" />

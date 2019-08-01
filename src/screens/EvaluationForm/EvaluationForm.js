@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StatusBar } from 'react-native';
+import { View, Text, TextInput, StatusBar, AsyncStorage } from 'react-native';
 import { Button } from '../../components/Button';
 import { Form, Field } from 'react-native-validate-form'
 import InputField from '../../components/InputField'
@@ -31,11 +31,7 @@ export default class EvaluationForm extends React.Component{
       this.setState({ data })
     }
 
-    next = () => {
-        this.props.navigation.navigate('EvaluationAnalysis')
-    }
-
-     submitForm = () => {
+    submitForm = () => {
       let submitResults = this.myForm.validate();
 
       let errors = [];
@@ -45,6 +41,19 @@ export default class EvaluationForm extends React.Component{
       });
 
       this.setState({ errors: errors });
+    }
+
+    next = async () => {
+      const token = await AsyncStorage.getItem('token');
+      const body = JSON.stringify(this.state.data)
+      console.log("body",body)
+      const headers = {"Authorization": 'Bearer ' + token}
+      let response = await fetch(`http://103.252.100.230/fact/member/user`, {method: 'PUT', body, headers})
+      let json = await response.json()
+      console.log("JSON #1", json)
+      if (json.message === "Success") {
+        this.props.navigation.navigate('EvaluationAnalysis')
+      }
     }
 
     render(){

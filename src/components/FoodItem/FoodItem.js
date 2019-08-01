@@ -12,7 +12,7 @@ export default class FoodItem extends React.Component {
         <View style={styles.row}>
           <Text style={styles.firstLine}>{this.props.name}</Text>
            <View style={styles.categoriesRow}>
-              {this.props.categories.map(cat=>(
+              {this.props.categories != undefined && this.props.categories.map(cat=>(
                 <Text style={styles.category}>{cat}</Text>
               ))}
           </View> 

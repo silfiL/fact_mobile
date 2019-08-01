@@ -18,7 +18,6 @@ export default class SearchFood extends React.Component{
     this.state = {
       isOpen: false,
       value: 0,
-      search: '',
       name: '',
       data: [],
       add: {
@@ -31,7 +30,7 @@ export default class SearchFood extends React.Component{
         calorie: 0,
         category_intake: 1
       },
-      badge: []
+      badges: []
     }
 
     this.onChange = this.onChange.bind(this)
@@ -53,10 +52,18 @@ export default class SearchFood extends React.Component{
 
     console.log("JSON #1", json)
     if (json.results != undefined){
-      let newArr = []
-
-    }
+      let foods = json.results.foods
+      let badgeArr = []
+      for (food in foods) {
+        for(data of foods[food]){
+          if (badgeArr.length != 10)
+            badgeArr.push(data.name)
+          }
+        }
+        this.setState({badges:badgeArr})
+      }
   }
+  
 
   componentDidMount() {
     this.onRefresh()
@@ -77,7 +84,8 @@ export default class SearchFood extends React.Component{
   }
 
   fillSearch = (item) => {
-    this.setState({search: item.name})
+    this.setState({name: item})
+    this.onSubmit()
   }
 
   _renderItem = ({item}) => (
@@ -133,12 +141,13 @@ export default class SearchFood extends React.Component{
   }
 
   render(){
+    console.log("state badges",this.state.badges)
     return(
       <View style={styles.container}>
           <StatusBar backgroundColor={Color.GREEN} barStyle="light-content" />
           <View style={styles.header}>
             <HeaderBackButton title="SEARCH FOOD" onPressBack={this.back} iconColor={Color.APP_WHITE} />
-            <TextInput autoFocus placeholder="Search Food Name" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
+            <TextInput autoFocus placeholder="Search Food Name" style={styles.search} placeholderTextColor={Color.LIGHT_GREY} value={this.state.name} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
           </View>
 
           {/*<View style={styles.rowSearch}>
@@ -150,9 +159,9 @@ export default class SearchFood extends React.Component{
          {this.state.data.length === 0 ?<View style={styles.blankContainer} >
           <Text style={styles.text}>Recents</Text>
           <View style={styles.row}>
-            <Badge text="Noodles" onPress={this.fillSearch}/>
-            <Badge text="Rice" onPress={this.fillSearch}/>
-            <Badge text="Egg" onPress={this.fillSearch}/>
+            {this.state.badges.map(badge=>(
+              <Badge text={badge} onPress={()=>this.fillSearch(badge)} bgColor={Color.LIGHT_GREEN} />
+            ))}
           </View>
           <View style={styles.center}>
               <Icon name="md-search" size={50} color={Color.FONT_GREY} />

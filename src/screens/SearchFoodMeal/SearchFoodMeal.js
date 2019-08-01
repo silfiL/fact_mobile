@@ -55,9 +55,30 @@ export default class SearchFoodMeal extends React.Component{
     }})
   }
 
-  fillSearch = () => {
-    console.log(this.props.text)
-    this.setState({search:this.props.text})
+  async onRefresh() {
+    const token = await AsyncStorage.getItem('token');
+    console.log("Token", token)
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/recent`, {headers})
+    const json = await response.json()
+
+    console.log("JSON #1", json)
+    if (json.results != undefined){
+      let foods = json.results.foods
+      let badgeArr = []
+      for (food in foods) {
+        for(data of foods[food]){
+          if (badgeArr.length != 10)
+            badgeArr.push(data.name)
+          }
+        }
+        this.setState({badges:badgeArr})
+      }
+  }
+
+  fillSearch = (item) => {
+    this.setState({name: item})
+    this.onSubmit()
   }
 
   _renderItem = ({item}) => (
@@ -118,17 +139,16 @@ export default class SearchFoodMeal extends React.Component{
             <TextInput placeholder="Search Food" placeholderTextColor={Color.LIGHT_GREY} style={styles.search} onSubmitEditing={this.onSubmit} onChangeText={(event) => this.onChange(event)}/>
           </View>*/}
          {this.state.search==''?<View style={styles.blankContainer} >
-          <Text style={styles.text}>Recents</Text>
+          {/*<Text style={styles.text}>Recents</Text>
           <View style={styles.row}>
-            <Badge text="Noodles" onPress={this.fillSearch} bgColor={Color.LIGHT_BLUE}/>
-            <Badge text="Rice" onPress={this.fillSearch} bgColor={Color.LIGHT_BLUE}/>
-            <Badge text="Egg" onPress={this.fillSearch} bgColor={Color.LIGHT_BLUE}/>
-          </View>
+            {this.state.badges.map(badge=>(
+              <Badge text={badge} onPress={()=>this.fillSearch(badge)} bgColor={Color.LIGHT_GREEN} />
+            ))}
+          </View>*/}
           <View style={styles.center}>
               <Icon name="md-search" size={50} color={Color.FONT_GREY} />
               <Text style={styles.centerText}>You can search using</Text>
-              <Text style={styles.centerText}>any keywords or use</Text>
-              <Text style={styles.centerText}>the ones in the recents</Text>
+              <Text style={styles.centerText}>any keywords</Text>
           </View>
         </View>:
         <View style={styles.blankContainer}>

@@ -38,10 +38,15 @@ export default class History extends React.Component {
                     ideal: 0,
                     over: 0,
                 }
-            }
+            },
+            level: '',
+            most_active: [],
+            activity_level: [],
+            activity_month: []
         }
 
         this.onRefreshIntake = this.onRefreshIntake.bind(this)
+        this.onRefreshBurnt = this.onRefreshBurnt.bind(this)
     }
 
     async onRefreshIntake() {
@@ -59,6 +64,38 @@ export default class History extends React.Component {
         this.setState({ data })
     }
 
+    async onRefreshBurnt() {
+        let date = new Date(this.state.end)
+        const token = await AsyncStorage.getItem('token');
+        const headers = { "Authorization": 'Bearer ' + token }
+        const response = await fetch(`http://103.252.100.230/fact/member/history/burnt?year=${date.getFullYear()}&month=${date.getMonth() + 1}&day=${date.getDate()}`, { headers })
+        const json = await response.json()
+
+        console.log("JSON #2", json)
+        if (this.state.index == 1){
+          const data = {
+              week: json.results.week,
+              month: json.results.month
+          }
+          this.setState({ data })
+        } else {
+          let most_active = json.results.most_active
+          let activity_level = json.results.activity_level
+          let activity_month = json.results.activity_month
+          let level = json.results.level
+          let week = []
+          for(var i=0;i<activity_level.length;i++){
+              week.push(activity_level[i][0])
+          }
+          week.reverse()
+          const data = {
+            week: week,
+            month: []
+          }
+          this.setState({most_active,activity_month,data,level})
+        }
+    }
+
     right = async() => {
         if (this.state.index == 2)
             await this.setState({ index: 0 })
@@ -66,8 +103,8 @@ export default class History extends React.Component {
             await this.setState({ index: this.state.index + 1 })
 
         if (this.state.index === 0) await this.onRefreshIntake()
-        if (this.state.index === 1) console.log('do nothing')
-        if (this.state.index === 2) console.log('do nothing')
+        if (this.state.index === 1) await this.onRefreshBurnt()
+        if (this.state.index === 2) await this.onRefreshBurnt()
     }
 
     left = async() => {
@@ -77,8 +114,8 @@ export default class History extends React.Component {
             await this.setState({ index: this.state.index - 1 })
 
         if (this.state.index === 0) await this.onRefreshIntake()
-        if (this.state.index === 1) console.log('do nothing')
-        if (this.state.index === 2) console.log('do nothing')
+        if (this.state.index === 1) await this.onRefreshBurnt()
+        if (this.state.index === 2) await this.onRefreshBurnt()
     }
 
     selectDate = (date) => {
@@ -195,7 +232,7 @@ export default class History extends React.Component {
                   chartConfig = { chartConfig }
                   />
                 <Text style = { styles.sectionTitle } > MONTH VIEW </Text> 
-                <Text style = { styles.month } > ({moment(this.state.end).format('MMMM YYYY')})</Text> 
+                <Text style = { styles.month } > ({moment(this.state.end).subtract(29,'days').format('MMM DD,YYYY')} - {moment(this.state.end).format('MMM DD,YYYY')})</Text> 
                 {this.state.index != 2 ?
                 <View> 
                   <PieChart data = { pieData }
@@ -208,27 +245,27 @@ export default class History extends React.Component {
                     /> 
                 </View> : 
                 <View style = {[styles.subContainer, styles.padBottom]}>
-                  <MyProgressBar progress = { 20 }/> 
+                  <MyProgressBar progress = {this.state.level!=''&&this.state.level == 'Medium'?50:(this.state.level=="Low"?0:100)}/> 
                   <View style = {[styles.below, styles.up]}>
                   <Text style = { styles.label } > Mostly done activities </Text> 
-                  <Text style = { styles.showText } > Walking </Text> 
+                  <Text style = { styles.showText } > {this.state.most_active.length > 0 && this.state.most_active[0].activity_label__name} </Text> 
                 </View> 
                 <View style = { styles.below } >
                   <Text style = { styles.label } > Day with the most active hours </Text> 
                   <View style = { styles.row } >
-                    <CircleWithDate date = { 14 }
-                      month = "Feb"
-                      hour = { 10 }
-                      /> 
+                    {this.state.activity_month.length>0 && <CircleWithDate date = {moment(this.state.activity_month[0][1]).format('DD')}
+                      month = {moment(this.state.activity_month[0][1]).format('MMM')}
+                      min = {parseInt(this.state.activity_month[0][0]/60)}
+                      />} 
                   </View > 
                 </View> 
                 <View style = { styles.below } >
-                  <Text style = { styles.label } > Day with the least active hours </Text> 
+                  <Text style = { styles.label }> Day with the least active hours </Text> 
                   <View style = { styles.row } >
-                    <CircleWithDate date = { 14 }
-                      month = "Feb"
-                      hour = { 10 }
-                      /> 
+                     {this.state.activity_month.length>0 && <CircleWithDate date = {moment(this.state.activity_month[29][1]).format('DD')}
+                      month = {moment(this.state.activity_month[29][1]).format('MMM')}
+                      min = {parseInt(this.state.activity_month[29][0]/60)}
+                      />} 
                   </View> 
                 </View> 
               </View>

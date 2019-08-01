@@ -85,6 +85,8 @@ export default class SelfTrainSessions extends React.Component{
       label: this.props.navigation.state.params.id,
       requested_at: date
     })
+    console.log("headers",headers)
+    
     console.log("body",body)
     const response = await fetch(`http://103.252.100.230/fact/member/activity`, {method:"DELETE",headers,body})
     const json = await response.json()
@@ -117,7 +119,7 @@ export default class SelfTrainSessions extends React.Component{
             <View style={styles.headerModal}>
               <Text style={styles.modalTitle}>DELETE SESSION</Text>
             </View>
-            <Text style={[styles.text,{fontSize:16}]}>Are you sure you want to delete the training data for {moment(this.state.deleteDate).format('DDDD, DD MMM YYYY')} ?</Text>
+            <Text style={[styles.text,{fontSize:16}]}>Are you sure you want to delete the training data for {moment(this.state.deleteDate).format('dddd, DD MMM YYYY')} ?</Text>
             <View style={styles.blankRow} >
               <View style={styles.blank}/>
               <View style={styles.modalButtonRow}>
