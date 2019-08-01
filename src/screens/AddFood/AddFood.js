@@ -28,11 +28,12 @@ export default class AddFood extends React.Component{
       data: {
         name: '',
         fat: '0',
-        calorie: '0',
+        calorie: '',
         protein: '0',
         carbohydrate: '0',
         category: 0
       },
+      errMessage: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -64,7 +65,8 @@ export default class AddFood extends React.Component{
       }
 
       await this.setState({data, isOpen:!this.state.isOpen})
-    }
+    } else
+      this.setState({errMessage: json.message})
   }
 
   back = () => {
@@ -72,7 +74,15 @@ export default class AddFood extends React.Component{
   }
 
   toggleModal = () => {
-    this.setState({isOpen:!this.state.isOpen})
+    const data = {
+        name: '',
+        fat: '0',
+        calorie: '',
+        protein: '0',
+        carbohydrate: '0',
+        category: 0
+    }
+    this.setState({isOpen:!this.state.isOpen,data:data,errMessage:''})
   }
 
   goToSearch = () => {
@@ -107,7 +117,7 @@ export default class AddFood extends React.Component{
   }
 
   submitForm = () => {
-    //this.setState({errMessage: ''})
+    this.setState({errMessage: ''})
     let submitResults = this.myForm.validate();
 
     let errors = [];
@@ -152,6 +162,7 @@ export default class AddFood extends React.Component{
                 <Icon name="close" size={20} color={Color.FONT_GREY} />
               </TouchableOpacity>
             </View>
+            {this.state.errMessage !== '' && <Text style={styles.errMessage}>{this.state.errMessage}</Text>}
             <Form
               ref={(ref) => this.myForm = ref}
               validate={true}

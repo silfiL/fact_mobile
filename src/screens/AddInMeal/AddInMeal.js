@@ -40,6 +40,7 @@ export default class AddInMeal extends React.Component{
       name={item.name}
       calorie={`${parseInt(parseFloat(item.calorie) * parseFloat(item.qty))} kcal`}
       portion={item.qty}
+      categories={item.categories}
     />
   );
 

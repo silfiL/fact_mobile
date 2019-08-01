@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, FlatList, StatusBar} from 'react-native'
+import { View, FlatList, StatusBar, AsyncStorage } from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { SimpleListItem } from '../../components/SimpleListItem'
 import { FloatingButton } from '../../components/FloatingButton'
@@ -49,9 +49,11 @@ export default class MyActivity extends React.Component{
   }
 
   async onRefresh() {
-    const response = await fetch(`http://103.252.100.230/fact/activity?name=all`)
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/activity-label?status=old`,{headers})
     const json = await response.json()
-
+    console.log("activity json",json)
     this.setState({ data: json.results.activities })
   }
 

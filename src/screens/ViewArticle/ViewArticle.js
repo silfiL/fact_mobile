@@ -15,7 +15,8 @@ export default class ViewArticle extends Component {
         image: 'https://cdn.th3rdwave.coffee/articles/rkvHXu_Il/rkvHXu_Il-1100-700.jpg',
         author: '',
         content: '',
-        published_on: ''
+        published_on: '',
+        view: ''
       }
 
       this.onRefresh = this.onRefresh.bind(this)
@@ -27,16 +28,16 @@ export default class ViewArticle extends Component {
       const headers = {"Authorization": 'Bearer ' + token}
       const response = await fetch(`http://103.252.100.230/fact/member/article/${this.props.navigation.state.params.id}`,{headers})
       const json = await response.json()
-      //console.log("articles json",json)
+      //console.log("articles json",json.results.view)
 
-      let {title, image, author, content, published_on} = this.state
+      let {title, image, author, content, published_on, view} = this.state
       title = json.results.title
       image = 'http://103.252.100.230/fact/image/' + json.results.image
       author = json.results.author
       content = json.results.content
       published_on = (new Date(json.results.published_on)).datetimeformat(option="date")
-
-      this.setState({title, image, author, content, published_on})
+      view = json.results.view
+      this.setState({title, image, author, content, published_on, view})
     }
 
     componentWillMount() {
@@ -69,7 +70,7 @@ export default class ViewArticle extends Component {
             </View>
             <View style={styles.row}>
               <Icon name="group" size={16} color={Color.FONT_GREY} />
-              <Text style={[styles.text,styles.left]}>30 views</Text>
+              <Text style={[styles.text,styles.left]}>{this.state.view} views</Text>
             </View>
           </View>
         </ScrollView>

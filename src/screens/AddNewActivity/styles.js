@@ -12,5 +12,10 @@ export const styles = StyleSheet.create({
         fontFamily: 'SourceSansPro-Regular',
         fontSize: 18,
         padding: Size.WIDTH1*0.25
-    }
+    },
+    centerCont: {
+      justifyContent: 'center',
+      flex: 1,
+      alignItems: 'center'
+    },
 })

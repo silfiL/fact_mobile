@@ -21,7 +21,8 @@ export default class CreateMeal extends React.Component{
 
     this.state = {
       name: '',
-      foods: []
+      foods: [],
+      errMessage: ''
     }
 
     this.onSubmit = this.onSubmit.bind(this)
@@ -74,7 +75,8 @@ export default class CreateMeal extends React.Component{
       this.props.navigation.state.params.onMealRefresh()
       this.props.navigation.navigate('Meal')
     }
-    else alert('Error')
+    else 
+      this.setState({errMessage : json.message})
   }
 
   render(){
@@ -104,6 +106,7 @@ export default class CreateMeal extends React.Component{
 
           <ScrollView>
               <View style={styles.form}>
+                  {this.state.errMessage !== '' && <Text style={styles.errMessage}>{this.state.errMessage}</Text>}
                   <Form
                     ref={(ref) => this.myForm = ref}
                     validate={true}

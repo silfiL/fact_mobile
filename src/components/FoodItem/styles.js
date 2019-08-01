@@ -22,13 +22,15 @@ export const styles = StyleSheet.create({
     color: Color.FONT_GREY
   },
   categoriesRow: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   category: {
     borderWidth: 1,
-    borderColor: Color.GREEN,
+    borderColor: Color.LIGHT_GREEN,
     fontSize: 12,
     fontFamily: 'SourceSansPro-Regular',
-    color: Color.FONT_GREY
+    color: Color.LIGHT_GREEN,
+    marginRight: 5,
+    paddingHorizontal: 2
   }
 })

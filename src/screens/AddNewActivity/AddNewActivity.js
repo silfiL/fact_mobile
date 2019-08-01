@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, FlatList, Text, StatusBar} from 'react-native'
+import { View, FlatList, Text, StatusBar, AsyncStorage } from 'react-native'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
 import { SimpleListItem } from '../../components/SimpleListItem'
 import { styles } from './styles'
@@ -44,9 +44,12 @@ export default class AddNewActivity extends React.Component{
   );
 
   async onRefresh() {
-    const response = await fetch(`http://103.252.100.230/fact/activity?name=all`)
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const response = await fetch(`http://103.252.100.230/fact/member/activity-label?status=new`,{headers})
     const json = await response.json()
-
+    console.log("activity json",json)
+    
     this.setState({ data: json.results.activities })
   }
 
@@ -60,11 +63,13 @@ export default class AddNewActivity extends React.Component{
         <StatusBar backgroundColor={Color.RED} barStyle="light-content" />
         <HeaderBackButton onPressBack={this.back} bgColor={Color.RED} iconColor={Color.APP_WHITE} title="ADD NEW ACTIVITY"/>
         <Text style={styles.text}>Choose activity you want to add</Text>
-        <FlatList
+        {this.state.data.length == 0 ? <View style={styles.centerCont}>
+            <Text style={styles.text}>You've added all activities</Text>
+          </View>:<FlatList
           data={this.state.data}
           keyExtractor={item=>item.id}
           renderItem={this._renderItem}
-        />
+        />}
       </View>
     )
   }

@@ -89,5 +89,13 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent:'space-between',
       marginBottom: Size.HEIGHT1*0.1,
+    },
+    errMessage: {
+      backgroundColor: Color.RED,
+      alignContent: 'center',
+      color: Color.APP_WHITE,
+      textTransform: 'uppercase',
+      padding: 5,
+      fontSize: 14
     }
 })

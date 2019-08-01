@@ -66,7 +66,8 @@ export default class SearchFoodMeal extends React.Component{
       name={item.name}
       onPressItem={() => this.toggleModal(item)}
       calorie={`${item.calorie} kcal`}
-      portion={item.qty}/>
+      portion={item.qty}
+      categories={item.categories}/>
   );
 
   addInMeal = () => {

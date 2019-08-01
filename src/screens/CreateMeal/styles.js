@@ -54,4 +54,12 @@ export const styles = StyleSheet.create({
         borderColor: Color.BLUE,
         backgroundColor: Color.TRANSPARENT,
     },
+    errMessage: {
+      backgroundColor: Color.RED,
+      alignContent: 'center',
+      color: Color.APP_WHITE,
+      textTransform: 'uppercase',
+      padding: 5,
+      fontSize: 14
+    }
 })

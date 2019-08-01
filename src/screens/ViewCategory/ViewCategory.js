@@ -98,6 +98,7 @@ export default class ViewCategory extends React.Component{
       name={item.name}
       calorie={item.calorie}
       portion={1}
+      categories={item.categories}
     />
   );
 

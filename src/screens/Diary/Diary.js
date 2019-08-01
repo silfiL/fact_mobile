@@ -175,6 +175,32 @@ export default class Diary extends Component {
     ])
   }
 
+  confirmRemove = (item) => {
+    console.log("item",item)
+    Alert.alert('Remove Exercise',`Are you sure you want to remove ${item.label} ?`,[
+      {text:'NO',style:'cancel'},{text:'YES',onPress:() => this.removeActivity(item.id)}
+    ])
+  }
+
+  removeActivity = async(id) => {
+    const token = await AsyncStorage.getItem('token');
+    const headers = {"Authorization": 'Bearer ' + token}
+    const arr = []
+    arr.push(id)
+    const body = JSON.stringify({
+      data: arr
+    })
+    console.log("body",body)
+    const response = await fetch(`http://103.252.100.230/fact/member/burnt`,{method:"DELETE",headers,body})
+    const json = await response.json()
+    if (json.message == 'Success'){
+        this.onRefresh()
+        Alert.alert('Success',"Deleted successfully",[{text:'OK',style:'cancel'}])
+    }
+    else
+        Alert.alert('Error',json.message,[{text:'OK',style:'cancel'}])
+  }
+
   removeFood = async(time, id) => {
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
@@ -185,9 +211,14 @@ export default class Diary extends Component {
       data: arr
     })
     console.log("body",body)
-    const response = await fetch(`http://103.252.100.230/fact/`+{method:"DELETE",headers,body})
+    const response = await fetch(`http://103.252.100.230/fact/member/intake`,{method:"DELETE",headers,body})
     const json = await response.json()
-    console.log("delete json",json)
+    if (json.message == 'Success'){
+        this.onRefresh()
+        Alert.alert('Success',"Deleted successfully",[{text:'OK',style:'cancel'}])
+    }
+    else
+        Alert.alert('Error',json.message,[{text:'OK',style:'cancel'}])
   }
 
   renderContent = () => {
@@ -224,7 +255,7 @@ export default class Diary extends Component {
       let times = parseInt(this.state.burnt[i].duration)
       let minutes = (times >= 60) ? parseInt(times / 60) : 0
       let seconds = parseInt(times % 60)
-      exercise.push(<FoodItemCard name={this.state.burnt[i].label} cal={parseFloat(this.state.burnt[i].calorie).toFixed(2)} portion={`${(minutes > 0) ? minutes + ' min(s) ' : ''}${(seconds > 0) ? seconds + ' sec(s)' : ''}`} noserving/>)
+      exercise.push(<FoodItemCard name={this.state.burnt[i].label} cal={parseFloat(this.state.burnt[i].calorie).toFixed(2)} portion={`${(minutes > 0) ? minutes + ' min(s) ' : ''}${(seconds > 0) ? seconds + ' sec(s)' : ''}`} noserving onPressItem={()=>this.confirmRemove(this.state.burnt[i])}/>)
       total.exercise += parseFloat(this.state.burnt[i].calorie)
     }
     return (

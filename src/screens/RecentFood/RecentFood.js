@@ -31,6 +31,7 @@ export default class RecentFood extends React.Component{
       name={item.name}
       calorie={item.calorie}
       portion={item.portion}
+      categories={item.categories}
     />
   );
 
