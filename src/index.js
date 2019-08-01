@@ -179,7 +179,7 @@ const rootStack = createStackNavigator({
   Homepage: HomepageTab,
   FirstTimeSTrain: FirstTimeSTrain,
 }, {
-  initialRouteName: 'EvaluationAnalysis',
+  initialRouteName: 'Homepage',
   headerMode: 'none'
 });
 

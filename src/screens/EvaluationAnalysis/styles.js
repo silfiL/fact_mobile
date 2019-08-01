@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
       fontFamily: 'SourceSansPro-Regular',
       flex: 1,
       flexWrap: 'wrap',
-      marginHorizontal: Size.WIDTH1*0.2
+      marginHorizontal: Size.WIDTH1*0.3,
     },
     group: {
       marginBottom: Size.HEIGHT1*0.3,
