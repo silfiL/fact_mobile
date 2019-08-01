@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StatusBar, AsyncStorage } from 'react-native'
+import { View, Text, StatusBar, AsyncStorage, Linking, Alert } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels'
 import LinearGradient from 'react-native-linear-gradient'
 import { Button } from '../../components/Button'
@@ -51,22 +51,19 @@ export default class SignUp extends React.Component{
     let json = await response.json()
     console.log("JSON #1", json)
     if (json.message === 'Success') {
-      response = await fetch(`http://103.252.100.230/fact/login`, {method: 'POST', body})
-      json = await response.json()
-
-      console.log("JSON #2", json)
-      await AsyncStorage.setItem('token', json.results.token);
-      this.props.navigation.navigate('FillProfileFirst')
-    } else 
+      Alert.alert("Success", `Please check your email.`, [
+        {text: 'Done', style: 'cancel'}
+      ])
+    } else
       this.setState({errMessage : json.message})
   }
 
   submitForm = () => {
     this.setState({errMessage: ''})
     let submitResults = this.myForm.validate();
- 
+
     let errors = [];
- 
+
     submitResults.forEach(item => {
       errors.push({ field: item.fieldName, error: item.error });
     });
@@ -74,8 +71,24 @@ export default class SignUp extends React.Component{
     if (this.state.data.password != this.state.data.re_password){
       errors.push({field:"re_password",error:"Password and confirm password must be same"})
     }
- 
+
     this.setState({ errors: errors });
+  }
+
+  componentDidMount() {
+    Linking.addEventListener('url', async (event) => {
+      let keyIndex = event.url.indexOf('=') + 1
+      let key = event.url.substring(keyIndex)
+      console.log("Forgot password (event)", event, key)
+
+      let response = await fetch(`http://103.252.100.230/fact/confirm-email/${key}`, {method: 'POST'})
+      let json = await response.json()
+
+      if (typeof json.results !== "undefined") {
+        await AsyncStorage.setItem('token', json.results.token);
+        this.props.navigation.navigate('FillProfileFirst')
+      }
+    })
   }
 
   render(){

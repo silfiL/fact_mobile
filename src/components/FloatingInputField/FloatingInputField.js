@@ -14,7 +14,9 @@ const FloatingInputField = ({
   keyboardType,
   labelStyle,
   inputStyle,
-  password
+  password,
+  editable,
+  disabled
 }) => {
   return (
     <View>
@@ -26,6 +28,8 @@ const FloatingInputField = ({
         labelStyle={labelStyle ? labelStyle : {}}
         inputStyle={inputStyle? inputStyle : {}}
         password={password}
+        editable={editable}
+        disabled={disabled}
       >
       {placeholder ? placeholder : ""}
       </FloatingLabel>

@@ -51,9 +51,12 @@ export default class AddFood extends React.Component{
     const body = JSON.stringify(this.state.data)
     const token = await AsyncStorage.getItem('token');
     const headers = {"Authorization": 'Bearer ' + token}
+
+    console.log(headers, body)
     let response = await fetch(`http://103.252.100.230/fact/member/food`, {method: 'POST', body, headers})
     let json = await response.json()
     console.log("add custom json",json)
+
     if (json.message === 'Success') {
       const data = {
         name: '',

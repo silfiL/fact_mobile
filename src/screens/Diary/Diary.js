@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ScrollView,
   AsyncStorage,
-  Alert
+  Alert,
+  Linking
 } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import LinearGradient from 'react-native-linear-gradient'
@@ -178,7 +179,7 @@ export default class Diary extends Component {
 
   confirmDelete = (time, item) => {
     Alert.alert('Remove Food',`Are you sure you want to remove ${item.name} ?`,[
-      {text:'NO',style:'cancel'},{text:'YES',onPress:() => this.removeFood(time,item.id)}  
+      {text:'NO',style:'cancel'},{text:'YES',onPress:() => this.removeFood(time,item.id)}
     ])
   }
 

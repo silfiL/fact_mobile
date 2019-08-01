@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, StatusBar, Alert } from 'react-native'
+import { View, Text, TextInput, StatusBar, Alert, Linking } from 'react-native'
 import { Button } from '../../components/Button'
 import { Title } from '../../components/Title'
 import { HeaderBackButton } from '../../components/HeaderBackButton'
@@ -63,6 +63,24 @@ export default class ForgetPassword extends React.Component{
 
   submitFailed = () => {
     console.log("Submit Failed")
+  }
+
+  async componentDidMount() {
+    Linking.addEventListener('url', async (event) => {
+      let keyIndex = event.url.indexOf('=') + 1
+      let key = event.url.substring(keyIndex)
+      console.log("Forgot password (event)", event, key)
+
+      let response = await fetch(`http://103.252.100.230/fact/confirm-forgot-password/${key}`, {method: 'POST'})
+      let json = await response.json()
+
+      if (typeof json.results !== "undefined") {
+        this.props.navigation.navigate('ResetPassword', {
+          email: json.results.email,
+          key: key
+        })
+      }
+    })
   }
 
   render(){
